@@ -463,6 +463,15 @@ function GameObject.SetTransform(self, transform)
     SetTransform(self:GetHandle(), transform);
 end
 
+--- Set a random angle for the GameObject.
+-- Sets the specified craft to a random angle (in 2D-only). Normally,
+-- craft are always built facing due north; this spices things up.
+-- @param self GameObject instance
+function GameObject.SetRandomHeadingAngle(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    SetRandomHeadingAngle(self:GetHandle());
+end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- GameObject - Condition Checks
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -625,6 +634,68 @@ function GameObject.IsPlayer(self)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- GameObject - Taps
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--- Get the Tap gameobject at index
+-- @param self GameObject instance
+-- @param index Tap index
+-- @return GameObject
+function GameObject.GetTap(self, index)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    if not isnumber(index) then error("Paramater target must be number."); end
+    local handle = GetTap(self:GetHandle(), index);
+    if handle == nil then return nil end;
+    return GameObject.FromHandle(handle);
+end
+
+--- Set an object as a tap of a GameObject
+-- @param self GameObject instance
+-- @param index Tap index
+-- @param object GameObject instance to be attached
+function GameObject.SetTap(self, index, object)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    if not isnumber(index) then error("Paramater target must be number."); end
+    if not isgameobject(object) then error("Paramater object must be GameObject instance."); end
+    return SetTap(self:GetHandle(), index, object:GetHandle());
+end
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- GameObject - Animations
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--- SetAnimation GameObject animation
+-- @param self GameObject instance
+-- @param name Animation name
+-- @param animType Animation Type, 0 == loop, 1 == 2way
+-- @return max frames
+function GameObject.SetAnimation(self, name, animType)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    if not isstring(name) then error("Paramater name must be string."); end
+    if not isnumber(animType) then error("Paramater animType must be 0 or 1."); end
+    if animType ~= 0 and animType ~= 1 then error("Paramater animType must be 0 or 1."); end
+    return SetAnimation(self:GetHandle(), name, animType);
+end
+
+--- Get animation frame of a GameObject
+-- @param self GameObject instance
+-- @param name Animation name
+-- @return frame
+function GameObject.GetAnimationFrame(self, name)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    if not isstring(name) then error("Paramater name must be string."); end
+    return GetAnimationFrame(self:GetHandle(), name);
+end
+
+--- Start the current animation of a GameObject
+-- @param self GameObject instance
+-- @param name Animation name
+function GameObject.StartAnimation(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    return StartAnimation(self:GetHandle());
+end
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- GameObject - Damage, Health, and Ammo
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -754,10 +825,6 @@ end
 -- GameObject - Damage, Health, and Ammo
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
---	{ "GetTeamNum", GetTeamNum },
---// get the team number of a unit. Returns 0 if invalid handle.
---DLLEXPORT TeamNum DLLAPI GetTeamNum(Handle h);
-
 --- Get team number of the GameObject.
 -- @param self GameObject instance
 -- @return integer Team number
@@ -766,10 +833,6 @@ function GameObject.GetTeamNum(self)
     return GetTeamNum(self:GetHandle());
 end
 
---	{ "SetTeamNum", SetTeamNum },
---// set the team number of a unit
---DLLEXPORT void DLLAPI SetTeamNum(Handle h, TeamNum t);
-
 --- Set team number of the GameObject.
 -- @param self GameObject instance
 -- @param team new team number
@@ -777,6 +840,23 @@ function GameObject.SetTeamNum(self, team)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     if not isnumber(team) then error("Paramater amt must be number."); end
     SetTeamNum(self:GetHandle(), team);
+end
+
+--- Get perceived team number of the GameObject.
+-- @param self GameObject instance
+-- @return integer Team number
+function GameObject.GetPerceivedTeam(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    return GetPerceivedTeam(self:GetHandle());
+end
+
+--- Set perceived team number of the GameObject.
+-- @param self GameObject instance
+-- @param team new team number
+function GameObject.SetPerceivedTeam(self, team)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    if not isnumber(team) then error("Paramater amt must be number."); end
+    SetPerceivedTeam(self:GetHandle(), team);
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -806,6 +886,42 @@ end
 function GameObject.GetRace(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return GetRace(self:GetHandle());
+end
+
+--- Get label of GameObject
+-- @param self GameObject instance
+-- @return Label name string
+function GameObject.GetLabel(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    return GetLabel(self:GetHandle());
+end
+
+--- Is the GameObject this odf?
+-- @param self GameObject instance
+-- @param label Label
+-- @usage enemy1:SetLabel("special_object_7")
+function GameObject.SetLabel(self, label)
+  if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+  if not isstring(label) then error("Paramater label must be a string."); end
+  SetLabel(self:GetHandle(),label);
+end
+
+--- Adds in a pilot if needed to a GameObject
+-- @param self GameObject instance
+-- @usage enemy1:AddPilot()
+function GameObject.AddPilot(self)
+  if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+  AddPilotByHandle(self:GetHandle());
+end
+
+--- Set GameObject as the local or remote user
+-- This must be called after building a new craft on entry or respawn
+-- @param self GameObject instance
+-- @param team new team number
+function GameObject.SetAsUser(self, team)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    if not isnumber(team) then error("Paramater amt must be number."); end
+    SetAsUser(self:GetHandle(), team);
 end
 
 --==============================================================================================================================================================
@@ -1087,7 +1203,7 @@ end
 
 --- Called when a player joins the game world.
 function AddPlayer(id, team, isNewPlayer)
-    debugprint("AddPlayer");
+    --debugprint("AddPlayer");
     local retVal, stoppedEarly = hook.CallAllPassReturn("AddPlayer", id, team, isNewPlayer);
     if not isboolean(retVal) then retVal = true; end
     return retVal;
@@ -1095,13 +1211,13 @@ end
 
 --- Called when a player leaves the game world.
 function DeletePlayer(id)
-    debugprint("DeletePlayer");
+    --debugprint("DeletePlayer");
     hook.CallAllNoReturn( "DeletePlayer", id );
 end
 
 --- Called when the player Ejects.
 function PlayerEjected(DeadObjectHandle)
-    debugprint("PlayerEjected");
+    --debugprint("PlayerEjected");
     local object = GameObject.FromHandle(DeadObjectHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PlayerEjected", object);
     if retVal == nil then retVal = EjectKillRetCodes.DoEjectPilot; end
@@ -1110,7 +1226,7 @@ end
 
 --- Called when an object is killed.
 function ObjectKilled(DeadObjectHandle, KillersHandle)
-    debugprint("ObjectKilled");
+    --debugprint("ObjectKilled");
     local object1 = GameObject.FromHandle(DeadObjectHandle);
     local object2 = GameObject.FromHandle(KillersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectKilled", object1, object2);
@@ -1120,7 +1236,7 @@ end
 
 --- Called when an object is sniped.
 function ObjectSniped(DeadObjectHandle, KillersHandle)
-    debugprint("ObjectSniped");
+    --debugprint("ObjectSniped");
     local object1 = GameObject.FromHandle(DeadObjectHandle);
     local object2 = GameObject.FromHandle(KillersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectSniped", object1, object2);
@@ -1130,7 +1246,7 @@ end
 
 --- Called when an ordnance hits an object. This technically happens just before any damage is applied. Also it only happens when the ordnance hits a vehicle or box/sphere collidable object. Objects that use collision mesh's are technically part of the terrain? sortof...
 function PreOrdnanceHit(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    debugprint("PreOrdnanceHit");
+    --debugprint("PreOrdnanceHit");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
     hook.CallAllNoReturn( "PreOrdnanceHit", object1, object2, ordnanceTeam, pOrdnanceODF );
@@ -1138,7 +1254,7 @@ end
 
 --- Called when an object is Sniped. Occurs just before the snipe, and can be used to prevent it from happening.
 function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    debugprint("PreSnipe");
+    --debugprint("PreSnipe");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, pOrdnanceODF);
@@ -1158,7 +1274,7 @@ end
 
 --- Called when a powerup is picked up. Can be used to prevent it.
 function PrePickupPowerup(curWorld, me, powerupHandle)
-    debugprint("PrePickupPowerup");
+    --debugprint("PrePickupPowerup");
     local object1 = GameObject.FromHandle(me);
     local object2 = GameObject.FromHandle(powerupHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PrePickupPowerup", curWorld, object1, object2);
@@ -1167,12 +1283,12 @@ function PrePickupPowerup(curWorld, me, powerupHandle)
 end
 
 --- Called when the user? changes targets? Can be used to trigger events on a target change?
-function PostTargetChangedCallback(craft, previousTarget, currentTarget)
-    debugprint("PostTargetChangedCallback");
+function PostTargetChangeCallback(craft, previousTarget, currentTarget)
+    --debugprint("PostTargetChangeCallback");
     local object1 = GameObject.FromHandle(craft);
     local object2 = GameObject.FromHandle(previousTarget);
     local object3 = GameObject.FromHandle(currentTarget);
-    hook.CallAllNoReturn( "PostTargetChangedCallback", object1, object2, object3 );
+    hook.CallAllNoReturn( "PostTargetChangeCallback", object1, object2, object3 );
 end
 
 --- Called when an IFace command is triggered. Use CalcCRC(string) to determine the command from the crc value.
