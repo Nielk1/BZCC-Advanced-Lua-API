@@ -411,7 +411,7 @@ function GameObject.AllLookAtMe(self, team, priority)
 end
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
--- GameObject - Position
+-- GameObject - Position & Velocity
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- Get object's position vector.
@@ -427,7 +427,7 @@ end
 -- @return Vector
 function GameObject.GetPosition2(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
-    return GetPosition(self:GetHandle());
+    return GetPosition2(self:GetHandle());
 end
 
 --- Get front vector.
@@ -436,6 +436,14 @@ end
 function GameObject.GetFront(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return GetFront(self:GetHandle());
+end
+
+--- Get front look vector.
+-- @param self GameObject instance
+-- @return Vector
+function GameObject.GetLookFront(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    return GetLookFront(self:GetHandle());
 end
 
 --- Set the position of the GameObject.
@@ -472,6 +480,38 @@ function GameObject.SetRandomHeadingAngle(self)
     SetRandomHeadingAngle(self:GetHandle());
 end
 
+--- Get object's velocity vector.
+-- @param self GameObject instance
+-- @return Vector, (0,0,0) if the handle is invalid or isn't movable.
+function GameObject.GetVelocity(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    return GetVelocity(self:GetHandle());
+end
+
+--- Set the velocity of the GameObject.
+-- @param self GameObject instance
+-- @param vel Vector velocity
+function GameObject.SetVelocity(self, vel)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    SetVelocity(self:GetHandle(), vel);
+end
+
+--- Get object's omega.
+-- @param self GameObject instance
+-- @return Vector, (0,0,0) if the handle is invalid or isn't movable.
+function GameObject.GetOmega(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    return GetOmega(self:GetHandle());
+end
+
+--- Set the omega of the GameObject.
+-- @param self GameObject instance
+-- @param omega
+function GameObject.SetOmega(self, omega)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    SetOmega(self:GetHandle(),omega);
+end
+
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- GameObject - Condition Checks
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -498,7 +538,7 @@ end
 -- @return bool
 function GameObject.IsAliveAndPilot(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
-    return IsAliveAndPilot2(self:GetHandle());
+    return IsAliveAndPilot(self:GetHandle());
 end
 
 --- Is the GameObject not dead and piloted?
@@ -579,6 +619,16 @@ end
 function GameObject.GetTug(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     local handle = GetTug(self:GetHandle());
+    if handle == nil then return nil end;
+    return GameObject.FromHandle(handle);
+end
+
+--- Has the GameObject hopped out of a vehicle? What vehicle?
+-- @param self GameObject instance
+-- @return GameObject of the vehicle that the pilot most recently hopped out of, or nil
+function GameObject.HoppedOutOf(self)
+    if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
+    local handle = HoppedOutOf(self:GetHandle());
     if handle == nil then return nil end;
     return GameObject.FromHandle(handle);
 end
@@ -1056,45 +1106,46 @@ function DeSimplifyForLoad(...)
 end
 
 function Save()
+    debugprint("_api::Save()");
     CustomTypeMap = {};
 
-    debugprint("Beginning save code");
+--    debugprint("Beginning save code");
 
     local saveData = {};
-    debugprint("Save Data Container ready");
+--    debugprint("Save Data Container ready");
 
     saveData.gameTurn = gameTurn;
 
-    debugprint("Saving custom types map");
+--    debugprint("Saving custom types map");
     local CustomSavableTypesCounter = 1;
     local CustomSavableTypeTmpTable = {};
     for k,v in pairs(CustomSavableTypes) do
         CustomSavableTypeTmpTable[CustomSavableTypesCounter] = k;
         CustomTypeMap[k] = CustomSavableTypesCounter;
-        debugprint("[" .. CustomSavableTypesCounter .. "] = " .. k);
+--        debugprint("[" .. CustomSavableTypesCounter .. "] = " .. k);
         CustomSavableTypesCounter = CustomSavableTypesCounter + 1;
     end
     saveData.CustomSavableTypes = CustomSavableTypeTmpTable; -- Write TmpID -> Name map
-    debugprint("Saved custom types map");
+--    debugprint("Saved custom types map");
     
-    debugprint("Saving custom types");
+--    debugprint("Saving custom types");
     local CustomSavableTypeDataTmpTable = {};
     for idNum,name in ipairs(CustomSavableTypeTmpTable) do
         local entry = CustomSavableTypes[name];
         if entry.BulkSave ~= nil and isfunction(entry.BulkSave) then
-            debugprint("Saved " .. entry.TypeName);
+--            debugprint("Saved " .. entry.TypeName);
             CustomSavableTypeDataTmpTable[idNum] = {SimplifyForSave(entry.BulkSave())};
         else
-            debugprint("Saved " .. entry.TypeName .. " (nothing to save)");
+--            debugprint("Saved " .. entry.TypeName .. " (nothing to save)");
             CustomSavableTypeDataTmpTable[idNum] = {};
         end
     end
     saveData.CustomSavableTypeData = CustomSavableTypeDataTmpTable; -- Write TmpID -> Data map
     CustomSavableTypeDataTmpTable = nil;
     CustomSavableTypeTmpTable = nil;
-    debugprint("Saved custom types");
+--    debugprint("Saved custom types");
     
-    debugprint("Calling all hooked save functions");
+--    debugprint("Calling all hooked save functions");
     table.insert(saveData,saveData.Hooks)
     local hookResults = hook.CallSave();
     if hookResults ~= nil then
@@ -1103,78 +1154,87 @@ function Save()
       saveData.HooksData = {};
     end
     
-    debugprint("Unpacking and returning Save Data Container");
+--    debugprint("Unpacking and returning Save Data Container");
     
-    str = table.show(saveData);
-    for s in str:gmatch("[^\r\n]+") do
-        debugprint(s);
-    end
+--    str = table.show(saveData);
+--    for s in str:gmatch("[^\r\n]+") do
+--        debugprint(s);
+--    end
     
+    debugprint("_api::/Save");
     return saveData;
 end
 
 function Load(...)
+    debugprint("_api::Load()");
     local args = ...;
 
-    str = table.show(args);
-    for s in str:gmatch("[^\r\n]+") do
-        debugprint(s);
-    end
+--    str = table.show(args);
+--    for s in str:gmatch("[^\r\n]+") do
+--        debugprint(s);
+--    end
 
-    debugprint("Beginning load code");
+--    debugprint("Beginning load code");
     
     gameTurn = args.gameTurn;
 
-    debugprint("Loading custom types map");
+--    debugprint("Loading custom types map");
     CustomTypeMap = args.CustomSavableTypes
-    debugprint("Loaded custom types map");
+--    debugprint("Loaded custom types map");
     
-    debugprint("Loading custom types data");
+--    debugprint("Loading custom types data");
     for idNum,data in ipairs(args.CustomSavableTypeData) do
         local entry = CustomSavableTypes[CustomTypeMap[idNum]];
         if entry.BulkLoad ~= nil and isfunction(entry.BulkLoad) then
-            debugprint("Loaded " .. entry.TypeName);
+--            debugprint("Loaded " .. entry.TypeName);
             entry.BulkLoad(DeSimplifyForLoad(table.unpack(data)));
         end
     end
-    debugprint("Loaded custom types data");
+--    debugprint("Loaded custom types data");
     
-    debugprint("Game Object Data Start");
-    for k,y in pairs(GameObjectAltered) do
-      debugprint(tostring(k) .. " = " .. tostring(y));
-    end
-    debugprint("Game Object Data End");
+--    debugprint("Game Object Data Start");
+--    for k,y in pairs(GameObjectAltered) do
+--      debugprint(tostring(k) .. " = " .. tostring(y));
+--    end
+--    debugprint("Game Object Data End");
     
-    debugprint("Calling all hooked load functions");
+--    debugprint("Calling all hooked load functions");
     hook.CallLoad(DeSimplifyForLoad(table.unpack(args.HooksData)));
+    debugprint("_api::/Load");
 end
 
 function PostLoad()
-    debugprint("PostLoading custom types");
+    debugprint("_api::PostLoad()");
+--    debugprint("PostLoading custom types");
     for idNum,name in ipairs(CustomSavableTypeTmpTable) do
         local entry = CustomSavableTypes[name];
         if entry.BulkPostLoad ~= nil and isfunction(entry.BulkPostLoad) then
-            debugprint("PostLoaded " .. entry.TypeName);
+--            debugprint("PostLoaded " .. entry.TypeName);
             SimplifyForSave(entry.BulkPostLoad());
         else
-            debugprint("PostLoaded " .. entry.TypeName .. " (nothing to PostLoad)");
+--            debugprint("PostLoaded " .. entry.TypeName .. " (nothing to PostLoad)");
         end
     end
-    debugprint("PostLoaded custom types");
+--    debugprint("PostLoaded custom types");
     
     hook.CallPostLoad();
+    debugprint("_api::/PostLoad");
 end
 
 --- Called before the mission starts up. 
 -- Preloading assets should be done here.
 function InitialSetup()
+    debugprint("_api::InitialSetup()");
     hook.CallAllNoReturn( "InitialSetup" );
+    debugprint("_api::/InitialSetup");
 end
 
 --- Called when the mission starts for the first time.
 -- Use this function to perform any one-time script initialization.
 function Start()
+    debugprint("_api::Start()");
     hook.CallAllNoReturn( "Start" );
+    debugprint("_api::/Start");
 end
 
 --- Called after any game object is created.
@@ -1203,21 +1263,23 @@ end
 
 --- Called when a player joins the game world.
 function AddPlayer(id, team, isNewPlayer)
-    --debugprint("AddPlayer");
+    --debugprint("_api::AddPlayer(" .. tostring(id) .. ", " .. tostring(team) .. ", " .. tostring(isNewPlayer) .. ")");
     local retVal, stoppedEarly = hook.CallAllPassReturn("AddPlayer", id, team, isNewPlayer);
     if not isboolean(retVal) then retVal = true; end
+    --debugprint("_api::/AddPlayer");
     return retVal;
 end
 
 --- Called when a player leaves the game world.
 function DeletePlayer(id)
+    --debugprint("_api::DeletePlayer(" .. tostring(id) .. ")");
     --debugprint("DeletePlayer");
     hook.CallAllNoReturn( "DeletePlayer", id );
 end
 
 --- Called when the player Ejects.
 function PlayerEjected(DeadObjectHandle)
-    --debugprint("PlayerEjected");
+    --debugprint("_api::PlayerEjected(" .. tostring(DeadObjectHandle) .. ")");
     local object = GameObject.FromHandle(DeadObjectHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PlayerEjected", object);
     if retVal == nil then retVal = EjectKillRetCodes.DoEjectPilot; end
@@ -1226,7 +1288,7 @@ end
 
 --- Called when an object is killed.
 function ObjectKilled(DeadObjectHandle, KillersHandle)
-    --debugprint("ObjectKilled");
+    --debugprint("_api::DeadObjectHandle(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
     local object1 = GameObject.FromHandle(DeadObjectHandle);
     local object2 = GameObject.FromHandle(KillersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectKilled", object1, object2);
@@ -1236,7 +1298,7 @@ end
 
 --- Called when an object is sniped.
 function ObjectSniped(DeadObjectHandle, KillersHandle)
-    --debugprint("ObjectSniped");
+    --debugprint("_api::ObjectSniped(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
     local object1 = GameObject.FromHandle(DeadObjectHandle);
     local object2 = GameObject.FromHandle(KillersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectSniped", object1, object2);
@@ -1246,7 +1308,7 @@ end
 
 --- Called when an ordnance hits an object. This technically happens just before any damage is applied. Also it only happens when the ordnance hits a vehicle or box/sphere collidable object. Objects that use collision mesh's are technically part of the terrain? sortof...
 function PreOrdnanceHit(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    --debugprint("PreOrdnanceHit");
+    --debugprint("_api::PreOrdnanceHit(" .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
     hook.CallAllNoReturn( "PreOrdnanceHit", object1, object2, ordnanceTeam, pOrdnanceODF );
@@ -1254,7 +1316,7 @@ end
 
 --- Called when an object is Sniped. Occurs just before the snipe, and can be used to prevent it from happening.
 function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    --debugprint("PreSnipe");
+    --debugprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, pOrdnanceODF);
@@ -1264,7 +1326,7 @@ end
 
 --- Called when a pilot gets into a ship. Can be used to prevent it.
 function PreGetIn(curWorld, pilotHandle, emptyCraftHandle)
-    debugprint("PreGetIn");
+    --debugprint("_api::PreGetIn(" .. tostring(curWorld) .. ", " .. tostring(pilotHandle) .. ", " .. tostring(emptyCraftHandle) .. ")");
     local object1 = GameObject.FromHandle(pilotHandle);
     local object2 = GameObject.FromHandle(emptyCraftHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PreGetIn", curWorld, object1, object2);
@@ -1274,7 +1336,7 @@ end
 
 --- Called when a powerup is picked up. Can be used to prevent it.
 function PrePickupPowerup(curWorld, me, powerupHandle)
-    --debugprint("PrePickupPowerup");
+    --debugprint("_api::PrePickupPowerup(" .. tostring(curWorld) .. ", " .. tostring(me) .. ", " .. tostring(powerupHandle) .. ")");
     local object1 = GameObject.FromHandle(me);
     local object2 = GameObject.FromHandle(powerupHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PrePickupPowerup", curWorld, object1, object2);
@@ -1284,11 +1346,11 @@ end
 
 --- Called when the user? changes targets? Can be used to trigger events on a target change?
 function PostTargetChangeCallback(craft, previousTarget, currentTarget)
-    --debugprint("PostTargetChangeCallback");
+    --debugprint("_api::PostTargetChangeCallback(" .. tostring(craft) .. ", " .. tostring(previousTarget) .. ", " .. tostring(currentTarget) .. ")");
     local object1 = GameObject.FromHandle(craft);
     local object2 = GameObject.FromHandle(previousTarget);
     local object3 = GameObject.FromHandle(currentTarget);
-    hook.CallAllNoReturn( "PostTargetChangeCallback", object1, object2, object3 );
+    --hook.CallAllNoReturn( "PostTargetChangeCallback", object1, object2, object3 );
 end
 
 --- Called when an IFace command is triggered. Use CalcCRC(string) to determine the command from the crc value.

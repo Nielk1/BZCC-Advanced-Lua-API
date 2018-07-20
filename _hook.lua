@@ -153,6 +153,7 @@ local range = function(from, to, step)
   end, nil, from - step
 end
 
+
 --- Calls hooks associated with the hook name ignoring any return values.
 -- @param event Event to be hooked (string)
 -- @param ... Paramaters passed to every hooked function
@@ -175,6 +176,14 @@ function hook.CallAllNoReturn( event, ... )
     end
 end
 
+local function appendhelper(a, n, b, ...)
+  if   n == 0 then return a
+  else             return b, appendhelper(a, n-1, ...) end
+end
+local function appendvargs(a, ...)
+  return appendhelper(a, select('#', ...), ...)
+end
+
 --- Calls hooks associated with the hook name passing each return to the next.
 -- Hooked functions may return 2 values.  The first will be passed to the next
 -- as the last paramater.  The second, if true, will stop the execution of hooks.
@@ -191,7 +200,7 @@ function hook.CallAllPassReturn( event, ... )
             for k, v in pairs( HookTable ) do 
                 if ( isstring( k ) ) then
                     if ( v.priority == j ) then
-                        lastreturn, stopnow = v.func( ..., lastreturn );
+                        lastreturn, stopnow = v.func( appendvargs(lastreturn, ...) );
                         if stopnow == true then break; end
                     end
                 else
