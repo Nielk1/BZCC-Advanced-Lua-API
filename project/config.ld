@@ -1,9 +1,9 @@
 -- config.ld
 file = {
-'..\\Mod\\_requirefix.lua',
-'..\\Mod\\_printfix.lua',
-'..\\Mod\\_api.lua',
-'..\\Mod\\_hook.lua',
-'..\\Mod\\_table_show.lua',
-'..\\Mod\\_api_replaceondeath.lua'
+'..\\mod\\_requirefix.lua',
+'..\\mod\\_printfix.lua',
+'..\\mod\\_api.lua',
+'..\\mod\\_hook.lua',
+'..\\mod\\_table_show.lua',
+'..\\mod\\_api_replaceondeath.lua'
 }
