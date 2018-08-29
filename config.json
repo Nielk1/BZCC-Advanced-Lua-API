@@ -4,9 +4,9 @@
             "name":"Nielk1's Lua API Wrapper",
             "folder":"mod",
             "image":"logo.png",
-			"workshopid":"1364723281",
+            "workshopid":"1364723281-dev",
             "desc":"desc.txt",
-            "version":"v0.0.4"
+            "version":"v0.0.5-devel"
         }
     ]
 }
