@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <file>
+    <filename>..\..\baked\mod\_api.lua</filename>
+  </file>
+  <file>
+    <filename>..\..\baked\mod\_api_editor_tunnelfix.lua</filename>
+  </file>
+  <file>
+    <filename>..\..\baked\mod\_api_replaceondeath.lua</filename>
+  </file>
+  <file>
+    <filename>..\..\baked\mod\_hook.lua</filename>
+  </file>
+  <file>
+    <filename>..\..\baked\mod\_printfix.lua</filename>
+  </file>
+  <file>
+    <filename>..\..\baked\mod\_requirefix.lua</filename>
+  </file>
+  <file>
+    <filename>..\..\baked\mod\_table_show.lua</filename>
+  </file>
+</project>
