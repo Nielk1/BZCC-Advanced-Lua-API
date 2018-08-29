@@ -1,8 +1,8 @@
 [submodule "baked"]
 	path = baked
 	url = https://github.com/Nielk1/BZCC-Advanced-Lua-API.git
-	branch = baked
+	branch = baked-dev
 [submodule "assets"]
 	path = assets
 	url = https://github.com/Nielk1/BZCC-Advanced-Lua-API.git
-	branch = assets
+	branch = assets-dev
