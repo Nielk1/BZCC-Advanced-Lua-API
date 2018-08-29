@@ -1,9 +1,9 @@
 # Battlezone: Combat Commander - Advanced Lua API
 
 ## Documentation
-[via htmlpreview.github.io](http://htmlpreview.github.io/?https://github.com/Nielk1/BZCC-Advanced-Lua-API/blob/master/doc/index.html)
+[via htmlpreview.github.io](http://htmlpreview.github.io/?https://github.com/Nielk1/BZCC-Advanced-Lua-API/blob/assets/doc/index.html)
 or
-[via rawgit.com](https://cdn.rawgit.com/Nielk1/BZCC-Advanced-Lua-API/03360977/doc/index.html)
+[via rawgit.com](https://cdn.rawgit.com/Nielk1/BZCC-Advanced-Lua-API/assets/doc/index.html)
 
 ## Examples
 
