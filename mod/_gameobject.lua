@@ -15,11 +15,11 @@ local _api = require("_api");
 -- Utility Functions
 --==============================================================================================================================================================
 
---- Is this object a function?
+--- Is this object an instance of GameObject?
 -- @param object Object in question
 -- @return bool
-function isfunction(object)
-  return (type(object) == "function");
+function isgameobject(object)
+  return (type(object) == "table" and object.__type == "GameObject");
 end
 
 --==============================================================================================================================================================
