@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/_api.html">_api</a></li>
+  <li><a href="../modules/_api_replaceondeath.html">_api_replaceondeath</a></li>
+  <li><strong>_fsm</strong></li>
+  <li><a href="../modules/_gameobject.html">_gameobject</a></li>
+  <li><a href="../modules/_hook.html">_hook</a></li>
+  <li><a href="../modules/_printfix.html">_printfix</a></li>
+  <li><a href="../modules/_requirefix.html">_requirefix</a></li>
+  <li><a href="../modules/_table_show.html">_table_show</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>_fsm</code></h1>
+<p>BZCC LUA Extended API FSM.</p>
+<p>
+
+ Finite-state machine tuned for BZCC's serialization.
+ </p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: John "Nielk1" Klein</li>
+    </ul>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#isfsm">isfsm (object)</a></td>
+	<td class="summary">Is this object an instance of FSM?</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.run">FSM.run (self)</a></td>
+	<td class="summary">Run FSM.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.next">FSM.next (self)</a></td>
+	<td class="summary">Next FSM State.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.Save">FSM.Save (self)</a></td>
+	<td class="summary">Save event function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.Load">FSM.Load (id)</a></td>
+	<td class="summary">Load event function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.BulkSave">FSM.BulkSave ()</a></td>
+	<td class="summary">BulkSave event function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.BulkLoad">FSM.BulkLoad (data)</a></td>
+	<td class="summary">BulkLoad event function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#FSM.BulkPostLoad">FSM.BulkPostLoad ()</a></td>
+	<td class="summary">BulkPostLoad event function.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "isfsm"></a>
+    <strong>isfsm (object)</strong>
+    </dt>
+    <dd>
+    Is this object an instance of FSM?
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">object</span>
+         Object in question
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        bool
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.run"></a>
+    <strong>FSM.run (self)</strong>
+    </dt>
+    <dd>
+    Run FSM.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+         GameObject instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.next"></a>
+    <strong>FSM.next (self)</strong>
+    </dt>
+    <dd>
+    Next FSM State.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+         GameObject instance
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.Save"></a>
+    <strong>FSM.Save (self)</strong>
+    </dt>
+    <dd>
+    Save event function.
+ INTERNAL USE.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">self</span>
+         FSM instance
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        ...
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.Load"></a>
+    <strong>FSM.Load (id)</strong>
+    </dt>
+    <dd>
+    Load event function.
+ INTERNAL USE.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">id</span>
+         Handle
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.BulkSave"></a>
+    <strong>FSM.BulkSave ()</strong>
+    </dt>
+    <dd>
+    BulkSave event function.
+ INTERNAL USE.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+        ...
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.BulkLoad"></a>
+    <strong>FSM.BulkLoad (data)</strong>
+    </dt>
+    <dd>
+    BulkLoad event function.
+ INTERNAL USE.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "FSM.BulkPostLoad"></a>
+    <strong>FSM.BulkPostLoad ()</strong>
+    </dt>
+    <dd>
+    BulkPostLoad event function.
+ INTERNAL USE.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2018-12-04 03:21:22 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
