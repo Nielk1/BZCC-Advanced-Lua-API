@@ -5,7 +5,7 @@
 -- @module _hook
 -- @author John "Nielk1" Klein
 
-debugprint = debugprint or function() end;
+local debugprint = debugprint or function() end;
 
 debugprint("_hook Loading");
 
