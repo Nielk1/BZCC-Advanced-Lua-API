@@ -1,38 +1,38 @@
---- BZCC LUA Extended API FSM.
+--- BZCC LUA Extended API FuncArrayIter.
 -- 
--- Finite-state machine tuned for BZCC's serialization.
+-- Function Array and Function Array Iterator for serial event sequences across game turns.
 -- 
--- @module _fsm
+-- @module _funcarray
 -- @author John "Nielk1" Klein
 
 local debugprint = debugprint or function() end;
 
-debugprint("_fsm Loading");
+debugprint("_funcarray Loading");
 
 local _api = require("_api");
 
-local _fsm = {};
+local _funcarray = {};
 
-_fsm.Machines = {};
+_funcarray.Machines = {};
 
---- Is this object an instance of FSM?
+--- Is this object an instance of FuncArrayIter?
 -- @param object Object in question
 -- @return bool
-function isfsm(object)
-  return (type(object) == "table" and object.__type == "FSM");
+function isfuncarrayiter(object)
+  return (type(object) == "table" and object.__type == "FuncArrayIter");
 end
 
---- FSM.
--- An object containing all functions and data related to an FSM.
-local FSM = {}; -- the table representing the class, which will double as the metatable for the instances
+--- FuncArrayIter.
+-- An object containing all functions and data related to an FuncArrayIter.
+local FuncArrayIter = {}; -- the table representing the class, which will double as the metatable for the instances
 --GameObject.__index = GameObject; -- failed table lookups on the instances should fallback to the class table, to get methods
-FSM.__index = function(table, key)
+FuncArrayIter.__index = function(table, key)
   local retVal = rawget(table, key);
   if retVal ~= nil then return retVal; end
   if rawget(table, "addonData") ~= nil and rawget(rawget(table, "addonData"), key) ~= nil then return rawget(rawget(table, "addonData"), key); end
-  return rawget(FSM, key); -- if you fail to get it from the subdata, move on to base (looking for functions)
+  return rawget(FuncArrayIter, key); -- if you fail to get it from the subdata, move on to base (looking for functions)
 end
-FSM.__newindex = function(table, key, value)
+FuncArrayIter.__newindex = function(table, key, value)
   if key ~= "template" and key ~= "state_index" and key ~= "timer" and key ~= "addonData" then
     local addonData = rawget(table, "addonData");
     if addonData == nil then
@@ -44,14 +44,34 @@ FSM.__newindex = function(table, key, value)
     rawset(table, key, value);
   end
 end
-FSM.__type = "FSM";
+FuncArrayIter.__type = "FuncArrayIter";
 
---- Run FSM.
+--- Create FuncArrayIter
+-- @param name FuncArrayIter template (string)
+-- @param timer Timer's value, -1 for not set (int)
+-- @param state_index Current state (int)
+-- @param values Table of values embeded in the FuncArrayIter
+local CreateFuncArrayIter = function(name, timer, state_index, values)
+  local self = setmetatable({}, FuncArrayIter);
+  self.template = name;
+  self.timer = timer;
+  self.state_index = state_index;
+  
+  if istable(values) then
+    for k, v in pairs( values ) do 
+      self[k] = v;
+    end
+  end
+  
+  return self;
+end
+
+--- Run FuncArrayIter.
 -- @param self GameObject instance
-function FSM.run(self)
-    if not isfsm(self) then error("Paramater self must be FSM instance."); end
+function FuncArrayIter.run(self)
+    if not isfuncarrayiter(self) then error("Paramater self must be FuncArrayIter instance."); end
     
-    local machine = _fsm.Machines[self.template];
+    local machine = _funcarray.Machines[self.template];
     if machine == nil then return false; end
     if #machine < self.state_index then return false; end
     
@@ -66,46 +86,40 @@ function FSM.run(self)
     return false;
 end
 
---- Next FSM State.
+--- Next FuncArrayIter State.
 -- @param self GameObject instance
-function FSM.next(self)
+function FuncArrayIter.next(self)
     self.state_index = self.state_index + 1;
 end
 
--- Creates an FSM Template with the given indentifier.
--- @param name Name of the FSM Template (string)
+-- Creates an FuncArrayIter Template with the given indentifier.
+-- @param name Name of the FuncArrayIter Template (string)
 -- @param ... State functions
-function _fsm.Create( name, ... )
+function _funcarray.Create( name, ... )
     if not isstring(name) then error("Paramater name must be a string."); end
     
-    if (_fsm.Machines[ name ] == nil) then
-        _fsm.Machines[ name ] = {};
+    if (_funcarray.Machines[ name ] == nil) then
+        _funcarray.Machines[ name ] = {};
     end
     
-    _fsm.Machines[ name ] = { ... };
+    _funcarray.Machines[ name ] = { ... };
 end
 
--- Starts an FSM based on the FSM Template with the given indentifier.
--- @param event Name of the FSM Template (string)
+-- Starts an FuncArrayIter based on the FuncArrayIter Template with the given indentifier.
+-- @param event Name of the FuncArrayIter Template (string)
 -- @param init Initial data (table)
-function _fsm.Start( name, init )
+function _funcarray.Start( name, init )
     if not isstring(name) then error("Paramater name must be a string."); end
     if init ~= nil and not istable(init) then error("Paramater init must be table or nil."); end
-    if (_fsm.Machines[ name ] == nil) then error('FSM Template "' .. name .. '" not found.'); end
+    if (_funcarray.Machines[ name ] == nil) then error('FuncArrayIter Template "' .. name .. '" not found.'); end
 
-    local self = setmetatable({}, FSM);
-    self.template = name;
-    self.timer = -1;
-    self.state_index = 1;
-    return self;
-    
-    -- TODO: Copy init values into self
+    return CreateFuncArrayIter(name, -1, 1, init);
 end
 
 -- Wait a set period of time on this state.
--- @param state FSM data (FSM)
+-- @param state FuncArrayIter data (FuncArrayIter)
 -- @param seconds How many seconds to wait (int)
-function _fsm.SleepSeconds( seconds )
+function _funcarray.SleepSeconds( seconds )
     if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
 
     return {(function(state, ...)
@@ -121,70 +135,47 @@ function _fsm.SleepSeconds( seconds )
     end), {seconds}};
 end
 
---[[
-function _fsm.SleepSeconds( seconds )
-    if not isinteger(name) then error("Paramater name must be an integer."); end
-
-    return (function(state)
-        if state.timer == -1 then
-            state.timer = seconds * GetTPS();
-        elseif state.timer == 0 then
-            state:next();
-            state.timer = -1;
-        else
-            state.timer = state.timer - 1;
-        end
-    end);
-end
---]]
-
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
--- FSM - Core
+-- FuncArrayIter - Core
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 --- Save event function.
 -- INTERNAL USE.
--- @param self FSM instance
+-- @param self FuncArrayIter instance
 -- @return ...
-function FSM.Save(self)
+function FuncArrayIter.Save(self)
     return self;
 end
 
 --- Load event function.
 -- INTERNAL USE.
 -- @param id Handle
-function FSM.Load(data)
-    local self = setmetatable({}, FSM);
-    self.template = data.template;
-    self.timer =  data.timer;
-    self.state_index =  data.state_index;
-    return self;
-    
-    -- TODO: Copy other values into self
+function FuncArrayIter.Load(data)
+    return CreateFuncArrayIter(data.template, data.timer, data.state_index, data.addonData);
 end
 
 --- BulkSave event function.
 -- INTERNAL USE.
--- @return ...
-function FSM.BulkSave()
+-- @return data to save in bulk
+function FuncArrayIter.BulkSave()
     return;
 end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
 -- @params data
-function FSM.BulkLoad(data)
+function FuncArrayIter.BulkLoad(data)
 
 end
 
 --- BulkPostLoad event function.
 -- INTERNAL USE.
-function FSM.BulkPostLoad()
+function FuncArrayIter.BulkPostLoad()
 
 end
 
-_api.RegisterCustomSavableType(FSM);
+_api.RegisterCustomSavableType(FuncArrayIter);
 
-debugprint("_fsm Loaded");
+debugprint("_funcarray Loaded");
 
-return _fsm;
+return _funcarray;

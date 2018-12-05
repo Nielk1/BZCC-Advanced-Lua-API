@@ -102,6 +102,7 @@ PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW = 1;
 
 local CustomSavableTypes = {};
 local CustomTypeMap = nil; -- maps name to ID number
+local gameTurn = 0;
 
 local _api = {};
 
@@ -197,43 +198,43 @@ function Save()
     debugprint("_api::Save()");
     CustomTypeMap = {};
 
---    debugprint("Beginning save code");
+    debugprint("Beginning save code");
 
     local saveData = {};
---    debugprint("Save Data Container ready");
+    debugprint("Save Data Container ready");
 
     saveData.gameTurn = gameTurn;
 
---    debugprint("Saving custom types map");
+    debugprint("Saving custom types map");
     local CustomSavableTypesCounter = 1;
     local CustomSavableTypeTmpTable = {};
     for k,v in pairs(CustomSavableTypes) do
         CustomSavableTypeTmpTable[CustomSavableTypesCounter] = k;
         CustomTypeMap[k] = CustomSavableTypesCounter;
---        debugprint("[" .. CustomSavableTypesCounter .. "] = " .. k);
+        debugprint("[" .. CustomSavableTypesCounter .. "] = " .. k);
         CustomSavableTypesCounter = CustomSavableTypesCounter + 1;
     end
     saveData.CustomSavableTypes = CustomSavableTypeTmpTable; -- Write TmpID -> Name map
---    debugprint("Saved custom types map");
+    debugprint("Saved custom types map");
     
---    debugprint("Saving custom types");
+    debugprint("Saving custom types");
     local CustomSavableTypeDataTmpTable = {};
     for idNum,name in ipairs(CustomSavableTypeTmpTable) do
         local entry = CustomSavableTypes[name];
         if entry.BulkSave ~= nil and isfunction(entry.BulkSave) then
---            debugprint("Saved " .. entry.TypeName);
+            debugprint("Saved " .. entry.TypeName);
             CustomSavableTypeDataTmpTable[idNum] = {SimplifyForSave(entry.BulkSave())};
         else
---            debugprint("Saved " .. entry.TypeName .. " (nothing to save)");
+            debugprint("Saved " .. entry.TypeName .. " (nothing to save)");
             CustomSavableTypeDataTmpTable[idNum] = {};
         end
     end
     saveData.CustomSavableTypeData = CustomSavableTypeDataTmpTable; -- Write TmpID -> Data map
     CustomSavableTypeDataTmpTable = nil;
     CustomSavableTypeTmpTable = nil;
---    debugprint("Saved custom types");
+    debugprint("Saved custom types");
     
---    debugprint("Calling all hooked save functions");
+    debugprint("Calling all hooked save functions");
     table.insert(saveData,saveData.Hooks)
     local hookResults = hook.CallSave();
     if hookResults ~= nil then
@@ -241,13 +242,6 @@ function Save()
     else
       saveData.HooksData = {};
     end
-    
---    debugprint("Unpacking and returning Save Data Container");
-    
---    str = table.show(saveData);
---    for s in str:gmatch("[^\r\n]+") do
---        debugprint(s);
---    end
     
     debugprint(table.show(saveData));
     
@@ -268,7 +262,6 @@ function Load(...)
 --    debugprint("Beginning load code");
     
     gameTurn = args.gameTurn;
-    -- TODO: gameTurn either isn't saving or loading right, it's back to 0 on test after loading
 
 --    debugprint("Loading custom types map");
     CustomTypeMap = args.CustomSavableTypes
@@ -345,7 +338,6 @@ function DeleteObject(h)
     if GameObjectAltered[object:GetHandle()] ~= nil then GameObjectAltered[object:GetHandle()] = nil; end
 end
 
-local gameTurn = 0;
 --- Called once per tick after updating the network system and before simulating game objects.
 -- This function performs most of the mission script's game logic.
 function Update()
