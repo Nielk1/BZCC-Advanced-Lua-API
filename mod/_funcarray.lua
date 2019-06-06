@@ -25,6 +25,10 @@
 -- hook.Add("InitialSetup", "Custom_InitialSetup", function(turn)
 --     MissionData.TestFAI = funcarray.Start("TestMachine",{test='a',test2="b"});
 -- end);
+-- 
+-- hook.Add("Update", "Custom_Update", function(turn)
+--     MissionData.TestFAI:run();
+-- end);
 
 local debugprint = debugprint or function() end;
 

@@ -27,15 +27,10 @@
 -- hook.Add("InitialSetup", "Custom_InitialSetup", function(turn)
 --     MissionData.TestSMI = statemachine.Start("TestMachine2","state_a",{test='c',test2="d"});
 -- end);
-
-hook.Add("Update", "Custom_Update", function(turn)
-    if turn % 100 == 0 then
-        print(turn);
-    end
-    
-    MissionData.TestFAI:run();
-    MissionData.TestSMI:run();
-end);
+-- 
+-- hook.Add("Update", "Custom_Update", function(turn)
+--     MissionData.TestSMI:run();
+-- end);
 
 local debugprint = debugprint or function() end;
 
