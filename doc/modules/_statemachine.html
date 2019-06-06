@@ -33,7 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Functions">Functions</a></li>
-<li><a href="#FuncArrayIter___Core">FuncArrayIter - Core </a></li>
+<li><a href="#StateMachineIter___Core">StateMachineIter - Core </a></li>
 </ul>
 
 
@@ -41,8 +41,8 @@
 <ul class="nowrap">
   <li><a href="../modules/_api.html">_api</a></li>
   <li><a href="../modules/_api_replaceondeath.html">_api_replaceondeath</a></li>
-  <li><strong>_funcarray</strong></li>
-  <li><a href="../modules/_statemachine.html">_statemachine</a></li>
+  <li><a href="../modules/_funcarray.html">_funcarray</a></li>
+  <li><strong>_statemachine</strong></li>
   <li><a href="../modules/_gameobject.html">_gameobject</a></li>
   <li><a href="../modules/_hook.html">_hook</a></li>
   <li><a href="../modules/_printfix.html">_printfix</a></li>
@@ -54,34 +54,36 @@
 
 <div id="content">
 
-<h1>Module <code>_funcarray</code></h1>
-<p>BZCC LUA Extended API FuncArrayIter.</p>
+<h1>Module <code>_statemachine</code></h1>
+<p>BZCC LUA Extended API StateMachineIter.</p>
 <p>
 
- Function Array and Function Array Iterator for serial event sequences across game turns.
+ State Machine and State Machine Iterator for serial event sequences across game turns.
  </p>
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">local funcarray = require(&quot;_funcarray&quot;);
+        <pre class="example">local statemachine = require(&quot;_statemachine&quot;);
 
-funcarray.Create(&quot;TestMachine&quot;,
-    function(state)
-        print(&quot;test A&quot;);
-        state:next();
-    end,
-    funcarray.SleepSeconds(10),
-    function(state)
-        print(&quot;test B&quot;);
-        state:next();
-    end,
-    funcarray.SleepSeconds(15),
-    function(state)
-        print(&quot;test C&quot;);
-        state:next();
-    end);
+statemachine.Create(&quot;TestMachine2&quot;,
+    {
+        [&quot;state_a&quot;] = function(state)
+            print(&quot;test D&quot;);
+            state:switch(&quot;state_b&quot;);
+        end,
+        [&quot;state_b&quot;] = statemachine.SleepSeconds(10,&quot;state_c&quot;),
+        [&quot;state_c&quot;] = function(state)
+            print(&quot;test E&quot;);
+            state:switch(&quot;state_d&quot;);
+        end,
+        [&quot;state_d&quot;] = statemachine.SleepSeconds(15,&quot;state_e&quot;),
+        [&quot;state_e&quot;] = function(state)
+            print(&quot;test F&quot;);
+            state:switch(&quot;state_f&quot;);
+        end
+    });
 
 hook.Add(&quot;InitialSetup&quot;, &quot;Custom_InitialSetup&quot;, function(turn)
-    MissionData.TestFAI = funcarray.Start(&quot;TestMachine&quot;,{test=&apos;a&apos;,test2=&quot;b&quot;});
+    MissionData.TestSMI = statemachine.Start(&quot;TestMachine2&quot;,&quot;state_a&quot;,{test=&apos;c&apos;,test2=&quot;d&quot;});
 end);
 </pre>
     </ul>
@@ -94,38 +96,38 @@ end);
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#isfuncarrayiter">isfuncarrayiter (object)</a></td>
-	<td class="summary">Is this object an instance of FuncArrayIter?</td>
+	<td class="name" nowrap><a href="#isstatemachineiter">isstatemachineiter (object)</a></td>
+	<td class="summary">Is this object an instance of StateMachineIter?</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.run">FuncArrayIter.run (self)</a></td>
-	<td class="summary">Run FuncArrayIter.</td>
+	<td class="name" nowrap><a href="#StateMachineIter.run">StateMachineIter.run (self)</a></td>
+	<td class="summary">Run StateMachineIter.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.next">FuncArrayIter.next (self)</a></td>
-	<td class="summary">Next FuncArrayIter State.</td>
+	<td class="name" nowrap><a href="#StateMachineIter.switch">StateMachineIter.switch (self)</a></td>
+	<td class="summary">Switch StateMachineIter State.</td>
 	</tr>
 </table>
-<h2><a href="#FuncArrayIter___Core">FuncArrayIter - Core </a></h2>
+<h2><a href="#StateMachineIter___Core">StateMachineIter - Core </a></h2>
 <table class="function_list">
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.Save">FuncArrayIter.Save (self)</a></td>
+	<td class="name" nowrap><a href="#StateMachineIter.Save">StateMachineIter.Save (self)</a></td>
 	<td class="summary">Save event function.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.Load">FuncArrayIter.Load (id)</a></td>
+	<td class="name" nowrap><a href="#StateMachineIter.Load">StateMachineIter.Load (id)</a></td>
 	<td class="summary">Load event function.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.BulkSave">FuncArrayIter.BulkSave ()</a></td>
+	<td class="name" nowrap><a href="#StateMachineIter.BulkSave">StateMachineIter.BulkSave ()</a></td>
 	<td class="summary">BulkSave event function.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.BulkLoad">FuncArrayIter.BulkLoad (data)</a></td>
+	<td class="name" nowrap><a href="#StateMachineIter.BulkLoad">StateMachineIter.BulkLoad (data)</a></td>
 	<td class="summary">BulkLoad event function.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#FuncArrayIter.BulkPostLoad">FuncArrayIter.BulkPostLoad ()</a></td>
+	<td class="name" nowrap><a href="#StateMachineIter.BulkPostLoad">StateMachineIter.BulkPostLoad ()</a></td>
 	<td class="summary">BulkPostLoad event function.</td>
 	</tr>
 </table>
@@ -138,11 +140,11 @@ end);
 
     <dl class="function">
     <dt>
-    <a name = "isfuncarrayiter"></a>
-    <strong>isfuncarrayiter (object)</strong>
+    <a name = "isstatemachineiter"></a>
+    <strong>isstatemachineiter (object)</strong>
     </dt>
     <dd>
-    Is this object an instance of FuncArrayIter?
+    Is this object an instance of StateMachineIter?
 
 
     <h3>Parameters:</h3>
@@ -163,11 +165,11 @@ end);
 
 </dd>
     <dt>
-    <a name = "FuncArrayIter.run"></a>
-    <strong>FuncArrayIter.run (self)</strong>
+    <a name = "StateMachineIter.run"></a>
+    <strong>StateMachineIter.run (self)</strong>
     </dt>
     <dd>
-    Run FuncArrayIter.
+    Run StateMachineIter.
 
 
     <h3>Parameters:</h3>
@@ -183,11 +185,11 @@ end);
 
 </dd>
     <dt>
-    <a name = "FuncArrayIter.next"></a>
-    <strong>FuncArrayIter.next (self)</strong>
+    <a name = "StateMachineIter.switch"></a>
+    <strong>StateMachineIter.switch (self)</strong>
     </dt>
     <dd>
-    Next FuncArrayIter State.
+    Switch StateMachineIter State.
 
 
     <h3>Parameters:</h3>
@@ -203,12 +205,12 @@ end);
 
 </dd>
 </dl>
-    <h2 class="section-header "><a name="FuncArrayIter___Core"></a>FuncArrayIter - Core </h2>
+    <h2 class="section-header "><a name="StateMachineIter___Core"></a>StateMachineIter - Core </h2>
 
     <dl class="function">
     <dt>
-    <a name = "FuncArrayIter.Save"></a>
-    <strong>FuncArrayIter.Save (self)</strong>
+    <a name = "StateMachineIter.Save"></a>
+    <strong>StateMachineIter.Save (self)</strong>
     </dt>
     <dd>
     Save event function.
@@ -218,7 +220,7 @@ end);
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
-         FuncArrayIter instance
+         StateMachineIter instance
         </li>
     </ul>
 
@@ -233,8 +235,8 @@ end);
 
 </dd>
     <dt>
-    <a name = "FuncArrayIter.Load"></a>
-    <strong>FuncArrayIter.Load (id)</strong>
+    <a name = "StateMachineIter.Load"></a>
+    <strong>StateMachineIter.Load (id)</strong>
     </dt>
     <dd>
     Load event function.
@@ -254,8 +256,8 @@ end);
 
 </dd>
     <dt>
-    <a name = "FuncArrayIter.BulkSave"></a>
-    <strong>FuncArrayIter.BulkSave ()</strong>
+    <a name = "StateMachineIter.BulkSave"></a>
+    <strong>StateMachineIter.BulkSave ()</strong>
     </dt>
     <dd>
     BulkSave event function.
@@ -274,8 +276,8 @@ end);
 
 </dd>
     <dt>
-    <a name = "FuncArrayIter.BulkLoad"></a>
-    <strong>FuncArrayIter.BulkLoad (data)</strong>
+    <a name = "StateMachineIter.BulkLoad"></a>
+    <strong>StateMachineIter.BulkLoad (data)</strong>
     </dt>
     <dd>
     BulkLoad event function.
@@ -295,8 +297,8 @@ end);
 
 </dd>
     <dt>
-    <a name = "FuncArrayIter.BulkPostLoad"></a>
-    <strong>FuncArrayIter.BulkPostLoad ()</strong>
+    <a name = "StateMachineIter.BulkPostLoad"></a>
+    <strong>StateMachineIter.BulkPostLoad ()</strong>
     </dt>
     <dd>
     BulkPostLoad event function.

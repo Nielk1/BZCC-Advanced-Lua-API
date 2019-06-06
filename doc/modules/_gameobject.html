@@ -34,6 +34,16 @@
 <ul>
 <li><a href="#Functions">Functions</a></li>
 <li><a href="#Tables">Tables</a></li>
+<li><a href="#Core">Core </a></li>
+<li><a href="#Object_Creation___Destruction">Object Creation / Destruction </a></li>
+<li><a href="#Groups">Groups </a></li>
+<li><a href="#Orders">Orders </a></li>
+<li><a href="#Position___Velocity">Position & Velocity </a></li>
+<li><a href="#Condition_Checks">Condition Checks </a></li>
+<li><a href="#Taps">Taps </a></li>
+<li><a href="#Animations">Animations </a></li>
+<li><a href="#Damage__Health__and_Ammo">Damage, Health, and Ammo </a></li>
+<li><a href="#Other">Other </a></li>
 </ul>
 
 
@@ -42,6 +52,7 @@
   <li><a href="../modules/_api.html">_api</a></li>
   <li><a href="../modules/_api_replaceondeath.html">_api_replaceondeath</a></li>
   <li><a href="../modules/_funcarray.html">_funcarray</a></li>
+  <li><a href="../modules/_statemachine.html">_statemachine</a></li>
   <li><strong>_gameobject</strong></li>
   <li><a href="../modules/_hook.html">_hook</a></li>
   <li><a href="../modules/_printfix.html">_printfix</a></li>
@@ -71,6 +82,16 @@
 	<td class="name" nowrap><a href="#isgameobject">isgameobject (object)</a></td>
 	<td class="summary">Is this object an instance of GameObject?</td>
 	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#GameObject">GameObject</a></td>
+	<td class="summary">GameObject.</td>
+	</tr>
+</table>
+<h2><a href="#Core">Core </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.FromHandle">GameObject.FromHandle (handle)</a></td>
 	<td class="summary">Create new GameObject Intance.</td>
@@ -99,6 +120,9 @@
 	<td class="name" nowrap><a href="#GameObject.BulkPostLoad">GameObject.BulkPostLoad ()</a></td>
 	<td class="summary">BulkPostLoad event function.</td>
 	</tr>
+</table>
+<h2><a href="#Object_Creation___Destruction">Object Creation / Destruction </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#BuildGameObject">BuildGameObject (odf, team, pos)</a></td>
 	<td class="summary">Build Object.</td>
@@ -115,10 +139,16 @@
 	<td class="name" nowrap><a href="#GetGameObject">GetGameObject (key)</a></td>
 	<td class="summary">Get GameObject by seqNo or Label.</td>
 	</tr>
+</table>
+<h2><a href="#Groups">Groups </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.SetGroup">GameObject.SetGroup (self, group)</a></td>
 	<td class="summary">Set group of GameObject in interface.</td>
 	</tr>
+</table>
+<h2><a href="#Orders">Orders </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.Attack">GameObject.Attack (self, target, priority)</a></td>
 	<td class="summary">Order GameObject to Attack target GameObject.</td>
@@ -183,6 +213,9 @@
 	<td class="name" nowrap><a href="#GameObject.AllLookAtMe">GameObject.AllLookAtMe (self, team, priority)</a></td>
 	<td class="summary">Order entire team to look at GameObject.</td>
 	</tr>
+</table>
+<h2><a href="#Position___Velocity">Position & Velocity </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.GetPosition">GameObject.GetPosition (self)</a></td>
 	<td class="summary">Get object's position vector.</td>
@@ -231,6 +264,9 @@
 	<td class="name" nowrap><a href="#GameObject.SetOmega">GameObject.SetOmega (self, omega)</a></td>
 	<td class="summary">Set the omega of the GameObject.</td>
 	</tr>
+</table>
+<h2><a href="#Condition_Checks">Condition Checks </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.IsAlive">GameObject.IsAlive (self)</a></td>
 	<td class="summary">Is the GameObject alive and is still pilot controlled?</td>
@@ -303,6 +339,9 @@
 	<td class="name" nowrap><a href="#GameObject.IsPlayer">GameObject.IsPlayer (self)</a></td>
 	<td class="summary">Checks if the GameObject is a local or remotely-controlled player.</td>
 	</tr>
+</table>
+<h2><a href="#Taps">Taps </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.GetTap">GameObject.GetTap (self, index)</a></td>
 	<td class="summary">Get the Tap gameobject at index</td>
@@ -311,6 +350,9 @@
 	<td class="name" nowrap><a href="#GameObject.SetTap">GameObject.SetTap (self, index, object)</a></td>
 	<td class="summary">Set an object as a tap of a GameObject</td>
 	</tr>
+</table>
+<h2><a href="#Animations">Animations </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.SetAnimation">GameObject.SetAnimation (self, name, animType)</a></td>
 	<td class="summary">SetAnimation GameObject animation</td>
@@ -323,6 +365,9 @@
 	<td class="name" nowrap><a href="#GameObject.StartAnimation">GameObject.StartAnimation (self, name)</a></td>
 	<td class="summary">Start the current animation of a GameObject</td>
 	</tr>
+</table>
+<h2><a href="#Damage__Health__and_Ammo">Damage, Health, and Ammo </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.Damage">GameObject.Damage (self, amt, damager)</a></td>
 	<td class="summary">Cause GameObject to take damage.</td>
@@ -375,6 +420,9 @@
 	<td class="name" nowrap><a href="#GameObject.SetPerceivedTeam">GameObject.SetPerceivedTeam (self, team)</a></td>
 	<td class="summary">Set perceived team number of the GameObject.</td>
 	</tr>
+</table>
+<h2><a href="#Other">Other </a></h2>
+<table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#GameObject.IsOdf">GameObject.IsOdf (self, odf)</a></td>
 	<td class="summary">Is the GameObject this odf?</td>
@@ -403,13 +451,6 @@
 	<td class="name" nowrap><a href="#GameObject.SetAsUser">GameObject.SetAsUser (self, team)</a></td>
 	<td class="summary">Set GameObject as the local or remote user
  This must be called after building a new craft on entry or respawn</td>
-	</tr>
-</table>
-<h2><a href="#Tables">Tables</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#GameObject">GameObject</a></td>
-	<td class="summary">GameObject.</td>
 	</tr>
 </table>
 
@@ -445,6 +486,29 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "GameObject"></a>
+    <strong>GameObject</strong>
+    </dt>
+    <dd>
+    GameObject.
+ An object containing all functions and data related to a game object.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Core"></a>Core </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.FromHandle"></a>
     <strong>GameObject.FromHandle (handle)</strong>
@@ -598,6 +662,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Object_Creation___Destruction"></a>Object Creation / Destruction </h2>
+
+    <dl class="function">
     <dt>
     <a name = "BuildGameObject"></a>
     <strong>BuildGameObject (odf, team, pos)</strong>
@@ -699,6 +767,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Groups"></a>Groups </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.SetGroup"></a>
     <strong>GameObject.SetGroup (self, group)</strong>
@@ -722,6 +794,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Orders"></a>Orders </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.Attack"></a>
     <strong>GameObject.Attack (self, target, priority)</strong>
@@ -1133,6 +1209,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Position___Velocity"></a>Position & Velocity </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.GetPosition"></a>
     <strong>GameObject.GetPosition (self)</strong>
@@ -1425,6 +1505,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Condition_Checks"></a>Condition Checks </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.IsAlive"></a>
     <strong>GameObject.IsAlive (self)</strong>
@@ -1886,6 +1970,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Taps"></a>Taps </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.GetTap"></a>
     <strong>GameObject.GetTap (self, index)</strong>
@@ -1940,6 +2028,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Animations"></a>Animations </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.SetAnimation"></a>
     <strong>GameObject.SetAnimation (self, name, animType)</strong>
@@ -2022,6 +2114,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Damage__Health__and_Ammo"></a>Damage, Health, and Ammo </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.Damage"></a>
     <strong>GameObject.Damage (self, amt, damager)</strong>
@@ -2342,6 +2438,10 @@
 
 
 </dd>
+</dl>
+    <h2 class="section-header "><a name="Other"></a>Other </h2>
+
+    <dl class="function">
     <dt>
     <a name = "GameObject.IsOdf"></a>
     <strong>GameObject.IsOdf (self, odf)</strong>
@@ -2515,32 +2615,13 @@
 
 </dd>
 </dl>
-    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "GameObject"></a>
-    <strong>GameObject</strong>
-    </dt>
-    <dd>
-    GameObject.
- An object containing all functions and data related to a game object.
-
-
-
-
-
-
-
-</dd>
-</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2018-12-04 21:56:13 </i>
+<i style="float:right;">Last updated 2019-06-05 21:47:02 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
