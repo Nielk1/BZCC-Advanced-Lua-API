@@ -4,6 +4,27 @@
 -- 
 -- @module _funcarray
 -- @author John "Nielk1" Klein
+-- @usage local funcarray = require("_funcarray");
+-- 
+-- funcarray.Create("TestMachine",
+--     function(state)
+--         print("test A");
+--         state:next();
+--     end,
+--     funcarray.SleepSeconds(10),
+--     function(state)
+--         print("test B");
+--         state:next();
+--     end,
+--     funcarray.SleepSeconds(15),
+--     function(state)
+--         print("test C");
+--         state:next();
+--     end);
+-- 
+-- hook.Add("InitialSetup", "Custom_InitialSetup", function(turn)
+--     MissionData.TestFAI = funcarray.Start("TestMachine",{test='a',test2="b"});
+-- end);
 
 local debugprint = debugprint or function() end;
 
@@ -138,6 +159,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- FuncArrayIter - Core
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- @section
 
 --- Save event function.
 -- INTERNAL USE.

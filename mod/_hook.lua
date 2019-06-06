@@ -33,6 +33,7 @@ end
 -- @param event Event to be hooked (string)
 -- @param identifier Identifier for this hook observer (string)
 -- @param func Function to be executed (function)
+-- @param priority Higher numbers are higher priority (number) (optional, default 0)
 function hook.Add( event, identifier, func, priority )
     if not isstring(event) then error("Paramater event must be a string."); end
     if not isstring(identifier) then error("Paramater identifier must be a string."); end
@@ -157,7 +158,7 @@ end
 --- Calls hooks associated with the hook name ignoring any return values.
 -- @param event Event to be hooked (string)
 -- @param ... Paramaters passed to every hooked function
--- @note this function must be rewritten to not be n*m and awful.
+-- @todo this function must be rewritten to not be n*m and awful.
 function hook.CallAllNoReturn( event, ... )
     local HookTable = hook.Hooks[ event ]
     if ( HookTable ~= nil ) then
@@ -189,7 +190,7 @@ end
 -- as the last paramater.  The second, if true, will stop the execution of hooks.
 -- @param event Event to be hooked (string)
 -- @param ... Paramaters passed to every hooked function
--- @note this function must be rewritten to not be n*m and awful.
+-- @todo this function must be rewritten to not be n*m and awful.
 function hook.CallAllPassReturn( event, ... )
     local HookTable = hook.Hooks[ event ]
     local lastreturn = nil;

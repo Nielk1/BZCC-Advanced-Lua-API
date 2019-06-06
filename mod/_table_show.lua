@@ -5,7 +5,7 @@
 -- (For Lua 5.1)
 --
 -- Modified slightly by RiciLake to avoid the unnecessary table traversal in tablecount().
--- 
+--
 -- Modified slightly by John "Nielk1" Klein for LDoc.
 --
 -- @author Julio Manuel Fernandez-Diaz
