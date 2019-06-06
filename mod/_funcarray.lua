@@ -88,7 +88,7 @@ local CreateFuncArrayIter = function(name, timer, state_index, values)
 end
 
 --- Run FuncArrayIter.
--- @param self GameObject instance
+-- @param self FuncArrayIter instance
 function FuncArrayIter.run(self)
     if not isfuncarrayiter(self) then error("Paramater self must be FuncArrayIter instance."); end
     
@@ -108,7 +108,7 @@ function FuncArrayIter.run(self)
 end
 
 --- Next FuncArrayIter State.
--- @param self GameObject instance
+-- @param self FuncArrayIter instance
 function FuncArrayIter.next(self)
     self.state_index = self.state_index + 1;
 end
@@ -171,7 +171,7 @@ end
 
 --- Load event function.
 -- INTERNAL USE.
--- @param id Handle
+-- @param data
 function FuncArrayIter.Load(data)
     return CreateFuncArrayIter(data.template, data.timer, data.state_index, data.addonData);
 end
@@ -185,7 +185,7 @@ end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
--- @params data
+-- @param data
 function FuncArrayIter.BulkLoad(data)
 
 end

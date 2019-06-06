@@ -99,7 +99,7 @@ local CreateStateMachineIter = function(name, timer, state_key, values)
 end
 
 --- Run StateMachineIter.
--- @param self GameObject instance
+-- @param self FuncArrayIter instance
 function StateMachineIter.run(self)
     if not isstatemachineiter(self) then error("Paramater self must be StateMachineIter instance."); end
     
@@ -118,7 +118,8 @@ function StateMachineIter.run(self)
 end
 
 --- Switch StateMachineIter State.
--- @param self GameObject instance
+-- @param self StateMachineIter instance
+-- @param key State to switch to
 function StateMachineIter.switch(self, key)
     self.state_key = key;
 end
@@ -184,7 +185,7 @@ end
 
 --- Load event function.
 -- INTERNAL USE.
--- @param id Handle
+-- @param data
 function StateMachineIter.Load(data)
     return CreateStateMachineIter(data.template, data.timer, data.state_key, data.addonData);
 end
@@ -198,7 +199,7 @@ end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
--- @params data
+-- @param data
 function StateMachineIter.BulkLoad(data)
 
 end

@@ -100,7 +100,7 @@ end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
--- @params data
+-- @param data
 function GameObject.BulkLoad(data)
   for k,v in pairs(data) do
     local newGameObject = GameObject.FromHandle(k);
@@ -696,7 +696,6 @@ end
 
 --- Start the current animation of a GameObject
 -- @param self GameObject instance
--- @param name Animation name
 function GameObject.StartAnimation(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return StartAnimation(self:GetHandle());
