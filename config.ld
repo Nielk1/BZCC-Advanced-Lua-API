@@ -1,5 +1,6 @@
 -- config.ld
 file = {
+'scriptutils.lua',
 '..\\baked\\mod\\_api.lua',
 '..\\baked\\mod\\_api_replaceondeath.lua',
 '..\\baked\\mod\\_funcarray.lua',
