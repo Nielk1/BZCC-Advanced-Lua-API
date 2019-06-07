@@ -10,6 +10,7 @@ local debugprint = debugprint or function() end;
 debugprint("_gameobject Loading");
 
 local _api = require("_api");
+local hook = require("_hook");
 
 --- Is this object an instance of GameObject?
 -- @param object Object in question
@@ -22,6 +23,9 @@ local GameObjectMetatable = {};
 GameObjectMetatable.__mode = "k";
 local GameObjectWeakList = setmetatable({}, GameObjectMetatable);
 local GameObjectAltered = {};
+local GameObjectDeadAlteredMetatable = {};
+GameObjectDeadAlteredMetatable.__mode = "k";
+local GameObjectDeadAltered = setmetatable({}, GameObjectDeadAlteredMetatable);
 
 --- GameObject.
 -- An object containing all functions and data related to a game object.
@@ -33,17 +37,30 @@ GameObject.__index = function(table, key)
   if rawget(table, "addonData") ~= nil and rawget(rawget(table, "addonData"), key) ~= nil then return rawget(rawget(table, "addonData"), key); end
   return rawget(GameObject, key); -- if you fail to get it from the subdata, move on to base (looking for functions)
 end
-GameObject.__newindex = function(table, key, value)
-  if key ~= "id" and key ~= "addonData" then
-    local addonData = rawget(table, "addonData");
+GameObject.__newindex = function(dtable, key, value)
+  if key == "addonData" then
+    rawset(dtable, "addonData", value);
+    local objectId = dtable:GetHandle();--string.sub(tostring(table:GetHandle()),4);
+    if isstring(objectId) then
+        GameObjectDeadAltered[objectId] = dtable;
+    else
+        GameObjectAltered[objectId] = dtable;
+    end
+  elseif key ~= "id" and key ~= "addonData" then
+    local addonData = rawget(dtable, "addonData");
     if addonData == nil then
-      rawset(table, "addonData", {});
-      addonData = rawget(table, "addonData");
+      rawset(dtable, "addonData", {});
+      addonData = rawget(dtable, "addonData");
     end
     rawset(addonData, key, value);
-    GameObjectAltered[table:GetHandle()] = table;
+    local objectId = dtable:GetHandle();--string.sub(tostring(table:GetHandle()),4);
+    if isstring(objectId) then
+        GameObjectDeadAltered[objectId] = dtable;
+    else
+        GameObjectAltered[objectId] = dtable;
+    end
   else
-    rawset(table, key, value);
+    rawset(dtable, key, value);
   end
 end
 GameObject.__type = "GameObject";
@@ -57,11 +74,13 @@ GameObject.__type = "GameObject";
 -- @param handle Handle from BZCC
 -- @return GameObject
 function GameObject.FromHandle(handle)
-    local stringId = tostring(handle);
-    if GameObjectWeakList[stringId] ~= nil then return GameObjectWeakList[stringId]; end
+    local objectId = handle;--string.sub(tostring(handle),4);
+    if GameObjectWeakList[objectId] ~= nil then
+        return GameObjectWeakList[objectId];
+    end
     local self = setmetatable({}, GameObject);
     self.id = handle;
-    GameObjectWeakList[stringId] = self;
+    GameObjectWeakList[objectId] = self;
     return self;
 end
 
@@ -93,19 +112,28 @@ end
 function GameObject.BulkSave()
     local returnData = {};
     for k,v in pairs(GameObjectAltered) do
-        returnData[v.id] = v.addonData;
+        returnData[k] = v.addonData;
     end
-    return returnData;
+    local returnDataDead = {};
+    for k,v in pairs(GameObjectDeadAltered) do
+        returnDataDead[k] = v.addonData;
+    end
+    return returnData,returnDataDead;
 end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
--- @param data
-function GameObject.BulkLoad(data)
-  for k,v in pairs(data) do
-    local newGameObject = GameObject.FromHandle(k);
-    newGameObject.addonData = v;
-  end
+-- @param data Object data
+-- @param dataDead Dead object data
+function GameObject.BulkLoad(data,dataDead)
+    for k,v in pairs(data) do
+        local newGameObject = GameObject.FromHandle(k);
+        newGameObject.addonData = v;
+    end
+    for k,v in pairs(dataDead) do
+        local newGameObject = GameObject.FromHandle(k);
+        newGameObject.addonData = v;
+    end
 end
 
 --- BulkPostLoad event function.
@@ -933,7 +961,18 @@ function GameObject.SetAsUser(self, team)
     SetAsUser(self:GetHandle(), team);
 end
 
-
+hook.Add("DeleteObject", "GameObject_DeleteObject", function(object)
+    local objectId = object:GetHandle();--string.sub(tostring(object:GetHandle()),4);
+    debugprint('Decaying object ' .. tostring(objectId));
+    object.id = tostring(objectId) .. "_dead";
+    GameObjectWeakList[object.id] = object; -- shift tracking key to new id
+    GameObjectDeadAltered[object.id] = object; -- move data tracking to a weak table for saving
+    GameObjectWeakList[objectId] = nil; -- clear old tracking key
+    GameObjectAltered[objectId] = nil; -- clear hard reference for data we might have
+    --print(table.show(GameObjectWeakList,"GameObjectWeakList"));
+    --print(table.show(GameObjectAltered,"GameObjectAltered"));
+    --print(table.show(GameObjectDeadAltered,"GameObjectDeadAltered"));
+end, -9999);
 
 _api.RegisterCustomSavableType(GameObject);
 

@@ -335,7 +335,6 @@ end
 function DeleteObject(h)
     local object = GameObject.FromHandle(h);
     hook.CallAllNoReturn( "DeleteObject", object );
-    if GameObjectAltered[object:GetHandle()] ~= nil then GameObjectAltered[object:GetHandle()] = nil; end
 end
 
 --- Called once per tick after updating the network system and before simulating game objects.
@@ -448,5 +447,13 @@ function SetRandomSeed ( seed )
 end
 
 debugprint("_api Loaded");
+
+print("LuaMission " .. (LuaMissionVersion or 185) .. " detected");
+if LuaMissionFeatures ~= nil and next(LuaMissionFeatures) ~= nil then
+    print("LuaMission Features:");
+    for name,ver in ipairs(LuaMissionFeatures) do
+        print("  " .. name .. " = " .. ver);
+    end
+end
 
 return _api;
