@@ -544,7 +544,11 @@ end
 -- @return bool
 function GameObject.IsAround(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
-    return IsAround(self:GetHandle());
+    local objectId = self:GetHandle();
+    if isstring(objectId) then
+        return false;
+    end
+    return IsAround(objectId);
 end
 
 --- Returns true if it's a Craft, but NOT a person.
