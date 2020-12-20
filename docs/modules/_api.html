@@ -32,9 +32,9 @@
 
 <h2>Contents</h2>
 <ul>
-<li><a href="#Functions">Functions</a></li>
-<li><a href="#Tables">Tables</a></li>
-<li><a href="#Fields">Fields</a></li>
+<li><a href="#Utility_Functions">Utility Functions </a></li>
+<li><a href="#Enums">Enums </a></li>
+<li><a href="#Hooks">Hooks </a></li>
 </ul>
 
 
@@ -68,7 +68,7 @@
     </ul>
 
 
-<h2><a href="#Functions">Functions</a></h2>
+<h2><a href="#Utility_Functions">Utility Functions </a></h2>
 <table class="function_list">
 	<tr>
 	<td class="name" nowrap><a href="#isfunction">isfunction (object)</a></td>
@@ -93,6 +93,76 @@
 	<tr>
 	<td class="name" nowrap><a href="#isinteger">isinteger (object)</a></td>
 	<td class="summary">Is this object an integer?</td>
+	</tr>
+</table>
+<h2><a href="#Enums">Enums </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#EjectKillRetCodes.DoEjectPilot">EjectKillRetCodes.DoEjectPilot</a></td>
+	<td class="summary">Do 'standard' eject</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EjectKillRetCodes.DoRespawnSafest">EjectKillRetCodes.DoRespawnSafest</a></td>
+	<td class="summary">Respawn a 'PLAYER' at safest spawnpoint</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EjectKillRetCodes.DLLHandled">EjectKillRetCodes.DLLHandled</a></td>
+	<td class="summary">DLL handled actions.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#EjectKillRetCodes.DoGameOver">EjectKillRetCodes.DoGameOver</a></td>
+	<td class="summary">Game over, man.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreSnipeReturnCodes">PreSnipeReturnCodes</a></td>
+	<td class="summary">Return codes from the PreSnipe DLL callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreSnipeReturnCodes.PRESNIPE_KILLPILOT">PreSnipeReturnCodes.PRESNIPE_KILLPILOT</a></td>
+	<td class="summary">Kill the pilot (1.0-1.3.6.4 default).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT">PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT</a></td>
+	<td class="summary">Do not kill the pilot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreGetInReturnCodes">PreGetInReturnCodes</a></td>
+	<td class="summary">Return codes from the PreGetIn DLL callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreGetInReturnCodes.PREGETIN_DENY">PreGetInReturnCodes.PREGETIN_DENY</a></td>
+	<td class="summary">Deny the pilot entry to the craft</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreGetInReturnCodes.PREGETIN_ALLOW">PreGetInReturnCodes.PREGETIN_ALLOW</a></td>
+	<td class="summary">Allow the pilot entry</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrePickupPowerupReturnCodes">PrePickupPowerupReturnCodes</a></td>
+	<td class="summary">Return codes from the PrePickupPowerup DLL callback</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY">PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY</a></td>
+	<td class="summary">Deny the powerup from being picked up</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW">PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW</a></td>
+	<td class="summary">Allow the powerup to be picked up</td>
+	</tr>
+</table>
+<h2><a href="#Hooks">Hooks </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Save">Save ()</a></td>
+	<td class="summary">Save is called when you save a game, or when a Resync is requested.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Load">Load (...)</a></td>
+	<td class="summary">Load is called when you load a game, or when a Resync is loaded.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PostLoad">PostLoad ()</a></td>
+	<td class="summary">You probably don't need to implement this</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#InitialSetup">InitialSetup ()</a></td>
@@ -171,70 +241,12 @@
 	<td class="summary">Called every tick to set the Random seed used to sync GetRandomFloat across Multiworld.</td>
 	</tr>
 </table>
-<h2><a href="#Tables">Tables</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#PreSnipeReturnCodes">PreSnipeReturnCodes</a></td>
-	<td class="summary">Return codes from the PreSnipe DLL callback</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PreGetInReturnCodes">PreGetInReturnCodes</a></td>
-	<td class="summary">Return codes from the PreGetIn DLL callback</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PrePickupPowerupReturnCodes">PrePickupPowerupReturnCodes</a></td>
-	<td class="summary">Return codes from the PrePickupPowerup DLL callback</td>
-	</tr>
-</table>
-<h2><a href="#Fields">Fields</a></h2>
-<table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#EjectKillRetCodes.DoEjectPilot">EjectKillRetCodes.DoEjectPilot</a></td>
-	<td class="summary">Do 'standard' eject</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#EjectKillRetCodes.DoRespawnSafest">EjectKillRetCodes.DoRespawnSafest</a></td>
-	<td class="summary">Respawn a 'PLAYER' at safest spawnpoint</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#EjectKillRetCodes.DLLHandled">EjectKillRetCodes.DLLHandled</a></td>
-	<td class="summary">DLL handled actions.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#EjectKillRetCodes.DoGameOver">EjectKillRetCodes.DoGameOver</a></td>
-	<td class="summary">Game over, man.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PreSnipeReturnCodes.PRESNIPE_KILLPILOT">PreSnipeReturnCodes.PRESNIPE_KILLPILOT</a></td>
-	<td class="summary">Kill the pilot (1.0-1.3.6.4 default).</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT">PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT</a></td>
-	<td class="summary">Do not kill the pilot.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PreGetInReturnCodes.PREGETIN_DENY">PreGetInReturnCodes.PREGETIN_DENY</a></td>
-	<td class="summary">Deny the pilot entry to the craft</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PreGetInReturnCodes.PREGETIN_ALLOW">PreGetInReturnCodes.PREGETIN_ALLOW</a></td>
-	<td class="summary">Allow the pilot entry</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY">PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY</a></td>
-	<td class="summary">Deny the powerup from being picked up</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW">PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW</a></td>
-	<td class="summary">Allow the powerup to be picked up</td>
-	</tr>
-</table>
 
 <br/>
 <br/>
 
 
-    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+    <h2 class="section-header "><a name="Utility_Functions"></a>Utility Functions </h2>
 
     <dl class="function">
     <dt>
@@ -388,6 +400,244 @@
            <span class="types"><span class="type">bool</span></span>
 
     </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Enums"></a>Enums </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "EjectKillRetCodes.DoEjectPilot"></a>
+    <strong>EjectKillRetCodes.DoEjectPilot</strong>
+    </dt>
+    <dd>
+    Do 'standard' eject
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EjectKillRetCodes.DoRespawnSafest"></a>
+    <strong>EjectKillRetCodes.DoRespawnSafest</strong>
+    </dt>
+    <dd>
+    Respawn a 'PLAYER' at safest spawnpoint
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EjectKillRetCodes.DLLHandled"></a>
+    <strong>EjectKillRetCodes.DLLHandled</strong>
+    </dt>
+    <dd>
+    DLL handled actions.  Do nothing ingame
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "EjectKillRetCodes.DoGameOver"></a>
+    <strong>EjectKillRetCodes.DoGameOver</strong>
+    </dt>
+    <dd>
+    Game over, man.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreSnipeReturnCodes"></a>
+    <strong>PreSnipeReturnCodes</strong>
+    </dt>
+    <dd>
+    Return codes from the PreSnipe DLL callback
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreSnipeReturnCodes.PRESNIPE_KILLPILOT"></a>
+    <strong>PreSnipeReturnCodes.PRESNIPE_KILLPILOT</strong>
+    </dt>
+    <dd>
+    Kill the pilot (1.0-1.3.6.4 default).  Does still pass this to bullet hit code, where damage might also be applied
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT"></a>
+    <strong>PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT</strong>
+    </dt>
+    <dd>
+    Do not kill the pilot.  Does still pass this to bullet hit code, where damage might also be applied
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreGetInReturnCodes"></a>
+    <strong>PreGetInReturnCodes</strong>
+    </dt>
+    <dd>
+    Return codes from the PreGetIn DLL callback
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreGetInReturnCodes.PREGETIN_DENY"></a>
+    <strong>PreGetInReturnCodes.PREGETIN_DENY</strong>
+    </dt>
+    <dd>
+    Deny the pilot entry to the craft
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreGetInReturnCodes.PREGETIN_ALLOW"></a>
+    <strong>PreGetInReturnCodes.PREGETIN_ALLOW</strong>
+    </dt>
+    <dd>
+    Allow the pilot entry
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrePickupPowerupReturnCodes"></a>
+    <strong>PrePickupPowerupReturnCodes</strong>
+    </dt>
+    <dd>
+    Return codes from the PrePickupPowerup DLL callback
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY"></a>
+    <strong>PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY</strong>
+    </dt>
+    <dd>
+    Deny the powerup from being picked up
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW"></a>
+    <strong>PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW</strong>
+    </dt>
+    <dd>
+    Allow the powerup to be picked up
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Hooks"></a>Hooks </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "Save"></a>
+    <strong>Save ()</strong>
+    </dt>
+    <dd>
+    Save is called when you save a game, or when a Resync is requested.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Load"></a>
+    <strong>Load (...)</strong>
+    </dt>
+    <dd>
+    Load is called when you load a game, or when a Resync is loaded.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">...</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PostLoad"></a>
+    <strong>PostLoad ()</strong>
+    </dt>
+    <dd>
+    You probably don't need to implement this
+
+
+
 
 
 
@@ -676,12 +926,10 @@
 
            <span class="types"><span class="type">int</span></span>
         PreSnipeReturnValues
+ see ScriptUtils.PreSnipeReturnValues
     </ol>
 
 
-    <h3>See also:</h3>
-    <ul>
-    </ul>
 
 
 </dd>
@@ -714,12 +962,10 @@
 
            <span class="types"><span class="type">int</span></span>
         PreGetInReturnValues
+ see ScriptUtils.PreGetInReturnValues
     </ol>
 
 
-    <h3>See also:</h3>
-    <ul>
-    </ul>
 
 
 </dd>
@@ -752,12 +998,10 @@
 
            <span class="types"><span class="type">int</span></span>
         PrePickupPowerupReturnValues
+ see ScriptUtils.PrePickupPowerupReturnValues
     </ol>
 
 
-    <h3>See also:</h3>
-    <ul>
-    </ul>
 
 
 </dd>
@@ -869,203 +1113,13 @@
 
 </dd>
 </dl>
-    <h2 class="section-header "><a name="Tables"></a>Tables</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "PreSnipeReturnCodes"></a>
-    <strong>PreSnipeReturnCodes</strong>
-    </dt>
-    <dd>
-    Return codes from the PreSnipe DLL callback
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PreGetInReturnCodes"></a>
-    <strong>PreGetInReturnCodes</strong>
-    </dt>
-    <dd>
-    Return codes from the PreGetIn DLL callback
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PrePickupPowerupReturnCodes"></a>
-    <strong>PrePickupPowerupReturnCodes</strong>
-    </dt>
-    <dd>
-    Return codes from the PrePickupPowerup DLL callback
-
-
-
-
-
-
-
-</dd>
-</dl>
-    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
-
-    <dl class="function">
-    <dt>
-    <a name = "EjectKillRetCodes.DoEjectPilot"></a>
-    <strong>EjectKillRetCodes.DoEjectPilot</strong>
-    </dt>
-    <dd>
-    Do 'standard' eject
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "EjectKillRetCodes.DoRespawnSafest"></a>
-    <strong>EjectKillRetCodes.DoRespawnSafest</strong>
-    </dt>
-    <dd>
-    Respawn a 'PLAYER' at safest spawnpoint
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "EjectKillRetCodes.DLLHandled"></a>
-    <strong>EjectKillRetCodes.DLLHandled</strong>
-    </dt>
-    <dd>
-    DLL handled actions.  Do nothing ingame
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "EjectKillRetCodes.DoGameOver"></a>
-    <strong>EjectKillRetCodes.DoGameOver</strong>
-    </dt>
-    <dd>
-    Game over, man.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PreSnipeReturnCodes.PRESNIPE_KILLPILOT"></a>
-    <strong>PreSnipeReturnCodes.PRESNIPE_KILLPILOT</strong>
-    </dt>
-    <dd>
-    Kill the pilot (1.0-1.3.6.4 default).  Does still pass this to bullet hit code, where damage might also be applied
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT"></a>
-    <strong>PreSnipeReturnCodes.PRESNIPE_ONLYBULLETHIT</strong>
-    </dt>
-    <dd>
-    Do not kill the pilot.  Does still pass this to bullet hit code, where damage might also be applied
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PreGetInReturnCodes.PREGETIN_DENY"></a>
-    <strong>PreGetInReturnCodes.PREGETIN_DENY</strong>
-    </dt>
-    <dd>
-    Deny the pilot entry to the craft
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PreGetInReturnCodes.PREGETIN_ALLOW"></a>
-    <strong>PreGetInReturnCodes.PREGETIN_ALLOW</strong>
-    </dt>
-    <dd>
-    Allow the pilot entry
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY"></a>
-    <strong>PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY</strong>
-    </dt>
-    <dd>
-    Deny the powerup from being picked up
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW"></a>
-    <strong>PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW</strong>
-    </dt>
-    <dd>
-    Allow the powerup to be picked up
-
-
-
-
-
-
-
-</dd>
-</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-12-20 09:25:29 </i>
+<i style="float:right;">Last updated 2020-12-20 09:32:43 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
