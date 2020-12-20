@@ -76,6 +76,7 @@ FuncArrayIter.__type = "FuncArrayIter";
 --- Create FuncArrayIter
 -- @param name FuncArrayIter template (string)
 -- @param timer Timer's value, -1 for not set (int)
+-- @param target_turn TargetTurn's value, -1 for not set (int)
 -- @param state_index Current state (int)
 -- @param values Table of values embeded in the FuncArrayIter
 local CreateFuncArrayIter = function(name, timer, target_turn, state_index, values)
@@ -222,7 +223,7 @@ end
 
 hook.Add("Update", "_funcarray_Update", function(turn)
     _funcarray.game_turn = turn;
-end, 1000);
+end, 9999);
 
 _api.RegisterCustomSavableType(FuncArrayIter);
 

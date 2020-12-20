@@ -4,6 +4,37 @@
 -- 
 -- @module _hook
 -- @author John "Nielk1" Klein
+-- @usage local hook = require("_hook");
+-- 
+-- -- optional priority overrides
+-- _api_hook_priority_override = {
+--     ["Update"] = {
+--         ["_statemachine_Update"] = 10000;
+--         ["_funcarray_Update"] = 10000;
+--     },
+--     ["DeleteObject"] = {
+--         ["GameObject_DeleteObject"] = -10000;
+--     }
+-- };
+-- 
+-- hook.Add("InitialSetup", "Custom_InitialSetup", function(turn)
+--     
+-- end);
+-- 
+-- hook.Add("Update", "Custom_Update", function(turn)
+--     
+-- end);
+--
+-- hook.AddSaveLoad("Custom_SaveLoad",
+-- function()
+--     return MissionData;
+-- end,
+-- function(savedData)
+--     MissionData = savedData;
+-- end,
+-- function()
+--     print(table.show(MissionData,"MissionData"));
+-- end);
 
 local debugprint = debugprint or function() end;
 
@@ -39,6 +70,8 @@ function hook.Add( event, identifier, func, priority )
     if not isstring(identifier) then error("Paramater identifier must be a string."); end
     if not isfunction(func) then error("Paramater func must be a function."); end
     if priority == nil or not isnumber(priority) then priority = 0; end
+
+    priority = (_api_hook_priority_override and _api_hook_priority_override[event]) and _api_hook_priority_override[event][identifier] or priority;
 
     if (hook.Hooks[ event ] == nil) then
         hook.Hooks[ event ] = {};

@@ -78,6 +78,7 @@ StateMachineIter.__type = "StateMachineIter";
 --- Create StateMachineIter
 -- @param name StateMachineIter template (string)
 -- @param timer Timer's value, -1 for not set (int)
+-- @param target_turn TargetTurn's value, -1 for not set (int)
 -- @param state_key Current state (string)
 -- @param values Table of values embeded in the StateMachineIter
 local CreateStateMachineIter = function(name, timer, target_turn, state_key, values)
@@ -229,7 +230,7 @@ end
 
 hook.Add("Update", "_statemachine_Update", function(turn)
     _statemachine.game_turn = turn;
-end, 1000);
+end, 9999);
 
 _api.RegisterCustomSavableType(StateMachineIter);
 
