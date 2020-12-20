@@ -14,9 +14,9 @@ debugprint("_api Loading");
 
 local hook = require("_hook");
 
---==============================================================================================================================================================
+-------------------------------------------------------------------------------
 -- Utility Functions
---==============================================================================================================================================================
+-------------------------------------------------------------------------------
 -- @section
 
 --- Is this object a function?
@@ -62,9 +62,9 @@ function isinteger(object)
   return object == math.floor(object);
 end
 
---==============================================================================================================================================================
+-------------------------------------------------------------------------------
 -- Enums
---==============================================================================================================================================================
+-------------------------------------------------------------------------------
 -- @section
 
 -- Set of return codes from the PlayerEjected/PlayerKilled call to DLL
@@ -99,9 +99,9 @@ PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_DENY = 0;
 --- Allow the powerup to be picked up
 PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW = 1;
 
---==============================================================================================================================================================
--- Mission Core
---==============================================================================================================================================================
+-------------------------------------------------------------------------------
+-- Custom Types
+-------------------------------------------------------------------------------
 -- @section
 
 local CustomSavableTypes = {};
@@ -198,6 +198,12 @@ function DeSimplifyForLoad(...)
     return table.unpack(output);
 end
 
+-------------------------------------------------------------------------------
+-- Hooks
+-------------------------------------------------------------------------------
+-- @section
+
+--- Save is called when you save a game, or when a Resync is requested.
 function Save()
     debugprint("_api::Save()");
     CustomTypeMap = {};
@@ -253,6 +259,7 @@ function Save()
     return saveData;
 end
 
+--- Load is called when you load a game, or when a Resync is loaded.
 function Load(...)
     debugprint("_api::Load()");
     local args = ...;
@@ -286,6 +293,7 @@ function Load(...)
     debugprint("_api::/Load");
 end
 
+--- You probably don't need to implement this
 function PostLoad()
     debugprint("_api::PostLoad()");
     traceprint("PostLoading custom types");
@@ -428,7 +436,7 @@ end
 -- @tparam int ordnanceTeam Team number of the Ordnance, if applicable
 -- @tparam string ordnanceODF ODF file of the Ordnance that hit the VictimHandle
 -- @treturn int PreSnipeReturnValues
--- @see ScriptUtils.PreSnipeReturnValues
+-- see ScriptUtils.PreSnipeReturnValues
 function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, ordnanceODF)
     traceprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(ordnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
@@ -444,7 +452,7 @@ end
 -- @tparam handle pilotHandle Handle of the Pilot
 -- @tparam handle emptyCraftHandle Handle of the Empty craft
 -- @treturn int PreGetInReturnValues
--- @see ScriptUtils.PreGetInReturnValues
+-- see ScriptUtils.PreGetInReturnValues
 function PreGetIn(curWorld, pilotHandle, emptyCraftHandle)
     traceprint("_api::PreGetIn(" .. tostring(curWorld) .. ", " .. tostring(pilotHandle) .. ", " .. tostring(emptyCraftHandle) .. ")");
     local object1 = GameObject.FromHandle(pilotHandle);
@@ -460,7 +468,7 @@ end
 -- @tparam handle me Handle of the object picking up the Powerup
 -- @tparam handle powerupHandle Handle of the powerup object
 -- @treturn int PrePickupPowerupReturnValues
--- @see ScriptUtils.PrePickupPowerupReturnValues
+-- see ScriptUtils.PrePickupPowerupReturnValues
 function PrePickupPowerup(curWorld, me, powerupHandle)
     traceprint("_api::PrePickupPowerup(" .. tostring(curWorld) .. ", " .. tostring(me) .. ", " .. tostring(powerupHandle) .. ")");
     local object1 = GameObject.FromHandle(me);
@@ -516,6 +524,8 @@ function SetRandomSeed ( seed )
     hook.CallAllNoReturn( "SetRandomSeed", seed );
     traceprint("_api::/SetRandomSeed");
 end
+
+-- @section Script Run
 
 debugprint("_api Loaded");
 
