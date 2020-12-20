@@ -5,12 +5,24 @@
 -- @module ScriptUtils
 
 --- Default Matrix. North Facing with a position of 0, 0, 0.
+-- 1 0 0
+-- 0 1 0
+-- 0 0 1
+-- 0 0 0
 -- @table IdentityMatrix
 IdentityMatrix = {
-    right_x=1.000000, right_y=0.000000, right_z=0.000000,
-       up_x=0.000000,    up_y=1.000000,    up_z=0.000000,
-    front_x=0.000000, front_y=0.000000, front_z=1.000000,
-    posit_x=0.000000, posit_y=0.000000, posit_z=0.000000
+    right_x = 1.000000, -- 1.000000
+	right_y = 0.000000, -- 0.000000
+	right_z = 0.000000, -- 0.000000
+       up_x = 0.000000, -- 0.000000
+	   up_y = 1.000000, -- 1.000000
+	   up_z = 0.000000, -- 0.000000
+    front_x = 0.000000, -- 0.000000
+	front_y = 0.000000, -- 0.000000
+	front_z = 1.000000, -- 1.000000
+    posit_x = 0.000000, -- 0.000000
+	posit_y = 0.000000, -- 0.000000
+	posit_z = 0.000000  -- 0.000000
 }
 
 --- AiCommand
