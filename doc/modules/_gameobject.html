@@ -133,7 +133,7 @@
 	<td class="summary">Remove GameObject from world.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#GetPlayerGameObject">GetPlayerGameObject (team)</a></td>
+	<td class="name" nowrap><a href="#GetPlayerGameObject">GetPlayerGameObject ([team])</a></td>
 	<td class="summary">Get GameObject of Player.</td>
 	</tr>
 	<tr>
@@ -234,7 +234,7 @@
 	<td class="summary">Get front look vector.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#GameObject.SetPosition">GameObject.SetPosition (self, position, point)</a></td>
+	<td class="name" nowrap><a href="#GameObject.SetPosition">GameObject.SetPosition (self, position[, point])</a></td>
 	<td class="summary">Set the position of the GameObject.</td>
 	</tr>
 	<tr>
@@ -329,7 +329,7 @@
 	<td class="summary">Is the GameObject using a terminal?</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#GameObject.SetCanSnipe">GameObject.SetCanSnipe (self, canSnipe)</a></td>
+	<td class="name" nowrap><a href="#GameObject.SetCanSnipe">GameObject.SetCanSnipe (self[, canSnipe])</a></td>
 	<td class="summary">Gets whether the GameObject can be sniped.</td>
 	</tr>
 	<tr>
@@ -480,7 +480,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -521,6 +522,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">handle</span></span>
          Handle from BZCC
         </li>
     </ul>
@@ -528,7 +530,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        GameObject
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
+
     </ol>
 
 
@@ -546,6 +549,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -553,7 +557,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        Handle
+           <span class="types"><span class="type">Handle</span></span>
+
     </ol>
 
 
@@ -572,6 +577,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -681,9 +687,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">odf</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Object Definition File (without ".odf")
         </li>
         <li><span class="parameter">team</span>
+            <span class="types"><span class="type">int</span></span>
          Team number for the object, 0 to 15
         </li>
         <li><span class="parameter">pos</span>
@@ -694,6 +702,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         Newly built GameObject
     </ol>
 
@@ -712,6 +721,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -723,7 +733,7 @@
 </dd>
     <dt>
     <a name = "GetPlayerGameObject"></a>
-    <strong>GetPlayerGameObject (team)</strong>
+    <strong>GetPlayerGameObject ([team])</strong>
     </dt>
     <dd>
     Get GameObject of Player.
@@ -732,13 +742,16 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">team</span>
-         Team number of player (optional)
+            <span class="types"><span class="type">int</span></span>
+         Team number of player
+         (<em>optional</em>)
         </li>
     </ul>
 
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         GameObject of player or nil
     </ol>
 
@@ -764,6 +777,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         GameObject with Label or seqNo, or nil if none found
     </ol>
 
@@ -786,6 +800,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">group</span>
@@ -813,12 +828,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          Target GameObject
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -839,12 +857,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          Target GameObject
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -865,12 +886,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target GameObject, Vector, or Path name
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -891,12 +914,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target Vector or Path name
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -917,12 +942,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target GameObject instance
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -943,9 +970,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -966,12 +995,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target GameObject instance
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -992,9 +1023,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1015,12 +1048,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target Path name
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1041,12 +1076,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target GameObject or Path name
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1067,12 +1104,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          Target GameObject
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1093,12 +1133,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          Target GameObject
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1119,12 +1162,14 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
          Target vector or path name
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1146,12 +1191,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">odf</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Object Definition
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1172,12 +1220,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">target</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          Target GameObject instance
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1198,12 +1249,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">team</span>
+            <span class="types"><span class="type">int</span></span>
          Target team number
         </li>
         <li><span class="parameter">priority</span>
+            <span class="types"><span class="type">int</span></span>
          Order priority, >0 removes user control
         </li>
     </ul>
@@ -1228,6 +1282,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1235,7 +1290,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        Vector
+           <span class="types"><span class="type">Vector</span></span>
+
     </ol>
 
 
@@ -1253,6 +1309,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1260,7 +1317,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        Vector
+           <span class="types"><span class="type">Vector</span></span>
+
     </ol>
 
 
@@ -1278,6 +1336,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1285,7 +1344,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        Vector
+           <span class="types"><span class="type">Vector</span></span>
+
     </ol>
 
 
@@ -1303,6 +1363,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1310,7 +1371,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        Vector
+           <span class="types"><span class="type">Vector</span></span>
+
     </ol>
 
 
@@ -1319,7 +1381,7 @@
 </dd>
     <dt>
     <a name = "GameObject.SetPosition"></a>
-    <strong>GameObject.SetPosition (self, position, point)</strong>
+    <strong>GameObject.SetPosition (self, position[, point])</strong>
     </dt>
     <dd>
     Set the position of the GameObject.
@@ -1328,13 +1390,16 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">position</span>
          Vector position, Matrix position, or path name
         </li>
         <li><span class="parameter">point</span>
+            <span class="types"><span class="type">int</span></span>
          Index of the path point in the path (optional)
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -1354,6 +1419,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1361,7 +1427,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        Matrix
+           <span class="types"><span class="type">Matrix</span></span>
+
     </ol>
 
 
@@ -1379,9 +1446,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">transform</span>
+            <span class="types"><span class="type">Matrix</span></span>
          transform matrix
         </li>
     </ul>
@@ -1404,6 +1473,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1424,6 +1494,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1431,6 +1502,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">Vector</span></span>
         Vector, (0,0,0) if the handle is invalid or isn't movable.
     </ol>
 
@@ -1449,9 +1521,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">vel</span>
+            <span class="types"><span class="type">Vector</span></span>
          Vector velocity
         </li>
     </ul>
@@ -1472,6 +1546,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1479,6 +1554,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><span class="type">Vector</span></span>
         Vector, (0,0,0) if the handle is invalid or isn't movable.
     </ol>
 
@@ -1497,6 +1573,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">omega</span>
@@ -1524,6 +1601,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1531,7 +1609,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1549,6 +1628,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1556,7 +1636,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1575,6 +1656,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1582,7 +1664,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1607,6 +1690,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1614,7 +1698,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1632,6 +1717,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1639,7 +1725,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1657,6 +1744,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1664,7 +1752,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1682,6 +1771,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1689,7 +1779,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1708,6 +1799,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1715,7 +1807,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1733,6 +1826,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1740,7 +1834,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1758,6 +1853,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1765,7 +1861,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1783,6 +1880,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1790,7 +1888,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1808,6 +1907,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1815,6 +1915,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         GameObject of the tug carrything the GameObject, or nil
     </ol>
 
@@ -1833,6 +1934,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1840,6 +1942,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         GameObject of the vehicle that the pilot most recently hopped out of, or nil
     </ol>
 
@@ -1858,6 +1961,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1865,6 +1969,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         GameObject of the building the GameObject is inside, or nil
     </ol>
 
@@ -1883,6 +1988,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1890,6 +1996,7 @@
     <h3>Returns:</h3>
     <ol>
 
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
         GameObject of the terminal in use, or nil
     </ol>
 
@@ -1899,7 +2006,7 @@
 </dd>
     <dt>
     <a name = "GameObject.SetCanSnipe"></a>
-    <strong>GameObject.SetCanSnipe (self, canSnipe)</strong>
+    <strong>GameObject.SetCanSnipe (self[, canSnipe])</strong>
     </dt>
     <dd>
     Gets whether the GameObject can be sniped.
@@ -1912,10 +2019,13 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">canSnipe</span>
-         optional
+            <span class="types"><span class="type">int</span></span>
+
+         (<em>optional</em>)
         </li>
     </ul>
 
@@ -1935,6 +2045,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1942,7 +2053,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1960,6 +2072,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -1967,7 +2080,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        bool
+           <span class="types"><span class="type">bool</span></span>
+
     </ol>
 
 
@@ -1989,9 +2103,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
          Tap index
         </li>
     </ul>
@@ -1999,7 +2115,8 @@
     <h3>Returns:</h3>
     <ol>
 
-        GameObject
+           <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
+
     </ol>
 
 
@@ -2017,9 +2134,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
          Tap index
         </li>
         <li><span class="parameter">object</span>
@@ -2047,12 +2166,15 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Animation name
         </li>
         <li><span class="parameter">animType</span>
+            <span class="types"><span class="type">int</span></span>
          Animation Type, 0 == loop, 1 == 2way
         </li>
     </ul>
@@ -2078,9 +2200,11 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
          Animation name
         </li>
     </ul>
@@ -2106,6 +2230,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2131,6 +2256,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">amt</span>
@@ -2157,6 +2283,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">amt</span>
@@ -2183,6 +2310,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">amt</span>
@@ -2206,6 +2334,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2235,6 +2364,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2260,6 +2390,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2285,6 +2416,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">amt</span>
@@ -2308,6 +2440,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">amt</span>
@@ -2331,6 +2464,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">amt</span>
@@ -2354,6 +2488,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2379,6 +2514,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">team</span>
@@ -2402,6 +2538,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2427,6 +2564,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">team</span>
@@ -2454,6 +2592,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">odf</span>
@@ -2481,6 +2620,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2501,6 +2641,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2526,6 +2667,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2551,6 +2693,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">label</span>
@@ -2578,6 +2721,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
     </ul>
@@ -2603,6 +2747,7 @@
     <h3>Parameters:</h3>
     <ul>
         <li><span class="parameter">self</span>
+            <span class="types"><a class="type" href="../modules/_gameobject.html#GameObject">GameObject</a></span>
          GameObject instance
         </li>
         <li><span class="parameter">team</span>
@@ -2622,7 +2767,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-12-20 05:17:27 </i>
+<i style="float:right;">Last updated 2020-12-20 06:10:49 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
