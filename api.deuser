@@ -3,7 +3,7 @@
   <command>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander\battlezone2.exe</command>
   <working_directory>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander</working_directory>
   <symbols_directory>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander</symbols_directory>
-  <command_arguments>-win -edit -resolution 1280 720 isdf.bzn</command_arguments>
+  <command_arguments>-win -edit -resolution 1280 720 rwcore.bzn</command_arguments>
   <scc>
     <provider></provider>
     <user></user>

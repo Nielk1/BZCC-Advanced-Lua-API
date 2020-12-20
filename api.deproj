@@ -25,6 +25,12 @@
     <filename>..\baked\mod\_requirefix.lua</filename>
   </file>
   <file>
+    <filename>..\baked\mod\_statemachine.lua</filename>
+  </file>
+  <file>
     <filename>..\baked\mod\_table_show.lua</filename>
+  </file>
+  <file>
+    <filename>scriptutils.lua</filename>
   </file>
 </project>
