@@ -35,8 +35,10 @@ local debugprint = debugprint or function() end;
 debugprint("_funcarray Loading");
 
 local _api = require("_api");
+local hook = require("_hook");
 
 local _funcarray = {};
+_funcarray.game_turn = 0;
 
 _funcarray.Machines = {};
 
@@ -58,7 +60,7 @@ FuncArrayIter.__index = function(table, key)
   return rawget(FuncArrayIter, key); -- if you fail to get it from the subdata, move on to base (looking for functions)
 end
 FuncArrayIter.__newindex = function(table, key, value)
-  if key ~= "template" and key ~= "state_index" and key ~= "timer" and key ~= "addonData" then
+  if key ~= "template" and key ~= "state_index" and key ~= "timer" and key ~= "target_turn" and key ~= "addonData" then
     local addonData = rawget(table, "addonData");
     if addonData == nil then
       rawset(table, "addonData", {});
@@ -76,10 +78,11 @@ FuncArrayIter.__type = "FuncArrayIter";
 -- @param timer Timer's value, -1 for not set (int)
 -- @param state_index Current state (int)
 -- @param values Table of values embeded in the FuncArrayIter
-local CreateFuncArrayIter = function(name, timer, state_index, values)
+local CreateFuncArrayIter = function(name, timer, target_turn, state_index, values)
   local self = setmetatable({}, FuncArrayIter);
   self.template = name;
   self.timer = timer;
+  self.target_turn = target_turn;
   self.state_index = state_index;
   
   if istable(values) then
@@ -138,7 +141,26 @@ function _funcarray.Start( name, init )
     if init ~= nil and not istable(init) then error("Paramater init must be table or nil."); end
     if (_funcarray.Machines[ name ] == nil) then error('FuncArrayIter Template "' .. name .. '" not found.'); end
 
-    return CreateFuncArrayIter(name, -1, 1, init);
+    return CreateFuncArrayIter(name, -1, -1, 1, init);
+end
+
+-- Wait a set period of time on this state.
+-- @param state FuncArrayIter data (FuncArrayIter)
+-- @param calls How many calls to wait (int)
+function _funcarray.SleepCalls( calls )
+    if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
+
+    return {(function(state, ...)
+        local seconds = ...;
+        if state.timer == -1 then
+            state.timer = calls;
+        elseif state.timer == 0 then
+            state:next();
+            state.timer = -1;
+        else
+            state.timer = state.timer - 1;
+        end
+    end), {seconds}};
 end
 
 -- Wait a set period of time on this state.
@@ -149,13 +171,11 @@ function _funcarray.SleepSeconds( seconds )
 
     return {(function(state, ...)
         local seconds = ...;
-        if state.timer == -1 then
-            state.timer = seconds * GetTPS();
-        elseif state.timer == 0 then
+        if state.target_turn == -1 then
+            state.target_turn = _funcarray.game_turn + (seconds * GetTPS());
+        elseif state.target_turn <= _funcarray.game_turn  then
             state:next();
-            state.timer = -1;
-        else
-            state.timer = state.timer - 1;
+            state.target_turn = -1;
         end
     end), {seconds}};
 end
@@ -177,21 +197,21 @@ end
 -- INTERNAL USE.
 -- @param data
 function FuncArrayIter.Load(data)
-    return CreateFuncArrayIter(data.template, data.timer, data.state_index, data.addonData);
+    return CreateFuncArrayIter(data.template, data.timer, data.target_turn, data.state_index, data.addonData);
 end
 
 --- BulkSave event function.
 -- INTERNAL USE.
 -- @return data to save in bulk
 function FuncArrayIter.BulkSave()
-    return;
+    return _funcarray.game_turn;
 end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
 -- @param data
 function FuncArrayIter.BulkLoad(data)
-
+    _funcarray.game_turn = data;
 end
 
 --- BulkPostLoad event function.
@@ -199,6 +219,10 @@ end
 function FuncArrayIter.BulkPostLoad()
 
 end
+
+hook.Add("Update", "_funcarray_Update", function(turn)
+    _funcarray.game_turn = turn;
+end, 1000);
 
 _api.RegisterCustomSavableType(FuncArrayIter);
 

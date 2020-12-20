@@ -37,8 +37,10 @@ local debugprint = debugprint or function() end;
 debugprint("_statemachine Loading");
 
 local _api = require("_api");
+local hook = require("_hook");
 
 local _statemachine = {};
+_statemachine.game_turn = 0;
 
 _statemachine.Machines = {};
 
@@ -60,7 +62,7 @@ StateMachineIter.__index = function(table, key)
   return rawget(StateMachineIter, key); -- if you fail to get it from the subdata, move on to base (looking for functions)
 end
 StateMachineIter.__newindex = function(table, key, value)
-  if key ~= "template" and key ~= "state_key" and key ~= "timer" and key ~= "addonData" then
+  if key ~= "template" and key ~= "state_key" and key ~= "timer" and key ~= "target_turn" and key ~= "addonData" then
     local addonData = rawget(table, "addonData");
     if addonData == nil then
       rawset(table, "addonData", {});
@@ -78,10 +80,11 @@ StateMachineIter.__type = "StateMachineIter";
 -- @param timer Timer's value, -1 for not set (int)
 -- @param state_key Current state (string)
 -- @param values Table of values embeded in the StateMachineIter
-local CreateStateMachineIter = function(name, timer, state_key, values)
+local CreateStateMachineIter = function(name, timer, target_turn, state_key, values)
   local self = setmetatable({}, StateMachineIter);
   self.template = name;
   self.timer = timer;
+  self.target_turn = target_turn;
   self.state_key = state_key;
   
   if istable(values) then
@@ -141,7 +144,28 @@ function _statemachine.Start( name, state_key, init )
     if init ~= nil and not istable(init) then error("Paramater init must be table or nil."); end
     if (_statemachine.Machines[ name ] == nil) then error('StateMachineIter Template "' .. name .. '" not found.'); end
 
-    return CreateStateMachineIter(name, -1, state_key, init);
+    return CreateStateMachineIter(name, -1, -1, state_key, init);
+end
+
+-- Wait a set period of time on this state.
+-- @param state StateMachineIter data (StateMachineIter)
+-- @param calls How many calls to wait (int)
+-- @param next_state Next state when timer hits zero (string)
+function _statemachine.SleepCalls( calls, next_state )
+    if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
+    if not isstring(next_state) then error("Paramater next_state must be a string."); end
+
+    return {(function(state, ...)
+        local seconds, next_state = ...;
+        if state.timer == -1 then
+            state.timer = calls;
+        elseif state.timer == 0 then
+            state:switch(next_state);
+            state.timer = -1;
+        else
+            state.timer = state.timer - 1;
+        end
+    end), {seconds, next_state}};
 end
 
 -- Wait a set period of time on this state.
@@ -154,13 +178,11 @@ function _statemachine.SleepSeconds( seconds, next_state )
 
     return {(function(state, ...)
         local seconds, next_state = ...;
-        if state.timer == -1 then
-            state.timer = seconds * GetTPS();
-        elseif state.timer == 0 then
+        if state.target_turn == -1 then
+            state.target_turn = _statemachine.game_turn + (seconds * GetTPS());
+        elseif state.target_turn <= _statemachine.game_turn  then
             state:switch(next_state);
-            state.timer = -1;
-        else
-            state.timer = state.timer - 1;
+            state.target_turn = -1;
         end
     end), {seconds, next_state}};
 end
@@ -182,21 +204,21 @@ end
 -- INTERNAL USE.
 -- @param data
 function StateMachineIter.Load(data)
-    return CreateStateMachineIter(data.template, data.timer, data.state_key, data.addonData);
+    return CreateStateMachineIter(data.template, data.timer, data.target_turn, data.state_key, data.addonData);
 end
 
 --- BulkSave event function.
 -- INTERNAL USE.
 -- @return data to save in bulk
 function StateMachineIter.BulkSave()
-    return;
+    return _statemachine.game_turn;
 end
 
 --- BulkLoad event function.
 -- INTERNAL USE.
 -- @param data
 function StateMachineIter.BulkLoad(data)
-
+    _statemachine.game_turn = data;
 end
 
 --- BulkPostLoad event function.
@@ -204,6 +226,10 @@ end
 function StateMachineIter.BulkPostLoad()
 
 end
+
+hook.Add("Update", "_statemachine_Update", function(turn)
+    _statemachine.game_turn = turn;
+end, 1000);
 
 _api.RegisterCustomSavableType(StateMachineIter);
 
