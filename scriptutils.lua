@@ -5,9 +5,13 @@
 -- @module ScriptUtils
 
 --- Default Matrix. North Facing with a position of 0, 0, 0.
+--
 -- 1 0 0
+--
 -- 0 1 0
+--
 -- 0 0 1
+--
 -- 0 0 0
 -- @table IdentityMatrix
 IdentityMatrix = {
