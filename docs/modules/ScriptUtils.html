@@ -63,8 +63,40 @@
 <h2><a href="#Tables">Tables</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#IdentityMatrix">IdentityMatrix</a></td>
+	<td class="summary">Default Matrix.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#AiCommand">AiCommand</a></td>
 	<td class="summary">AiCommand</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TauntTypes">TauntTypes</a></td>
+	<td class="summary">Taunt Type Categories</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#DMSubGameTypes">DMSubGameTypes</a></td>
+	<td class="summary">Deathmatch Sub Game Types.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreSnipeReturnValues">PreSnipeReturnValues</a></td>
+	<td class="summary">Values returned by the PreSnipe function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PreGetInReturnValues">PreGetInReturnValues</a></td>
+	<td class="summary">Values returned by the PreGetIn function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#PrePickupPowerupReturnValues">PrePickupPowerupReturnValues</a></td>
+	<td class="summary">Values returned by the PrePickupPowerup function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#RandomizeTypes">RandomizeTypes</a></td>
+	<td class="summary">Randomize Vehicle Types.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TeamRelationshipTypes">TeamRelationshipTypes</a></td>
+	<td class="summary">Team Relationship Types.</td>
 	</tr>
 </table>
 
@@ -75,6 +107,59 @@
     <h2 class="section-header "><a name="Tables"></a>Tables</h2>
 
     <dl class="function">
+    <dt>
+    <a name = "IdentityMatrix"></a>
+    <strong>IdentityMatrix</strong>
+    </dt>
+    <dd>
+    Default Matrix.  North Facing with a position of 0, 0, 0.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">right_x</span>
+
+        </li>
+        <li><span class="parameter">right_y</span>
+
+        </li>
+        <li><span class="parameter">right_z</span>
+
+        </li>
+        <li><span class="parameter">up_x</span>
+
+        </li>
+        <li><span class="parameter">up_y</span>
+
+        </li>
+        <li><span class="parameter">up_z</span>
+
+        </li>
+        <li><span class="parameter">front_x</span>
+
+        </li>
+        <li><span class="parameter">front_y</span>
+
+        </li>
+        <li><span class="parameter">front_z</span>
+
+        </li>
+        <li><span class="parameter">posit_x</span>
+
+        </li>
+        <li><span class="parameter">posit_y</span>
+
+        </li>
+        <li><span class="parameter">posit_z</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
     <dt>
     <a name = "AiCommand"></a>
     <strong>AiCommand</strong>
@@ -416,6 +501,347 @@
 
 
 </dd>
+    <dt>
+    <a name = "TauntTypes"></a>
+    <strong>TauntTypes</strong>
+    </dt>
+    <dd>
+    Taunt Type Categories
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[0]</span>
+        TAUNTS_GameStart
+        </li>
+        <li><span class="parameter">[1]</span>
+        TAUNTS_NewHuman
+        </li>
+        <li><span class="parameter">[2]</span>
+        TAUNTS_LeftHuman
+        </li>
+        <li><span class="parameter">[3]</span>
+        TAUNTS_HumanShipDestroyed
+        </li>
+        <li><span class="parameter">[4]</span>
+        TAUNTS_HumanRecyDestroyed
+        </li>
+        <li><span class="parameter">[5]</span>
+        TAUNTS_CPURecyDestroyed
+        </li>
+        <li><span class="parameter">[6]</span>
+        TAUNTS_Random
+        </li>
+        <li><span class="parameter">[7]</span>
+        TAUNTS_Category7
+        </li>
+        <li><span class="parameter">[8]</span>
+        TAUNTS_Category8
+        </li>
+        <li><span class="parameter">[9]</span>
+        TAUNTS_Category9
+        </li>
+        <li><span class="parameter">[10]</span>
+        TAUNTS_Category10
+        </li>
+        <li><span class="parameter">[11]</span>
+        TAUNTS_Category11
+        </li>
+        <li><span class="parameter">[12]</span>
+        TAUNTS_Category12
+        </li>
+        <li><span class="parameter">[13]</span>
+        TAUNTS_Category13
+        </li>
+        <li><span class="parameter">[14]</span>
+        TAUNTS_Category14
+        </li>
+        <li><span class="parameter">[15]</span>
+        TAUNTS_Category15
+        </li>
+        <li><span class="parameter">[TAUNTS_GameStart]</span>
+        0
+        </li>
+        <li><span class="parameter">[TAUNTS_NewHuman]</span>
+        1
+        </li>
+        <li><span class="parameter">[TAUNTS_LeftHuman]</span>
+        2
+        </li>
+        <li><span class="parameter">[TAUNTS_HumanShipDestroyed]</span>
+        3
+        </li>
+        <li><span class="parameter">[TAUNTS_HumanRecyDestroyed]</span>
+        4
+        </li>
+        <li><span class="parameter">[TAUNTS_CPURecyDestroyed]</span>
+        5
+        </li>
+        <li><span class="parameter">[TAUNTS_Random]</span>
+        6
+        </li>
+        <li><span class="parameter">[TAUNTS_Category7]</span>
+        7
+        </li>
+        <li><span class="parameter">[TAUNTS_Category8]</span>
+        8
+        </li>
+        <li><span class="parameter">[TAUNTS_Category9]</span>
+        9
+        </li>
+        <li><span class="parameter">[TAUNTS_Category10]</span>
+        10
+        </li>
+        <li><span class="parameter">[TAUNTS_Category11]</span>
+        11
+        </li>
+        <li><span class="parameter">[TAUNTS_Category12]</span>
+        12
+        </li>
+        <li><span class="parameter">[TAUNTS_Category14]</span>
+        14
+        </li>
+        <li><span class="parameter">[TAUNTS_Category13]</span>
+        13
+        </li>
+        <li><span class="parameter">[TAUNTS_Category15]</span>
+        15
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "DMSubGameTypes"></a>
+    <strong>DMSubGameTypes</strong>
+    </dt>
+    <dd>
+    Deathmatch Sub Game Types.  Values returned by ivar7.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[0]</span>
+        DMSubtype_Normal
+        </li>
+        <li><span class="parameter">[1]</span>
+        DMSubtype_KOH
+        </li>
+        <li><span class="parameter">[2]</span>
+        DMSubtype_CTF
+        </li>
+        <li><span class="parameter">[3]</span>
+        DMSubtype_Loot
+        </li>
+        <li><span class="parameter">[4]</span>
+        DMSubtype_RESERVED1
+        </li>
+        <li><span class="parameter">[5]</span>
+        DMSubtype_Race1
+        </li>
+        <li><span class="parameter">[6]</span>
+        DMSubtype_Race2
+        </li>
+        <li><span class="parameter">[7]</span>
+        DMSubtype_Normal2
+        </li>
+        <li><span class="parameter">[DMSubtype_Normal]</span>
+        0
+        </li>
+        <li><span class="parameter">[DMSubtype_KOH]</span>
+        1
+        </li>
+        <li><span class="parameter">[DMSubtype_CTF]</span>
+        2
+        </li>
+        <li><span class="parameter">[DMSubtype_Loot]</span>
+        3
+        </li>
+        <li><span class="parameter">[DMSubtype_RESERVED1]</span>
+        4
+        </li>
+        <li><span class="parameter">[DMSubtype_Race1]</span>
+        5
+        </li>
+        <li><span class="parameter">[DMSubtype_Race2]</span>
+        6
+        </li>
+        <li><span class="parameter">[DMSubtype_Normal2]</span>
+        7
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreSnipeReturnValues"></a>
+    <strong>PreSnipeReturnValues</strong>
+    </dt>
+    <dd>
+    Values returned by the PreSnipe function.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[0]</span>
+        PRESNIPE_KILLPILOT
+        </li>
+        <li><span class="parameter">[1]</span>
+        PRESNIPE_ONLYBULLETHIT
+        </li>
+        <li><span class="parameter">[PRESNIPE_KILLPILOT]</span>
+        0
+        </li>
+        <li><span class="parameter">[PRESNIPE_ONLYBULLETHIT]</span>
+        1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PreGetInReturnValues"></a>
+    <strong>PreGetInReturnValues</strong>
+    </dt>
+    <dd>
+    Values returned by the PreGetIn function.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[0]</span>
+        PREGETIN_DENY
+        </li>
+        <li><span class="parameter">[1]</span>
+        PREGETIN_ALLOW
+        </li>
+        <li><span class="parameter">[PREGETIN_DENY]</span>
+        0
+        </li>
+        <li><span class="parameter">[PREGETIN_ALLOW]</span>
+        1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "PrePickupPowerupReturnValues"></a>
+    <strong>PrePickupPowerupReturnValues</strong>
+    </dt>
+    <dd>
+    Values returned by the PrePickupPowerup function.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[0]</span>
+        PREPICKUPPOWERUP_DENY
+        </li>
+        <li><span class="parameter">[1]</span>
+        PREPICKUPPOWERUP_ALLOW
+        </li>
+        <li><span class="parameter">[PREPICKUPPOWERUP_DENY]</span>
+        0
+        </li>
+        <li><span class="parameter">[PREPICKUPPOWERUP_ALLOW]</span>
+        1
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "RandomizeTypes"></a>
+    <strong>RandomizeTypes</strong>
+    </dt>
+    <dd>
+    Randomize Vehicle Types.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[0]</span>
+        Randomize_None
+        </li>
+        <li><span class="parameter">[1]</span>
+        Randomize_ByRace
+        </li>
+        <li><span class="parameter">[2]</span>
+        Randomize_Any
+        </li>
+        <li><span class="parameter">[Randomize_None]</span>
+        0
+        </li>
+        <li><span class="parameter">[Randomize_ByRace]</span>
+        1
+        </li>
+        <li><span class="parameter">[Randomize_Any]</span>
+        2
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TeamRelationshipTypes"></a>
+    <strong>TeamRelationshipTypes</strong>
+    </dt>
+    <dd>
+    Team Relationship Types.  Comparable against the GetTeamRelationship function.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">[1]</span>
+        TEAMRELATIONSHIP_SAMETEAM
+        </li>
+        <li><span class="parameter">[2]</span>
+        TEAMRELATIONSHIP_ALLIEDTEAM
+        </li>
+        <li><span class="parameter">[0]</span>
+        TEAMRELATIONSHIP_INVALIDHANDLE
+        </li>
+        <li><span class="parameter">[3]</span>
+        TEAMRELATIONSHIP_ENEMYTEAM
+        </li>
+        <li><span class="parameter">[TEAMRELATIONSHIP_ENEMYTEAM]</span>
+        3
+        </li>
+        <li><span class="parameter">[TEAMRELATIONSHIP_ALLIEDTEAM]</span>
+        2
+        </li>
+        <li><span class="parameter">[TEAMRELATIONSHIP_SAMETEAM]</span>
+        1
+        </li>
+        <li><span class="parameter">[TEAMRELATIONSHIP_INVALIDHANDLE]</span>
+        0
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
 </dl>
 
 
@@ -423,7 +849,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2020-12-20 09:35:34 </i>
+<i style="float:right;">Last updated 2020-12-20 09:39:01 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

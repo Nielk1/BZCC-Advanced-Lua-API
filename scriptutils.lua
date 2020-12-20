@@ -4,7 +4,7 @@
 --
 -- @module ScriptUtils
 
--- Default Matrix. North Facing with a position of 0, 0, 0.
+--- Default Matrix. North Facing with a position of 0, 0, 0.
 -- @table IdentityMatrix
 IdentityMatrix = {
     right_x=1.000000, right_y=0.000000, right_z=0.000000,
@@ -126,7 +126,7 @@ AiCommand = {
    ["CMD_CMDPANEL_DESELECT"] = 53; -- 53
 };
 
--- Taunt Type Categories
+--- Taunt Type Categories
 -- @table TauntTypes
 TauntTypes = {
    [0] = "TAUNTS_GameStart"; -- TAUNTS_GameStart
@@ -163,7 +163,7 @@ TauntTypes = {
    ["TAUNTS_Category15"] = 15; -- 15
 };
 
--- Deathmatch Sub Game Types. Values returned by ivar7.
+--- Deathmatch Sub Game Types. Values returned by ivar7.
 -- @table DMSubGameTypes
 DMSubGameTypes = {
    [0] = "DMSubtype_Normal"; -- DMSubtype_Normal
@@ -184,7 +184,7 @@ DMSubGameTypes = {
    ["DMSubtype_Normal2"] = 7; -- 7
 };
 
--- Values returned by the PreSnipe function.
+--- Values returned by the PreSnipe function.
 -- @table PreSnipeReturnValues
 PreSnipeReturnValues = {
    [0] = "PRESNIPE_KILLPILOT"; -- PRESNIPE_KILLPILOT
@@ -193,7 +193,7 @@ PreSnipeReturnValues = {
    ["PRESNIPE_ONLYBULLETHIT"] = 1; -- 1
 };
 
--- Values returned by the PreGetIn function.
+--- Values returned by the PreGetIn function.
 -- @table PreGetInReturnValues
 PreGetInReturnValues = {
    [0] = "PREGETIN_DENY"; -- PREGETIN_DENY
@@ -202,7 +202,7 @@ PreGetInReturnValues = {
    ["PREGETIN_ALLOW"] = 1; -- 1
 };
 
--- Values returned by the PrePickupPowerup function.
+--- Values returned by the PrePickupPowerup function.
 -- @table PrePickupPowerupReturnValues
 PrePickupPowerupReturnValues = {
    [0] = "PREPICKUPPOWERUP_DENY"; -- PREPICKUPPOWERUP_DENY
@@ -211,7 +211,7 @@ PrePickupPowerupReturnValues = {
    ["PREPICKUPPOWERUP_ALLOW"] = 1; -- 1
 };
 
--- Randomize Vehicle Types.
+--- Randomize Vehicle Types.
 -- @table RandomizeTypes
 RandomizeTypes = {
    [0] = "Randomize_None"; -- Randomize_None
@@ -222,7 +222,7 @@ RandomizeTypes = {
    ["Randomize_Any"] = 2; -- 2
 };
 
--- Team Relationship Types. Comparable against the GetTeamRelationship function.
+--- Team Relationship Types. Comparable against the GetTeamRelationship function.
 -- @table TeamRelationshipTypes
 TeamRelationshipTypes = {
    [1] = "TEAMRELATIONSHIP_SAMETEAM"; -- TEAMRELATIONSHIP_SAMETEAM
