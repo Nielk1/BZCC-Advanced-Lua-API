@@ -19,42 +19,42 @@ local hook = require("_hook");
 
 --- Is this object a function?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isfunction(object)
   return (type(object) == "function");
 end
 
 --- Is this object a table?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function istable(object)
   return (type(object) == 'table');
 end
 
 --- Is this object a string?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isstring(object)
   return (type(object) == "string");
 end
 
 --- Is this object a boolean?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isboolean(object)
   return (type(object) == "boolean");
 end
 
 --- Is this object a number?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isnumber(object)
   return (type(object) == "number");
 end
 
 --- Is this object an integer?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isinteger(object)
   if not isnumber(object) then return false end;
   return object == math.floor(object);

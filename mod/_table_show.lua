@@ -26,9 +26,9 @@
 -- Userdata and function keys and values are shown as strings,
 -- which logically are exactly not equivalent to the original code.
 --
--- @param t the table
--- @param name name of the table (optional)
--- @param indent first indentation (optional)
+-- @tparam table t the table
+-- @tparam[opt] string name name of the table
+-- @tparam[opt] string indent first indentation (optional)
 -- @usage print(table.show(t, "t"))   -- a typical use
 function table.show(t, name, indent)
    local cart     -- a container

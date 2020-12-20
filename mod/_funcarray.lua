@@ -44,7 +44,7 @@ _funcarray.Machines = {};
 
 --- Is this object an instance of FuncArrayIter?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isfuncarrayiter(object)
   return (type(object) == "table" and object.__type == "FuncArrayIter");
 end
@@ -74,11 +74,11 @@ end
 FuncArrayIter.__type = "FuncArrayIter";
 
 --- Create FuncArrayIter
--- @param name FuncArrayIter template (string)
--- @param timer Timer's value, -1 for not set (int)
--- @param target_turn TargetTurn's value, -1 for not set (int)
--- @param state_index Current state (int)
--- @param values Table of values embeded in the FuncArrayIter
+-- @tparam string name FuncArrayIter template
+-- @tparam int timer Timer's value, -1 for not set
+-- @tparam int target_turn TargetTurn's value, -1 for not set
+-- @tparam int state_index Current state
+-- @tparam table values Table of values embeded in the FuncArrayIter
 local CreateFuncArrayIter = function(name, timer, target_turn, state_index, values)
   local self = setmetatable({}, FuncArrayIter);
   self.template = name;
@@ -96,7 +96,7 @@ local CreateFuncArrayIter = function(name, timer, target_turn, state_index, valu
 end
 
 --- Run FuncArrayIter.
--- @param self FuncArrayIter instance
+-- @tparam FuncArrayIter self FuncArrayIter instance
 function FuncArrayIter.run(self)
     if not isfuncarrayiter(self) then error("Paramater self must be FuncArrayIter instance."); end
     
@@ -116,14 +116,14 @@ function FuncArrayIter.run(self)
 end
 
 --- Next FuncArrayIter State.
--- @param self FuncArrayIter instance
+-- @tparam FuncArrayIter self FuncArrayIter instance
 function FuncArrayIter.next(self)
     self.state_index = self.state_index + 1;
 end
 
 -- Creates an FuncArrayIter Template with the given indentifier.
--- @param name Name of the FuncArrayIter Template (string)
--- @param ... State functions
+-- @tparam string name Name of the FuncArrayIter Template
+-- @tparam function ... State functions
 function _funcarray.Create( name, ... )
     if not isstring(name) then error("Paramater name must be a string."); end
     
@@ -135,8 +135,8 @@ function _funcarray.Create( name, ... )
 end
 
 -- Starts an FuncArrayIter based on the FuncArrayIter Template with the given indentifier.
--- @param event Name of the FuncArrayIter Template (string)
--- @param init Initial data (table)
+-- @tparam string event Name of the FuncArrayIter Template
+-- @tparam table init Initial data
 function _funcarray.Start( name, init )
     if not isstring(name) then error("Paramater name must be a string."); end
     if init ~= nil and not istable(init) then error("Paramater init must be table or nil."); end
@@ -146,8 +146,8 @@ function _funcarray.Start( name, init )
 end
 
 -- Wait a set period of time on this state.
--- @param state FuncArrayIter data (FuncArrayIter)
--- @param calls How many calls to wait (int)
+-- @tparam FuncArrayIter state FuncArrayIter data
+-- @tparam int calls How many calls to wait
 function _funcarray.SleepCalls( calls )
     if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
 
@@ -165,8 +165,8 @@ function _funcarray.SleepCalls( calls )
 end
 
 -- Wait a set period of time on this state.
--- @param state FuncArrayIter data (FuncArrayIter)
--- @param seconds How many seconds to wait (int)
+-- @tparam FuncArrayIter state FuncArrayIter data
+-- @tparam number seconds How many seconds to wait
 function _funcarray.SleepSeconds( seconds )
     if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
 

@@ -61,10 +61,10 @@ local function has_value (tab, val)
 end
 
 --- Add a hook to listen to the specified event.
--- @param event Event to be hooked (string)
--- @param identifier Identifier for this hook observer (string)
--- @param func Function to be executed (function)
--- @param priority Higher numbers are higher priority (number) (optional, default 0)
+-- @tparam string event Event to be hooked
+-- @tparam string identifier Identifier for this hook observer
+-- @tparam func func Function to be executed
+-- @tparam[opt=0] number priority Higher numbers are higher priority
 function hook.Add( event, identifier, func, priority )
     if not isstring(event) then error("Paramater event must be a string."); end
     if not isstring(identifier) then error("Paramater identifier must be a string."); end
@@ -88,8 +88,8 @@ function hook.Add( event, identifier, func, priority )
 end
 
 -- Removes the hook with the given indentifier.
--- @param event Event to be hooked (string)
--- @param identifier Identifier for this hook observer (string)
+-- @tparam string event Event to be hooked
+-- @tparam string identifier Identifier for this hook observer
 function hook.Remove( event, name )
     if not isstring(event) then error("Paramater event must be a string."); end
     if not isstring(identifier) then error("Paramater identifier must be a string."); end
@@ -99,10 +99,10 @@ function hook.Remove( event, name )
 end
 
 --- Add a hook to listen to the Save, Load, and PostLoad event.
--- @param identifier Identifier for this hook observer (string)
--- @param save Function to be executed for Save (function) (optional)
--- @param load Function to be executed for Load (function) (optional)
--- @param postload Function to be executed for PostLoad (function) (optional)
+-- @tparam string identifier Identifier for this hook observer
+-- @tparam[opt] function save Function to be executed for Save
+-- @tparam[opt] function load Function to be executed for Load
+-- @tparam[opt] function postload Function to be executed for PostLoad
 function hook.AddSaveLoad( identifier, save, load, postload )
     if not isstring(identifier) then error("Paramater identifier must be a string."); end
     if save == nil and load == nil and postload == nil then error("At least one of paramaters save, load, and postload must be supplied."); end
@@ -122,7 +122,7 @@ function hook.AddSaveLoad( identifier, save, load, postload )
 end
 
 --- Removes the Save, Load, and PostLoad hooks with the given indentifier.
--- @param identifier Identifier for this hook observer (string)
+-- @tparam string identifier Identifier for this hook observer
 function hook.RemoveSaveLoad( identifier )
     if not isstring(identifier) then error("Paramater identifier must be a string."); end
     if ( not hook.SaveLoadHooks[ identifier ] ) then return; end
@@ -189,7 +189,7 @@ end
 
 
 --- Calls hooks associated with the hook name ignoring any return values.
--- @param event Event to be hooked (string)
+-- @tparam string event Event to be hooked
 -- @param ... Paramaters passed to every hooked function
 -- @todo this function must be rewritten to not be n*m and awful.
 function hook.CallAllNoReturn( event, ... )
@@ -221,7 +221,7 @@ end
 --- Calls hooks associated with the hook name passing each return to the next.
 -- Hooked functions may return 2 values.  The first will be passed to the next
 -- as the last paramater.  The second, if true, will stop the execution of hooks.
--- @param event Event to be hooked (string)
+-- @tparam string event Event to be hooked
 -- @param ... Paramaters passed to every hooked function
 -- @todo this function must be rewritten to not be n*m and awful.
 function hook.CallAllPassReturn( event, ... )

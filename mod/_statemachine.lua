@@ -46,7 +46,7 @@ _statemachine.Machines = {};
 
 --- Is this object an instance of StateMachineIter?
 -- @param object Object in question
--- @return bool
+-- @treturn bool
 function isstatemachineiter(object)
   return (type(object) == "table" and object.__type == "StateMachineIter");
 end
@@ -76,11 +76,11 @@ end
 StateMachineIter.__type = "StateMachineIter";
 
 --- Create StateMachineIter
--- @param name StateMachineIter template (string)
--- @param timer Timer's value, -1 for not set (int)
--- @param target_turn TargetTurn's value, -1 for not set (int)
--- @param state_key Current state (string)
--- @param values Table of values embeded in the StateMachineIter
+-- @tparam string name StateMachineIter template
+-- @tparam int timer Timer's value, -1 for not set
+-- @tparam int target_turn TargetTurn's value, -1 for not set
+-- @tparam string state_key Current state
+-- @tparam table values Table of values embeded in the StateMachineIter
 local CreateStateMachineIter = function(name, timer, target_turn, state_key, values)
   local self = setmetatable({}, StateMachineIter);
   self.template = name;
@@ -98,7 +98,7 @@ local CreateStateMachineIter = function(name, timer, target_turn, state_key, val
 end
 
 --- Run StateMachineIter.
--- @param self FuncArrayIter instance
+-- @tparam StateMachineIter self FuncArrayIter instance
 function StateMachineIter.run(self)
     if not isstatemachineiter(self) then error("Paramater self must be StateMachineIter instance."); end
     
@@ -117,8 +117,8 @@ function StateMachineIter.run(self)
 end
 
 --- Switch StateMachineIter State.
--- @param self StateMachineIter instance
--- @param key State to switch to
+-- @tparam StateMachineIter self StateMachineIter instance
+-- @tparam string key State to switch to
 function StateMachineIter.switch(self, key)
     self.state_key = key;
 end
@@ -137,9 +137,9 @@ function _statemachine.Create( name, states )
 end
 
 -- Starts an StateMachineIter based on the StateMachineIter Template with the given indentifier.
--- @param event Name of the StateMachineIter Template (string)
--- @param state_key Initial state (string)
--- @param init Initial data (table)
+-- @tparam string event Name of the StateMachineIter Template
+-- @tparam string state_key Initial state
+-- @tparam table init Initial data
 function _statemachine.Start( name, state_key, init )
     if not isstring(name) then error("Paramater name must be a string."); end
     if init ~= nil and not istable(init) then error("Paramater init must be table or nil."); end
@@ -149,9 +149,9 @@ function _statemachine.Start( name, state_key, init )
 end
 
 -- Wait a set period of time on this state.
--- @param state StateMachineIter data (StateMachineIter)
--- @param calls How many calls to wait (int)
--- @param next_state Next state when timer hits zero (string)
+-- @tparam StateMachineIter state StateMachineIter data
+-- @tparam int calls How many calls to wait
+-- @tparam string next_state Next state when timer hits zero
 function _statemachine.SleepCalls( calls, next_state )
     if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
     if not isstring(next_state) then error("Paramater next_state must be a string."); end
@@ -170,9 +170,9 @@ function _statemachine.SleepCalls( calls, next_state )
 end
 
 -- Wait a set period of time on this state.
--- @param state StateMachineIter data (StateMachineIter)
--- @param seconds How many seconds to wait (int)
--- @param next_state Next state when timer hits zero (string)
+-- @tparam StateMachineIter state StateMachineIter data
+-- @tparam int seconds How many seconds to wait
+-- @tparam string next_state Next state when timer hits zero
 function _statemachine.SleepSeconds( seconds, next_state )
     if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
     if not isstring(next_state) then error("Paramater next_state must be a string."); end
