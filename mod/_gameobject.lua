@@ -867,7 +867,7 @@ end
 
 --- Get team number of the GameObject.
 -- @tparam GameObject self GameObject instance
--- @return integer Team number
+-- @treturn int Team number
 function GameObject.GetTeamNum(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return GetTeamNum(self:GetHandle());
@@ -875,7 +875,7 @@ end
 
 --- Set team number of the GameObject.
 -- @tparam GameObject self GameObject instance
--- @param team new team number
+-- @tparam int team new team number
 function GameObject.SetTeamNum(self, team)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     if not isnumber(team) then error("Paramater amt must be number."); end
@@ -884,7 +884,7 @@ end
 
 --- Get perceived team number of the GameObject.
 -- @tparam GameObject self GameObject instance
--- @return integer Team number
+-- @treturn int Team number
 function GameObject.GetPerceivedTeam(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return GetPerceivedTeam(self:GetHandle());
@@ -892,7 +892,7 @@ end
 
 --- Set perceived team number of the GameObject.
 -- @tparam GameObject self GameObject instance
--- @param team new team number
+-- @tparam int team new team number
 function GameObject.SetPerceivedTeam(self, team)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     if not isnumber(team) then error("Paramater amt must be number."); end
@@ -906,7 +906,7 @@ end
 
 --- Is the GameObject this odf?
 -- @tparam GameObject self GameObject instance
--- @param odf ODF filename
+-- @tparam string odf ODF filename
 -- @usage enemy1:IsOdf("svturr")
 function GameObject.IsOdf(self, odf)
   if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
@@ -923,7 +923,7 @@ end
 
 --- Get race of GameObject
 -- @tparam GameObject self GameObject instance
--- @return character identifier for race
+-- @treturn string character identifier for race
 function GameObject.GetRace(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return GetRace(self:GetHandle());
@@ -931,7 +931,7 @@ end
 
 --- Get label of GameObject
 -- @tparam GameObject self GameObject instance
--- @return Label name string
+-- @treturn string Label name string
 function GameObject.GetLabel(self)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     return GetLabel(self:GetHandle());
@@ -939,7 +939,7 @@ end
 
 --- Is the GameObject this odf?
 -- @tparam GameObject self GameObject instance
--- @param label Label
+-- @tparam string label Label
 -- @usage enemy1:SetLabel("special_object_7")
 function GameObject.SetLabel(self, label)
   if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
@@ -958,7 +958,7 @@ end
 --- Set GameObject as the local or remote user
 -- This must be called after building a new craft on entry or respawn
 -- @tparam GameObject self GameObject instance
--- @param team new team number
+-- @tparam int team new team number
 function GameObject.SetAsUser(self, team)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     if not isnumber(team) then error("Paramater amt must be number."); end

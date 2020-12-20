@@ -8,6 +8,7 @@
 -- @author John "Nielk1" Klein
 
 local debugprint = debugprint or function() end;
+local traceprint = traceprint or function() end;
 
 debugprint("_api Loading");
 
@@ -263,44 +264,38 @@ function Load(...)
     
     gameTurn = args.gameTurn;
 
---    debugprint("Loading custom types map");
+    traceprint("Loading custom types map");
     CustomTypeMap = args.CustomSavableTypes
---    debugprint("Loaded custom types map");
+    traceprint("Loaded custom types map");
     
---    debugprint("Loading custom types data");
+    traceprint("Loading custom types data");
     for idNum,data in ipairs(args.CustomSavableTypeData) do
         local entry = CustomSavableTypes[CustomTypeMap[idNum]];
         if entry.BulkLoad ~= nil and isfunction(entry.BulkLoad) then
---            debugprint("Loaded " .. entry.TypeName);
+            traceprint("Loaded " .. entry.TypeName);
             entry.BulkLoad(DeSimplifyForLoad(table.unpack(data)));
         end
     end
---    debugprint("Loaded custom types data");
-    
---    debugprint("Game Object Data Start");
---    for k,y in pairs(GameObjectAltered) do
---      debugprint(tostring(k) .. " = " .. tostring(y));
---    end
---    debugprint("Game Object Data End");
-    
---    debugprint("Calling all hooked load functions");
+    traceprint("Loaded custom types data");
+
+    traceprint("Calling all hooked load functions");
     hook.CallLoad(DeSimplifyForLoad(table.unpack(args.HooksData)));
     debugprint("_api::/Load");
 end
 
 function PostLoad()
     debugprint("_api::PostLoad()");
---    debugprint("PostLoading custom types");
+    traceprint("PostLoading custom types");
     for idNum,name in ipairs(CustomSavableTypeTmpTable) do
         local entry = CustomSavableTypes[name];
         if entry.BulkPostLoad ~= nil and isfunction(entry.BulkPostLoad) then
---            debugprint("PostLoaded " .. entry.TypeName);
+            traceprint("PostLoaded " .. entry.TypeName);
             SimplifyForSave(entry.BulkPostLoad());
         else
---            debugprint("PostLoaded " .. entry.TypeName .. " (nothing to PostLoad)");
+            traceprint("PostLoaded " .. entry.TypeName .. " (nothing to PostLoad)");
         end
     end
---    debugprint("PostLoaded custom types");
+    traceprint("PostLoaded custom types");
     
     hook.CallPostLoad();
     debugprint("_api::/PostLoad");
@@ -346,23 +341,23 @@ end
 
 --- Called when a player joins the game world.
 function AddPlayer(id, team, isNewPlayer)
-    --debugprint("_api::AddPlayer(" .. tostring(id) .. ", " .. tostring(team) .. ", " .. tostring(isNewPlayer) .. ")");
+    debugprint("_api::AddPlayer(" .. tostring(id) .. ", " .. tostring(team) .. ", " .. tostring(isNewPlayer) .. ")");
     local retVal, stoppedEarly = hook.CallAllPassReturn("AddPlayer", id, team, isNewPlayer);
     if not isboolean(retVal) then retVal = true; end
-    --debugprint("_api::/AddPlayer");
+    debugprint("_api::/AddPlayer");
     return retVal;
 end
 
 --- Called when a player leaves the game world.
 function DeletePlayer(id)
-    --debugprint("_api::DeletePlayer(" .. tostring(id) .. ")");
-    --debugprint("DeletePlayer");
+    debugprint("_api::DeletePlayer(" .. tostring(id) .. ")");
     hook.CallAllNoReturn( "DeletePlayer", id );
+    debugprint("/DeletePlayer");
 end
 
 --- Called when the player Ejects.
 function PlayerEjected(DeadObjectHandle)
-    --debugprint("_api::PlayerEjected(" .. tostring(DeadObjectHandle) .. ")");
+    traceprint("_api::PlayerEjected(" .. tostring(DeadObjectHandle) .. ")");
     local object = GameObject.FromHandle(DeadObjectHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PlayerEjected", object);
     if retVal == nil then retVal = EjectKillRetCodes.DoEjectPilot; end
@@ -371,7 +366,7 @@ end
 
 --- Called when an object is killed.
 function ObjectKilled(DeadObjectHandle, KillersHandle)
-    --debugprint("_api::DeadObjectHandle(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
+    traceprint("_api::DeadObjectHandle(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
     local object1 = GameObject.FromHandle(DeadObjectHandle);
     local object2 = GameObject.FromHandle(KillersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectKilled", object1, object2);
@@ -381,7 +376,7 @@ end
 
 --- Called when an object is sniped.
 function ObjectSniped(DeadObjectHandle, KillersHandle)
-    --debugprint("_api::ObjectSniped(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
+    traceprint("_api::ObjectSniped(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
     local object1 = GameObject.FromHandle(DeadObjectHandle);
     local object2 = GameObject.FromHandle(KillersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectSniped", object1, object2);
@@ -391,7 +386,7 @@ end
 
 --- Called when an ordnance hits an object. This technically happens just before any damage is applied. Also it only happens when the ordnance hits a vehicle or box/sphere collidable object. Objects that use collision mesh's are technically part of the terrain? sortof...
 function PreOrdnanceHit(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    --debugprint("_api::PreOrdnanceHit(" .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
+    traceprint("_api::PreOrdnanceHit(" .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
     hook.CallAllNoReturn( "PreOrdnanceHit", object1, object2, ordnanceTeam, pOrdnanceODF );
@@ -399,7 +394,7 @@ end
 
 --- Called when an object is Sniped. Occurs just before the snipe, and can be used to prevent it from happening.
 function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    --debugprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
+    traceprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, pOrdnanceODF);
@@ -409,7 +404,7 @@ end
 
 --- Called when a pilot gets into a ship. Can be used to prevent it.
 function PreGetIn(curWorld, pilotHandle, emptyCraftHandle)
-    --debugprint("_api::PreGetIn(" .. tostring(curWorld) .. ", " .. tostring(pilotHandle) .. ", " .. tostring(emptyCraftHandle) .. ")");
+    traceprint("_api::PreGetIn(" .. tostring(curWorld) .. ", " .. tostring(pilotHandle) .. ", " .. tostring(emptyCraftHandle) .. ")");
     local object1 = GameObject.FromHandle(pilotHandle);
     local object2 = GameObject.FromHandle(emptyCraftHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PreGetIn", curWorld, object1, object2);
@@ -419,7 +414,7 @@ end
 
 --- Called when a powerup is picked up. Can be used to prevent it.
 function PrePickupPowerup(curWorld, me, powerupHandle)
-    --debugprint("_api::PrePickupPowerup(" .. tostring(curWorld) .. ", " .. tostring(me) .. ", " .. tostring(powerupHandle) .. ")");
+    traceprint("_api::PrePickupPowerup(" .. tostring(curWorld) .. ", " .. tostring(me) .. ", " .. tostring(powerupHandle) .. ")");
     local object1 = GameObject.FromHandle(me);
     local object2 = GameObject.FromHandle(powerupHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PrePickupPowerup", curWorld, object1, object2);
@@ -429,7 +424,7 @@ end
 
 --- Called when the user? changes targets? Can be used to trigger events on a target change?
 function PostTargetChangeCallback(craft, previousTarget, currentTarget)
-    --debugprint("_api::PostTargetChangeCallback(" .. tostring(craft) .. ", " .. tostring(previousTarget) .. ", " .. tostring(currentTarget) .. ")");
+    traceprint("_api::PostTargetChangeCallback(" .. tostring(craft) .. ", " .. tostring(previousTarget) .. ", " .. tostring(currentTarget) .. ")");
     local object1 = GameObject.FromHandle(craft);
     local object2 = GameObject.FromHandle(previousTarget);
     local object3 = GameObject.FromHandle(currentTarget);
