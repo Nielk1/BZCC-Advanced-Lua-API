@@ -17,6 +17,7 @@ local hook = require("_hook");
 --==============================================================================================================================================================
 -- Utility Functions
 --==============================================================================================================================================================
+-- @section
 
 --- Is this object a function?
 -- @param object Object in question
@@ -64,6 +65,7 @@ end
 --==============================================================================================================================================================
 -- Enums
 --==============================================================================================================================================================
+-- @section
 
 -- Set of return codes from the PlayerEjected/PlayerKilled call to DLL
 EjectKillRetCodes = {}
@@ -100,6 +102,7 @@ PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW = 1;
 --==============================================================================================================================================================
 -- Mission Core
 --==============================================================================================================================================================
+-- @section
 
 local CustomSavableTypes = {};
 local CustomTypeMap = nil; -- maps name to ID number
@@ -320,26 +323,37 @@ end
 --- Called after any game object is created.
 -- Handle is the game object that was created.
 -- This function will get a lot of traffic so it should not do too much work.
+-- Note that many game object functions may not work properly here.
 function AddObject(h)
+    traceprint("_api::AddObject(" .. tostring(h) .. ")");
     hook.CallAllNoReturn( "AddObject", GameObject.FromHandle(h) );
+    traceprint("_api::/AddObject");
 end
 
 --- Called before a game object is deleted.
 -- Handle is the game object to be deleted.
 -- This function will get a lot of traffic so it should not do too much work.
+-- Note: This is called after the object is largely removed from the game, so most Get functions won't return a valid value.
 function DeleteObject(h)
+    traceprint("_api::DeleteObject(" .. tostring(h) .. ")");
     local object = GameObject.FromHandle(h);
     hook.CallAllNoReturn( "DeleteObject", object );
+    traceprint("_api::/DeleteObject");
 end
 
 --- Called once per tick after updating the network system and before simulating game objects.
 -- This function performs most of the mission script's game logic.
 function Update()
+    traceprint("_api::Update()");
     hook.CallAllNoReturn( "Update", gameTurn );
     gameTurn = gameTurn + 1;
+    traceprint("_api::/Update");
 end
 
 --- Called when a player joins the game world.
+-- @tparam int id DPID number for this player
+-- @tparam int team Team number for this player
+-- @tparam bool isNewPlayer Is new player?
 function AddPlayer(id, team, isNewPlayer)
     debugprint("_api::AddPlayer(" .. tostring(id) .. ", " .. tostring(team) .. ", " .. tostring(isNewPlayer) .. ")");
     local retVal, stoppedEarly = hook.CallAllPassReturn("AddPlayer", id, team, isNewPlayer);
@@ -349,96 +363,158 @@ function AddPlayer(id, team, isNewPlayer)
 end
 
 --- Called when a player leaves the game world.
+-- @tparam int id DPID number for this player
 function DeletePlayer(id)
     debugprint("_api::DeletePlayer(" .. tostring(id) .. ")");
     hook.CallAllNoReturn( "DeletePlayer", id );
-    debugprint("/DeletePlayer");
+    debugprint("_api::/DeletePlayer");
 end
 
 --- Called when the player Ejects.
-function PlayerEjected(DeadObjectHandle)
-    traceprint("_api::PlayerEjected(" .. tostring(DeadObjectHandle) .. ")");
-    local object = GameObject.FromHandle(DeadObjectHandle);
+-- @tparam handle deadObjectHandle Handle for the now Dead ship that was ejected out of
+function PlayerEjected(deadObjectHandle)
+    traceprint("_api::PlayerEjected(" .. tostring(deadObjectHandle) .. ")");
+    local object = GameObject.FromHandle(deadObjectHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PlayerEjected", object);
     if retVal == nil then retVal = EjectKillRetCodes.DoEjectPilot; end
+    traceprint("_api::/PlayerEjected");
     return retVal;
 end
 
 --- Called when an object is killed.
-function ObjectKilled(DeadObjectHandle, KillersHandle)
-    traceprint("_api::DeadObjectHandle(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
-    local object1 = GameObject.FromHandle(DeadObjectHandle);
-    local object2 = GameObject.FromHandle(KillersHandle);
+-- @tparam handle deadObjectHandle Handle for the now Dead object
+-- @tparam handle killersHandle Handle for the object that killed this object, if present
+function ObjectKilled(deadObjectHandle, killersHandle)
+    traceprint("_api::DeadObjectHandle(" .. tostring(deadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
+    local object1 = GameObject.FromHandle(deadObjectHandle);
+    local object2 = GameObject.FromHandle(killersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectKilled", object1, object2);
     if retVal == nil then retVal = (object1:IsPlayer() and EjectKillRetCodes.DoEjectPilot or EjectKillRetCodes.DLLHandled); end
+    traceprint("_api::/DeadObjectHandle");
     return retVal;
 end
 
 --- Called when an object is sniped.
-function ObjectSniped(DeadObjectHandle, KillersHandle)
-    traceprint("_api::ObjectSniped(" .. tostring(DeadObjectHandle) .. ", " .. tostring(KillersHandle) .. ")");
-    local object1 = GameObject.FromHandle(DeadObjectHandle);
-    local object2 = GameObject.FromHandle(KillersHandle);
+-- @tparam handle deadObjectHandle Handle for the now Dead ship that was ejected out of
+-- @tparam handle killersHandle Handle for the object that killed this object, if present
+function ObjectSniped(deadObjectHandle, killersHandle)
+    traceprint("_api::ObjectSniped(" .. tostringDeadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
+    local object1 = GameObject.FromHandle(deadObjectHandle);
+    local object2 = GameObject.FromHandle(killersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectSniped", object1, object2);
     if retVal == nil then retVal = (object1:IsPlayer() and EjectKillRetCodes.DoGameOver or EjectKillRetCodes.DLLHandled); end
+    traceprint("_api::/ObjectSniped");
     return retVal;
 end
 
---- Called when an ordnance hits an object. This technically happens just before any damage is applied. Also it only happens when the ordnance hits a vehicle or box/sphere collidable object. Objects that use collision mesh's are technically part of the terrain? sortof...
-function PreOrdnanceHit(shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    traceprint("_api::PreOrdnanceHit(" .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
+--- Called when an ordnance hits an object. This technically happens just before any damage is applied.
+-- @tparam handle shooterHandle Handle of the Shooter
+-- @tparam handle victimHandle Handle of the object hit
+-- @tparam int ordnanceTeam Team number of the Ordnance, if applicable
+-- @tparam string ordnanceODF ODF file of the Ordnance that hit the VictimHandle
+function PreOrdnanceHit(shooterHandle, victimHandle, ordnanceTeam, ordnanceODF)
+    traceprint("_api::PreOrdnanceHit(" .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(ordnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
-    hook.CallAllNoReturn( "PreOrdnanceHit", object1, object2, ordnanceTeam, pOrdnanceODF );
+    hook.CallAllNoReturn( "PreOrdnanceHit", object1, object2, ordnanceTeam, ordnanceODF );
+    traceprint("_api::/PreOrdnanceHit");
 end
 
 --- Called when an object is Sniped. Occurs just before the snipe, and can be used to prevent it from happening.
-function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, pOrdnanceODF)
-    traceprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(pOrdnanceODF) .. ")");
+-- This function is called when a SniperShell Ordnance hits an Object and would successfully trigger a Snipe.
+-- @tparam int curWorld Current MP World. If you do anything that effects the world, ensure curWorld is 0 to avoid MP Resyncs
+-- @tparam handle shooterHandle Handle of the Shooter
+-- @tparam handle victimHandle Handle of the object hit
+-- @tparam int ordnanceTeam Team number of the Ordnance, if applicable
+-- @tparam string ordnanceODF ODF file of the Ordnance that hit the VictimHandle
+-- @treturn int PreSnipeReturnValues
+-- @see ScriptUtils.PreSnipeReturnValues
+function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, ordnanceODF)
+    traceprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(ordnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, pOrdnanceODF);
+    local retVal, stoppedEarly = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, ordnanceODF);
     if retVal == nil then retVal = PreSnipeReturnCodes.PRESNIPE_KILLPILOT; end
+    traceprint("_api::/PreSnipe");
     return retVal;
 end
 
 --- Called when a pilot gets into a ship. Can be used to prevent it.
+-- @tparam int curWorld The current MP World. If you do anything that effects the world, ensure curWorld is 0 to avoid MP Resyncs
+-- @tparam handle pilotHandle Handle of the Pilot
+-- @tparam handle emptyCraftHandle Handle of the Empty craft
+-- @treturn int PreGetInReturnValues
+-- @see ScriptUtils.PreGetInReturnValues
 function PreGetIn(curWorld, pilotHandle, emptyCraftHandle)
     traceprint("_api::PreGetIn(" .. tostring(curWorld) .. ", " .. tostring(pilotHandle) .. ", " .. tostring(emptyCraftHandle) .. ")");
     local object1 = GameObject.FromHandle(pilotHandle);
     local object2 = GameObject.FromHandle(emptyCraftHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PreGetIn", curWorld, object1, object2);
     if retVal == nil then retVal = PreGetInReturnCodes.PREGETIN_ALLOW; end
+    traceprint("_api::/PreGetIn");
     return retVal;
 end
 
 --- Called when a powerup is picked up. Can be used to prevent it.
+-- @tparam int curWorld The current MP World. If you do anything that effects the world, ensure curWorld is 0 to avoid MP Resyncs.
+-- @tparam handle me Handle of the object picking up the Powerup
+-- @tparam handle powerupHandle Handle of the powerup object
+-- @treturn int PrePickupPowerupReturnValues
+-- @see ScriptUtils.PrePickupPowerupReturnValues
 function PrePickupPowerup(curWorld, me, powerupHandle)
     traceprint("_api::PrePickupPowerup(" .. tostring(curWorld) .. ", " .. tostring(me) .. ", " .. tostring(powerupHandle) .. ")");
     local object1 = GameObject.FromHandle(me);
     local object2 = GameObject.FromHandle(powerupHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("PrePickupPowerup", curWorld, object1, object2);
     if retVal == nil then retVal = PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW; end
+    traceprint("_api::/PrePickupPowerup");
     return retVal;
 end
 
 --- Called when the user? changes targets? Can be used to trigger events on a target change?
+-- @tparam handle craft Handle of the object that just changed Targets
+-- @tparam handle previousTarget Handle of the previous Target
+-- @tparam handle currentTarget Handle of the new Target
 function PostTargetChangeCallback(craft, previousTarget, currentTarget)
     traceprint("_api::PostTargetChangeCallback(" .. tostring(craft) .. ", " .. tostring(previousTarget) .. ", " .. tostring(currentTarget) .. ")");
     local object1 = GameObject.FromHandle(craft);
     local object2 = GameObject.FromHandle(previousTarget);
     local object3 = GameObject.FromHandle(currentTarget);
     hook.CallAllNoReturn( "PostTargetChangeCallback", object1, object2, object3 );
+    traceprint("_api::/PostTargetChangeCallback");
+end
+
+
+--- Called at the End of the mission, shortly before game returns to the Shell UI.
+function PostRun()
+    debugprint("_api::PostRun(" .. tostring(craft) .. ", " .. tostring(previousTarget) .. ", " .. tostring(currentTarget) .. ")");
+    hook.CallAllNoReturn( "PostRun" );
+    debugprint("_api::/PostRun");
+end
+
+--- Used to select the team's next respawn ODF.
+-- Note: Mission scripts tend to handle respawn logic themselves, making this superfluous.
+-- @tparam int team Team number specified for filtering
+function GetNextRandomVehicleODF(team)
+    debugprint("_api::GetNextRandomVehicleODF(" .. tostring(team) .. ")");
+    hook.CallAllNoReturn( "GetNextRandomVehicleODF", (team );
+    debugprint("_api::/GetNextRandomVehicleODF");
 end
 
 --- Called when an IFace command is triggered. Use CalcCRC(string) to determine the command from the crc value.
+-- @tparam int crc CRC of the Command to process
 function ProcessCommand ( crc )
+    traceprint("_api::ProcessCommand(" .. tostring(crc) .. ")");
     hook.CallAllNoReturn( "ProcessCommand", crc );
+    traceprint("_api::/ProcessCommand");
 end
 
 --- Called every tick to set the Random seed used to sync GetRandomFloat across Multiworld.
+-- @tparam int seed Random seed to use
 function SetRandomSeed ( seed )
+    traceprint("_api::SetRandomSeed(" .. tostring(seed) .. ")");
     hook.CallAllNoReturn( "SetRandomSeed", seed );
+    traceprint("_api::/SetRandomSeed");
 end
 
 debugprint("_api Loaded");
