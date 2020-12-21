@@ -966,13 +966,10 @@ function GameObject.SetAsUser(self, team)
 end
 
 hook.Add("DeleteObject", "GameObject_DeleteObject", function(object)
-    local objectId = object:GetHandle();--string.sub(tostring(object:GetHandle()),4);
+    local objectId = object:GetHandle();
     debugprint('Decaying object ' .. tostring(objectId));
-    object.id = tostring(objectId) .. "_dead";
-    GameObjectWeakList[object.id] = object; -- shift tracking key to new id
-    GameObjectDeadAltered[object.id] = object; -- move data tracking to a weak table for saving
-    GameObjectWeakList[objectId] = nil; -- clear old tracking key
-    GameObjectAltered[objectId] = nil; -- clear hard reference for data we might have
+    GameObjectDeadAltered[objectId] = GameObjectAltered[objectId]; -- move data tracking, if it exists, to a weak table so it can GC if not being held onto
+    GameObjectAltered[objectId] = nil; -- clear hard reference for data we might have from strong table so the object can GC if nothing uses it
     --print(table.show(GameObjectWeakList,"GameObjectWeakList"));
     --print(table.show(GameObjectAltered,"GameObjectAltered"));
     --print(table.show(GameObjectDeadAltered,"GameObjectDeadAltered"));
