@@ -8,22 +8,22 @@
 -- 
 -- funcarray.Create("TestMachine",
 --     function(state)
---         print("test A");
+--         print("test " .. state.test1);
 --         state:next();
 --     end,
 --     funcarray.SleepSeconds(10),
 --     function(state)
---         print("test B");
+--         print("test " .. state.test2);
 --         state:next();
 --     end,
 --     funcarray.SleepSeconds(15),
 --     function(state)
---         print("test C");
+--         print("test " .. state.test3);
 --         state:next();
 --     end);
 -- 
 -- hook.Add("InitialSetup", "Custom_InitialSetup", function(turn)
---     MissionData.TestFAI = funcarray.Start("TestMachine",{test='a',test2="b"});
+--     MissionData.TestFAI = funcarray.Start("TestMachine",{test1='a',test2="b",test3="c"});
 -- end);
 -- 
 -- hook.Add("Update", "Custom_Update", function(turn)

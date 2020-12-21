@@ -7,25 +7,25 @@
 -- @usage local statemachine = require("_statemachine");
 -- 
 -- statemachine.Create("TestMachine2",
---     {
---         ["state_a"] = function(state)
---             print("test D");
---             state:switch("state_b");
---         end,
---         ["state_b"] = statemachine.SleepSeconds(10,"state_c"),
---         ["state_c"] = function(state)
---             print("test E");
---             state:switch("state_d");
---         end,
---         ["state_d"] = statemachine.SleepSeconds(15,"state_e"),
---         ["state_e"] = function(state)
---             print("test F");
---             state:switch("state_f");
---         end
---     });
+-- {
+--     ["state_a"] = function(state)
+--         print("test " .. state.test1);
+--         state:switch("state_b");
+--     end,
+--     ["state_b"] = statemachine.SleepSeconds(10,"state_c"),
+--     ["state_c"] = function(state)
+--         print("test " .. state.test2);
+--         state:switch("state_d");
+--     end,
+--     ["state_d"] = statemachine.SleepSeconds(15,"state_e"),
+--     ["state_e"] = function(state)
+--         print("test " .. state.test3);
+--         state:switch("state_f");
+--     end
+-- });
 -- 
 -- hook.Add("InitialSetup", "Custom_InitialSetup", function(turn)
---     MissionData.TestSMI = statemachine.Start("TestMachine2","state_a",{test='c',test2="d"});
+--     MissionData.TestSMI = statemachine.Start("TestMachine2","state_a",{test1='d',test2="e",test3="f"});
 -- end);
 -- 
 -- hook.Add("Update", "Custom_Update", function(turn)
