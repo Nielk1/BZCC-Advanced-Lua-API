@@ -406,7 +406,7 @@ end
 -- @tparam handle deadObjectHandle Handle for the now Dead ship that was ejected out of
 -- @tparam handle killersHandle Handle for the object that killed this object, if present
 function ObjectSniped(deadObjectHandle, killersHandle)
-    traceprint("_api::ObjectSniped(" .. tostringDeadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
+    traceprint("_api::ObjectSniped(" .. tostring(deadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
     local object1 = GameObject.FromHandle(deadObjectHandle);
     local object2 = GameObject.FromHandle(killersHandle);
     local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectSniped", object1, object2);
@@ -495,7 +495,7 @@ end
 
 --- Called at the End of the mission, shortly before game returns to the Shell UI.
 function PostRun()
-    debugprint("_api::PostRun(" .. tostring(craft) .. ", " .. tostring(previousTarget) .. ", " .. tostring(currentTarget) .. ")");
+    debugprint("_api::PostRun()");
     hook.CallAllNoReturn( "PostRun" );
     debugprint("_api::/PostRun");
 end
@@ -505,7 +505,7 @@ end
 -- @tparam int team Team number specified for filtering
 function GetNextRandomVehicleODF(team)
     debugprint("_api::GetNextRandomVehicleODF(" .. tostring(team) .. ")");
-    hook.CallAllNoReturn( "GetNextRandomVehicleODF", (team );
+    hook.CallAllNoReturn( "GetNextRandomVehicleODF", team );
     debugprint("_api::/GetNextRandomVehicleODF");
 end
 

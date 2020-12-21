@@ -10,6 +10,9 @@ debugprint = debugprint or function() end;
 
 debugprint("_api_replaceondeath Loading");
 
+local hook = require("_hook");
+require("_gameobject");
+
 hook.Add("AddObject", "ReplaceOnDeath_AddObject", function(object)
     local newObjectOdf = object:GetOdf();
     local replaceWith,success = GetODFString(newObjectOdf, "ReplaceOnDeath", "ReplaceWith", "");
