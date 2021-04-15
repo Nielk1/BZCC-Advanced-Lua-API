@@ -291,6 +291,8 @@ function Load(...)
     traceprint("Calling all hooked load functions");
     hook.CallLoad(DeSimplifyForLoad(table.unpack(args.HooksData)));
     debugprint("_api::/Load");
+    
+    PostLoad(); -- not implemented by LuaMission, if we need to add it do a version check here so we don't run it twice
 end
 
 --- You probably don't need to implement this
@@ -529,11 +531,11 @@ end
 
 debugprint("_api Loaded");
 
-print("LuaMission " .. (LuaMissionVersion or 185) .. " detected");
+print("LuaMission v" .. (LuaMissionVersion or 185) .. " detected");
 if LuaMissionFeatures ~= nil and next(LuaMissionFeatures) ~= nil then
     print("LuaMission Features:");
-    for name,ver in ipairs(LuaMissionFeatures) do
-        print("  " .. name .. " = " .. ver);
+    for name,ver in pairs(LuaMissionFeatures) do
+        print("  " .. name .. " v" .. ver);
     end
 end
 

@@ -1,4 +1,4 @@
---- BZCC LUA Extended API Replace on Death Extension.
+﻿--- BZCC LUA Extended API Replace on Death Extension.
 --
 -- Replace objects with alternate objects when they die.
 --
