@@ -1,14 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
   <command>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander\battlezone2.exe</command>
   <working_directory>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander</working_directory>
   <symbols_directory>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander</symbols_directory>
-  <command_arguments>-win -edit -resolution 1280 720 rwcore.bzn</command_arguments>
-  <scc>
-    <provider></provider>
-    <user></user>
-    <project_name></project_name>
-    <local_path></local_path>
-    <aux_project_path></aux_project_path>
-  </scc>
+  <command_arguments>-win -nointro -edit -resolution 1280 720 isdf.bzn</command_arguments>
+  <watches>
+    <watch>LLuaMissionFeatures</watch>
+    <watch>uaMissionVersion</watch>
+    <watch>ipairs(LuaMissionFeatures)</watch>
+  </watches>
+  <openfiles>
+    <file>
+      <filename>_api_replaceondeath.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_table_show.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_api.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_requirefix.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>isdf.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_gameobject.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>scriptextender.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>scriptutils.lua</filename>
+      <localpath></localpath>
+    </file>
+  </openfiles>
 </project>

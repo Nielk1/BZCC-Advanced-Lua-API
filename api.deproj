@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
   <file>
     <filename>..\baked\mod\_api.lua</filename>
@@ -33,4 +33,11 @@
   <file>
     <filename>scriptutils.lua</filename>
   </file>
+  <file>
+    <filename>scriptextender.lua</filename>
+  </file>
+  <file>
+    <filename>C:\Users\Nielk1\Documents\My Games\Battlezone Combat Commander\addon\isdf.lua</filename>
+  </file>
+  <templates></templates>
 </project>
