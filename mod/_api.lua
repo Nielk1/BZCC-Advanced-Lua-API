@@ -299,8 +299,7 @@ end
 function PostLoad()
     debugprint("_api::PostLoad()");
     traceprint("PostLoading custom types");
-    for idNum,name in ipairs(CustomSavableTypeTmpTable) do
-        local entry = CustomSavableTypes[name];
+    for name,entry in pairs(CustomSavableTypes) do
         if entry.BulkPostLoad ~= nil and isfunction(entry.BulkPostLoad) then
             traceprint("PostLoaded " .. entry.TypeName);
             SimplifyForSave(entry.BulkPostLoad());
