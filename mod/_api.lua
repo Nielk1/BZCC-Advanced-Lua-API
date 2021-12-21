@@ -365,7 +365,7 @@ end
 -- @tparam bool isNewPlayer Is new player?
 function AddPlayer(id, team, isNewPlayer)
     debugprint("_api::AddPlayer(" .. tostring(id) .. ", " .. tostring(team) .. ", " .. tostring(isNewPlayer) .. ")");
-    local retVal, stoppedEarly = hook.CallAllPassReturn("AddPlayer", id, team, isNewPlayer);
+    local retVal = hook.CallAllPassReturn("AddPlayer", id, team, isNewPlayer);
     if not isboolean(retVal) then retVal = true; end
     debugprint("_api::/AddPlayer");
     return retVal;
@@ -384,7 +384,7 @@ end
 function PlayerEjected(deadObjectHandle)
     traceprint("_api::PlayerEjected(" .. tostring(deadObjectHandle) .. ")");
     local object = GameObject.FromHandle(deadObjectHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("PlayerEjected", object);
+    local retVal = hook.CallAllPassReturn("PlayerEjected", object);
     if retVal == nil then retVal = EjectKillRetCodes.DoEjectPilot; end
     traceprint("_api::/PlayerEjected");
     return retVal;
@@ -397,7 +397,7 @@ function ObjectKilled(deadObjectHandle, killersHandle)
     traceprint("_api::DeadObjectHandle(" .. tostring(deadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
     local object1 = GameObject.FromHandle(deadObjectHandle);
     local object2 = GameObject.FromHandle(killersHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectKilled", object1, object2);
+    local retVal = hook.CallAllPassReturn("ObjectKilled", object1, object2);
     if retVal == nil then retVal = (object1:IsPlayer() and EjectKillRetCodes.DoEjectPilot or EjectKillRetCodes.DLLHandled); end
     traceprint("_api::/DeadObjectHandle");
     return retVal;
@@ -410,7 +410,7 @@ function ObjectSniped(deadObjectHandle, killersHandle)
     traceprint("_api::ObjectSniped(" .. tostring(deadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
     local object1 = GameObject.FromHandle(deadObjectHandle);
     local object2 = GameObject.FromHandle(killersHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("ObjectSniped", object1, object2);
+    local retVal = hook.CallAllPassReturn("ObjectSniped", object1, object2);
     if retVal == nil then retVal = (object1:IsPlayer() and EjectKillRetCodes.DoGameOver or EjectKillRetCodes.DLLHandled); end
     traceprint("_api::/ObjectSniped");
     return retVal;
@@ -442,7 +442,7 @@ function PreSnipe(curWorld, shooterHandle, victimHandle, ordnanceTeam, ordnanceO
     traceprint("_api::PreSnipe(" .. tostring(curWorld) .. ", " .. tostring(shooterHandle) .. ", " .. tostring(victimHandle) .. ", " .. tostring(ordnanceTeam) .. ", " .. tostring(ordnanceODF) .. ")");
     local object1 = GameObject.FromHandle(shooterHandle);
     local object2 = GameObject.FromHandle(victimHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, ordnanceODF);
+    local retVal = hook.CallAllPassReturn("PreSnipe", curWorld, object1, object2, ordnanceTeam, ordnanceODF);
     if retVal == nil then retVal = PreSnipeReturnCodes.PRESNIPE_KILLPILOT; end
     traceprint("_api::/PreSnipe");
     return retVal;
@@ -458,7 +458,7 @@ function PreGetIn(curWorld, pilotHandle, emptyCraftHandle)
     traceprint("_api::PreGetIn(" .. tostring(curWorld) .. ", " .. tostring(pilotHandle) .. ", " .. tostring(emptyCraftHandle) .. ")");
     local object1 = GameObject.FromHandle(pilotHandle);
     local object2 = GameObject.FromHandle(emptyCraftHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("PreGetIn", curWorld, object1, object2);
+    local retVal = hook.CallAllPassReturn("PreGetIn", curWorld, object1, object2);
     if retVal == nil then retVal = PreGetInReturnCodes.PREGETIN_ALLOW; end
     traceprint("_api::/PreGetIn");
     return retVal;
@@ -474,7 +474,7 @@ function PrePickupPowerup(curWorld, me, powerupHandle)
     traceprint("_api::PrePickupPowerup(" .. tostring(curWorld) .. ", " .. tostring(me) .. ", " .. tostring(powerupHandle) .. ")");
     local object1 = GameObject.FromHandle(me);
     local object2 = GameObject.FromHandle(powerupHandle);
-    local retVal, stoppedEarly = hook.CallAllPassReturn("PrePickupPowerup", curWorld, object1, object2);
+    local retVal = hook.CallAllPassReturn("PrePickupPowerup", curWorld, object1, object2);
     if retVal == nil then retVal = PrePickupPowerupReturnCodes.PREPICKUPPOWERUP_ALLOW; end
     traceprint("_api::/PrePickupPowerup");
     return retVal;

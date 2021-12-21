@@ -22,6 +22,8 @@ local debugprint = debugprint or function() end;
 
 debugprint("_mapdata Loading");
 
+local hook = require("_hook");
+
 --- BZN filename with extension.
 -- @string BznFile
 
@@ -58,6 +60,57 @@ debugprint("_mapdata Loading");
 -- @function __call
 -- @treturn table
 local mapdata = {};
+
+
+--- Get play area polygon.
+-- Triggers "MapData:GetPlayArea" event.
+-- treturn table
+function mapdata.GetPlayArea()
+    local edge_path = GetPathPoints("edge_path");
+    local retVal = nil;
+    if edge_path ~= nil then
+        local MinX = 99999;
+        local MaxX = -99999;
+        local MinZ = 99999;
+        local MaxZ = -99999;
+        for _, point in ipairs(edge_path) do
+            if point.x < MinX then MinX = point.x end
+            if point.x > MaxX then MaxX = point.x end
+            if point.z < MinX then MinZ = point.z end
+            if point.z > MaxX then MaxZ = point.z end
+        end
+        
+        -- this is the same padding the game uses
+        MinX = MinX + 10;
+        MaxX = MaxX - 10;
+        MinZ = MinZ + 10;
+        MaxZ = MaxZ - 10;
+        
+        retVal = { SetVector(MinX, 0, MinZ),
+                   SetVector(MinX, 0, MaxZ),
+                   SetVector(MaxX, 0, MaxZ),
+                   SetVector(MaxX, 0, MinZ) };
+    end
+    if retVal == nil then
+        -- this is the same padding the game uses
+        local MinX = mapdata.MinX + 5;
+        local MaxX = mapdata.MaxX - 5;
+        local MinZ = mapdata.MinZ + 5;
+        local MaxZ = mapdata.MaxZ - 5;
+        
+        retVal = { SetVector(MinX, 0, MinZ),
+                   SetVector(MinX, 0, MaxZ),
+                   SetVector(MaxX, 0, MaxZ),
+                   SetVector(MaxX, 0, MinZ) };
+    end
+    -- implementers of this function need to have 2 paramaters, where the first is the
+    -- path we provided, and the 2nd is an overriding path from another hook implementer
+    local hookResult = hook.CallAllPassReturn("MapData:GetPlayArea", retVal);
+    if hookResult ~= nil then
+        return hookResult;
+    end
+    return retVal;
+end
 
 function read_i16(b1, b2)
     assert(0 <= b1 and b1 <= 0xff);
