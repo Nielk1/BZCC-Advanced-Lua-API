@@ -22,6 +22,7 @@ local debugprint = debugprint or function() end;
 
 debugprint("_mapdata Loading");
 
+local _api = require("_api");
 local hook = require("_hook");
 
 --- BZN filename with extension.
@@ -60,7 +61,6 @@ local hook = require("_hook");
 -- @function __call
 -- @treturn table
 local mapdata = {};
-
 
 --- Get play area polygon.
 -- Triggers "MapData:GetPlayArea" event.
@@ -187,7 +187,7 @@ mapdata_meta.__index = function(table, key)
     if key == "MetersPerGrid" then return LoadMetersPerGrid(table); end
     if key == "MetersPerCluster" then return MetersPerCluster(table); end
     if not mapLoaded and (key == "Version" or key == "MinX" or key == "MinZ" or key == "MaxX" or key == "MaxZ") then LoadBinaryMapData(table); end
-    return rawget(table, key);
+    return rawget(mapdata_meta, key); -- move on to base (looking for functions)
 end
 mapdata_meta.__newindex = function(dtable, key, value)
     error("Attempt to update a read-only table.", 2)
@@ -202,7 +202,26 @@ mapdata_meta.__call = function(table)
     LoadBinaryMapData(table);
     return table;
 end
+
+mapdata_meta.__type = "MapData";
+
 mapdata = setmetatable(mapdata, mapdata_meta);
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- MapData - Core
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- @section
+
+--- Load event function.
+-- INTERNAL USE.
+-- We only saved a marker of our type and nothing else, so on load we just restore ourself to our global self, via module self-requiring
+-- @param data
+function mapdata_meta.Load(data)
+    local mapdata = require("_mapdata");
+    return mapdata;
+end
+
+_api.RegisterCustomSavableType(mapdata_meta);
 
 debugprint("_mapdata Loaded");
 

@@ -115,33 +115,33 @@ function _api.RegisterCustomSavableType(obj)
     local typeT = {};
     if obj.Save ~= nil then
         typeT.Save = obj.Save;
-    else
-        typeT.Save = function() end
+    --else
+    --    typeT.Save = function() end
     end
     if obj.Load ~= nil then
         typeT.Load = obj.Load;
-    else
-        typeT.Load = function() end
+    --else
+    --    typeT.Load = function() end
     end
     if obj.PostLoad ~= nil then
         typeT.PostLoad = obj.PostLoad;
-    else
-        typeT.PostLoad = function() end
+    --else
+    --    typeT.PostLoad = function() end
     end
     if obj.BulkSave ~= nil then
         typeT.BulkSave = obj.BulkSave;
-    else
-        typeT.BulkSave = function() end
+    --else
+    --    typeT.BulkSave = function() end
     end
     if obj.BulkLoad ~= nil then
         typeT.BulkLoad = obj.BulkLoad;
-    else
-        typeT.BulkLoad = function() end
+    --else
+    --    typeT.BulkLoad = function() end
     end
     if obj.BulkPostLoad ~= nil then
         typeT.BulkPostLoad = obj.BulkPostLoad;
-    else
-        typeT.BulkPostLoad = function() end
+    --else
+    --    typeT.BulkPostLoad = function() end
     end
     typeT.TypeName = obj.__type;
     CustomSavableTypes[obj.__type] = typeT;
@@ -158,7 +158,9 @@ function SimplifyForSave(...)
                 local typeIndex = CustomTypeMap[v.__type];
                 debugprint("Type index for " .. v.__type .. " is " .. tostring(typeIndex));
                 specialTypeTable["*custom_type"] = typeIndex;
-                specialTypeTable["*data"] = {CustomSavableTypes[v.__type].Save(v)};
+                if CustomSavableTypes[v.__type].Save ~= nil then
+                    specialTypeTable["*data"] = {CustomSavableTypes[v.__type].Save(v)};
+                end
                 table.insert(output, specialTypeTable);
             else
                 local newTable = {};
@@ -183,7 +185,13 @@ function DeSimplifyForLoad(...)
             if v["*custom_type"] ~= nil then
                 local typeName = CustomTypeMap[v["*custom_type"]];
                 local typeObj = CustomSavableTypes[typeName];
-                table.insert(output, typeObj.Load(table.unpack(v["*data"])));
+                if typeObj.Load ~= nil then
+                    if v["*data"] ~= nil then
+                        table.insert(output, typeObj.Load(table.unpack(v["*data"])));
+                    else
+                        table.insert(output, typeObj.Load());
+                    end
+                end
             else
                 local newTable = {};
                 for k2, v2 in pairs( v ) do 
