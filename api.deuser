@@ -42,5 +42,21 @@
       <filename>scriptutils.lua</filename>
       <localpath></localpath>
     </file>
+    <file>
+      <filename>_funcarray.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_printfix.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_hook.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_api_editor_tunnelfix.lua</filename>
+      <localpath></localpath>
+    </file>
   </openfiles>
 </project>

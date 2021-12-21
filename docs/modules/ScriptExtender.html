@@ -33,6 +33,7 @@
 <h2>Contents</h2>
 <ul>
 <li><a href="#Radar">Radar </a></li>
+<li><a href="#GameObject">GameObject </a></li>
 </ul>
 
 
@@ -48,6 +49,7 @@
   <li><a href="../modules/_hook.html">_hook</a></li>
   <li><a href="../modules/_printfix.html">_printfix</a></li>
   <li><a href="../modules/_requirefix.html">_requirefix</a></li>
+  <li><a href="../modules/_mapdata.html">_mapdata</a></li>
   <li><a href="../modules/_table_show.html">_table_show</a></li>
 </ul>
 
@@ -89,6 +91,53 @@
 	<td class="summary">Is radar type active?</td>
 	</tr>
 </table>
+<h2><a href="#GameObject">GameObject </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#SetStatusImage">SetStatusImage (handle, texture)</a></td>
+	<td class="summary">Change the status image of an object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SetLockdown">SetLockdown (handle, turns)</a></td>
+	<td class="summary">Set the lockdown state on an object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetLockdown">GetLockdown (handle)</a></td>
+	<td class="summary">Get the lockdown state on an object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetWeaponLeadPosition">GetWeaponLeadPosition (shooter, index, target)</a></td>
+	<td class="summary">Get the world position of the weapon's TLI.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetCenterOfMass">GetCenterOfMass (handle)</a></td>
+	<td class="summary">Get the world center of mass.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetWeaponCharge">GetWeaponCharge (handle, slot)</a></td>
+	<td class="summary">Get percent charge of weapon.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#IsWeaponLocked">IsWeaponLocked (handle, slot)</a></td>
+	<td class="summary">Get if weapon is locked.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SetRadarColor">SetRadarColor (handle, color)</a></td>
+	<td class="summary">Set base radar color of object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetRadarColor">GetRadarColor (handle)</a></td>
+	<td class="summary">Get base radar color of object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ResetRadarColor">ResetRadarColor (handle)</a></td>
+	<td class="summary">Reset radar color of object.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetRadarColorWithState">GetRadarColorWithState (handle)</a></td>
+	<td class="summary">Get radar color of object considers its alive state.</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
@@ -113,11 +162,17 @@
         <li><span class="parameter">[1]</span>
         RADARTYPE_MAP
         </li>
+        <li><span class="parameter">[2]</span>
+        RADARTYPE_COCKPIT_CUSTOM_1
+        </li>
         <li><span class="parameter">[RADARTYPE_COCKPIT]</span>
         0
         </li>
         <li><span class="parameter">[RADARTYPE_MAP]</span>
         1
+        </li>
+        <li><span class="parameter">[RADARTYPE_COCKPIT_CUSTOM_1]</span>
+        2
         </li>
     </ul>
 
@@ -146,6 +201,10 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">RadarDisable(RadarType.RADARTYPE_MAP);</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -173,6 +232,11 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <li><pre class="example">RadarEnable(RadarType.RADARTYPE_MAP);</pre></li>
+        <li><pre class="example">RadarEnable(RadarType.RADARTYPE_MAP, <span class="keyword">true</span>);</pre></li>
+    </ul>
 
 </dd>
     <dt>
@@ -200,6 +264,10 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> enabled = RadarEnabled(RadarType.RADARTYPE_MAP);</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -227,6 +295,377 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> active = RadarActive(RadarType.RADARTYPE_MAP);</pre>
+    </ul>
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="GameObject"></a>GameObject </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "SetStatusImage"></a>
+    <strong>SetStatusImage (handle, texture)</strong>
+    </dt>
+    <dd>
+    Change the status image of an object.
+ This image, conventionally called the "wireframe" in BZ2, is the image above the
+ weapon panel. This code exploits the logic used to change it for pilot pack weapons.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+        <li><span class="parameter">texture</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         Texture filename
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">SetStatusImage(playerHandle, <span class="string">'wire_iggren3.dds'</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "SetLockdown"></a>
+    <strong>SetLockdown (handle, turns)</strong>
+    </dt>
+    <dd>
+    Set the lockdown state on an object.
+ Apply the EMP Stream affect to an object.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+        <li><span class="parameter">turns</span>
+            <span class="types"><span class="type">number</span></span>
+         game turns to apply affect
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">SetLockdown(objectHandle, GetTPS() * <span class="number">10</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetLockdown"></a>
+    <strong>GetLockdown (handle)</strong>
+    </dt>
+    <dd>
+    Get the lockdown state on an object.
+ Get the EMP Stream affect turns remaining.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        number turns game turns left of affect
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> turns = GetLockdown(objectHandle);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetWeaponLeadPosition"></a>
+    <strong>GetWeaponLeadPosition (shooter, index, target)</strong>
+    </dt>
+    <dd>
+    Get the world position of the weapon's TLI.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">shooter</span>
+            <span class="types"><span class="type">Handle</span></span>
+         shooter's GameObject handle
+        </li>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+         weapon index
+        </li>
+        <li><span class="parameter">target</span>
+            <span class="types"><span class="type">Handle</span></span>
+         target's GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Vector</span></span>
+        world position of TLI
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> pos = GetWeaponLeadPosition(shooter, <span class="number">0</span>, target);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetCenterOfMass"></a>
+    <strong>GetCenterOfMass (handle)</strong>
+    </dt>
+    <dd>
+    Get the world center of mass.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Vector</span></span>
+        world position of center of mass
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> pos = GetCenterOfMass(objectHandle);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetWeaponCharge"></a>
+    <strong>GetWeaponCharge (handle, slot)</strong>
+    </dt>
+    <dd>
+    Get percent charge of weapon.
+ This applies only to ChargeGun and MulitLauncher.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+        <li><span class="parameter">slot</span>
+            <span class="types"><span class="type">int</span></span>
+         Weapon slot
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">number</span></span>
+        charge %
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> charge = GetWeaponCharge(objectHandle, <span class="number">0</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "IsWeaponLocked"></a>
+    <strong>IsWeaponLocked (handle, slot)</strong>
+    </dt>
+    <dd>
+    Get if weapon is locked.
+ This applies only to Launcher.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+        <li><span class="parameter">slot</span>
+            <span class="types"><span class="type">int</span></span>
+         Weapon slot
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        is weapon locked
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> locked = IsWeaponLocked(objectHandle, <span class="number">0</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "SetRadarColor"></a>
+    <strong>SetRadarColor (handle, color)</strong>
+    </dt>
+    <dd>
+    Set base radar color of object.
+ This sets the radar color on stock radars for an object and auto-generates the 2nd color.
+ The game will override this when a color change event occurs, such as hopping out.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+        <li><span class="parameter">color</span>
+            <span class="types"><span class="type">ColorInt</span></span>
+         Color value
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">SetRadarColor(objectHandle, <span class="number">0xff0000</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetRadarColor"></a>
+    <strong>GetRadarColor (handle)</strong>
+    </dt>
+    <dd>
+    Get base radar color of object.
+ This gets the radar color on stock radars for an object.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">ColorInt</span></span>
+        Color value
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> color = GetRadarColor(objectHandle);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "ResetRadarColor"></a>
+    <strong>ResetRadarColor (handle)</strong>
+    </dt>
+    <dd>
+    Reset radar color of object.
+ This restores the game default radar color to an object.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">ColorInt</span></span>
+        Color value
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> color = GetRadarColor(objectHandle);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetRadarColorWithState"></a>
+    <strong>GetRadarColorWithState (handle)</strong>
+    </dt>
+    <dd>
+    Get radar color of object considers its alive state.
+ Objects that are dead have a darker color, though this appears broken
+ in BZCC it is still in the code and may be used in other cases.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">ColorInt</span></span>
+        Color value
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> color = GetRadarColorWithState(objectHandle);</pre>
+    </ul>
 
 </dd>
 </dl>
@@ -236,7 +675,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2021-04-15 04:41:07 </i>
+<i style="float:right;">Last updated 2021-12-21 07:39:43 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

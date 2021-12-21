@@ -10,5 +10,6 @@ file = {
 '..\\baked\\mod\\_hook.lua',
 '..\\baked\\mod\\_printfix.lua',
 '..\\baked\\mod\\_requirefix.lua',
+'..\\baked\\mod\\_mapdata.lua',
 '..\\baked\\mod\\_table_show.lua'
 }
