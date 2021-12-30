@@ -5,9 +5,7 @@
   <symbols_directory>D:\Program Files (x86)\GOG Galaxy\Games\Battlezone Combat Commander</symbols_directory>
   <command_arguments>-win -nointro -edit -resolution 1280 720 isdf.bzn</command_arguments>
   <watches>
-    <watch>LLuaMissionFeatures</watch>
-    <watch>uaMissionVersion</watch>
-    <watch>ipairs(LuaMissionFeatures)</watch>
+    <watch>mapdata</watch>
   </watches>
   <openfiles>
     <file>
@@ -39,10 +37,6 @@
       <localpath></localpath>
     </file>
     <file>
-      <filename>scriptutils.lua</filename>
-      <localpath></localpath>
-    </file>
-    <file>
       <filename>_funcarray.lua</filename>
       <localpath></localpath>
     </file>
@@ -56,6 +50,18 @@
     </file>
     <file>
       <filename>_api_editor_tunnelfix.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_statemachine.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>_mapdata.lua</filename>
+      <localpath></localpath>
+    </file>
+    <file>
+      <filename>scriptutils.lua</filename>
       <localpath></localpath>
     </file>
   </openfiles>

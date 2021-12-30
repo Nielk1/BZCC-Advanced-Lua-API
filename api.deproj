@@ -19,6 +19,9 @@
     <filename>..\baked\mod\_hook.lua</filename>
   </file>
   <file>
+    <filename>..\baked\mod\_mapdata.lua</filename>
+  </file>
+  <file>
     <filename>..\baked\mod\_printfix.lua</filename>
   </file>
   <file>
@@ -31,13 +34,13 @@
     <filename>..\baked\mod\_table_show.lua</filename>
   </file>
   <file>
-    <filename>scriptutils.lua</filename>
+    <filename>C:\Users\Nielk1\Documents\My Games\Battlezone Combat Commander\addon\isdf.lua</filename>
   </file>
   <file>
     <filename>scriptextender.lua</filename>
   </file>
   <file>
-    <filename>C:\Users\Nielk1\Documents\My Games\Battlezone Combat Commander\addon\isdf.lua</filename>
+    <filename>scriptutils.lua</filename>
   </file>
   <templates></templates>
 </project>
