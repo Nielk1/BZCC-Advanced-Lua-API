@@ -2,6 +2,7 @@
 -- 
 -- Function Array and Function Array Iterator for serial event sequences across game turns.
 -- 
+-- Dependencies: @{_api}, @{_hook}
 -- @module _funcarray
 -- @author John "Nielk1" Klein
 -- @usage local funcarray = require("_funcarray");
@@ -187,6 +188,7 @@ end
 -- @section
 
 --- Save event function.
+--
 -- INTERNAL USE.
 -- @param self FuncArrayIter instance
 -- @return ...
@@ -195,6 +197,7 @@ function FuncArrayIter.Save(self)
 end
 
 --- Load event function.
+--
 -- INTERNAL USE.
 -- @param data
 function FuncArrayIter.Load(data)
@@ -202,6 +205,7 @@ function FuncArrayIter.Load(data)
 end
 
 --- BulkSave event function.
+--
 -- INTERNAL USE.
 -- @return data to save in bulk
 function FuncArrayIter.BulkSave()
@@ -209,6 +213,7 @@ function FuncArrayIter.BulkSave()
 end
 
 --- BulkLoad event function.
+--
 -- INTERNAL USE.
 -- @param data
 function FuncArrayIter.BulkLoad(data)
@@ -216,6 +221,7 @@ function FuncArrayIter.BulkLoad(data)
 end
 
 --- BulkPostLoad event function.
+--
 -- INTERNAL USE.
 function FuncArrayIter.BulkPostLoad()
 

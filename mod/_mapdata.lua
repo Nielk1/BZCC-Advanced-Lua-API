@@ -3,6 +3,7 @@
 -- Functions for accessing map file data.
 -- Note this data is lazy-loaded, call the module function to force load.
 -- 
+-- Dependencies: @{_api}, @{_hook}
 -- @module _mapdata
 -- @author John "Nielk1" Klein
 -- @alias mapdata
@@ -40,12 +41,16 @@ local hook = require("_hook");
 --
 -- Version 4 is a BZCC TER without compression.
 --
---- version 5 is a BZCC TER with compression.
+-- Version 5 is a BZCC TER with compression.
 -- @int Version
 
 --- Meters per quarter of a terrain cluster.
 --
 -- This is [Size]:MetersPerGrid from the TRN
+--
+-- The "PerQuarter" here reffers to a single side of the cluster.
+-- In BZ2 a cluster was divided into 4x4 subdivision for 16 cells in total.
+-- This is what the setting is based on, where BZCC internally rescales this.
 -- @number MetersPerQuarter
 
 --- Meters per terrain grid vertex.
@@ -63,8 +68,18 @@ local hook = require("_hook");
 local mapdata = {};
 
 --- Get play area polygon.
+--
+-- Call method: @{_hook.CallAllPassReturn|CallAllPassReturn}
+--
+-- Return Vector[] polygon
+-- @event MapData:GetPlayArea
+-- @tparam Vector[] polygon Original play area polygon
+-- @tparam[opt] HookResult priorResult Prior event handler's polygon
+-- @see _hook.Add
+
+--- Get play area polygon.
 -- Triggers "MapData:GetPlayArea" event.
--- treturn table
+-- @treturn table
 function mapdata.GetPlayArea()
     local edge_path = GetPathPoints("edge_path");
     local retVal = nil;
@@ -216,8 +231,10 @@ mapdata = setmetatable(mapdata, mapdata_meta);
 -- @section
 
 --- Load event function.
+--
 -- INTERNAL USE.
--- We only saved a marker of our type and nothing else, so on load we just restore ourself to our global self, via module self-requiring
+--
+-- We only saved a marker of our type and nothing else, so on load we just restore ourself to our global self, via module self-requiring.
 -- @param data
 function mapdata_meta.Load(data)
     local mapdata = require("_mapdata");

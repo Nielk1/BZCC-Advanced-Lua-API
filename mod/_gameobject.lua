@@ -2,6 +2,7 @@
 -- 
 -- GameObject wrapper functions.
 -- 
+-- Dependencies: @{_api}, @{_hook}
 -- @module _gameobject
 -- @author John "Nielk1" Klein
 

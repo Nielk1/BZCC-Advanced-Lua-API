@@ -2,6 +2,7 @@
 -- 
 -- State Machine and State Machine Iterator for serial event sequences across game turns.
 -- 
+-- Dependencies: @{_api}, @{_hook}
 -- @module _statemachine
 -- @author John "Nielk1" Klein
 -- @usage local statemachine = require("_statemachine");
@@ -194,6 +195,7 @@ end
 -- @section
 
 --- Save event function.
+--
 -- INTERNAL USE.
 -- @param self StateMachineIter instance
 -- @return ...
@@ -202,6 +204,7 @@ function StateMachineIter.Save(self)
 end
 
 --- Load event function.
+--
 -- INTERNAL USE.
 -- @param data
 function StateMachineIter.Load(data)
@@ -209,6 +212,7 @@ function StateMachineIter.Load(data)
 end
 
 --- BulkSave event function.
+--
 -- INTERNAL USE.
 -- @return data to save in bulk
 function StateMachineIter.BulkSave()
@@ -216,6 +220,7 @@ function StateMachineIter.BulkSave()
 end
 
 --- BulkLoad event function.
+--
 -- INTERNAL USE.
 -- @param data
 function StateMachineIter.BulkLoad(data)
@@ -223,6 +228,7 @@ function StateMachineIter.BulkLoad(data)
 end
 
 --- BulkPostLoad event function.
+--
 -- INTERNAL USE.
 function StateMachineIter.BulkPostLoad()
 
