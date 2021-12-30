@@ -186,7 +186,10 @@ mapdata_meta.__index = function(table, key)
     if key == "MetersPerQuarter" then return LoadMetersPerQuarter(table); end
     if key == "MetersPerGrid" then return LoadMetersPerGrid(table); end
     if key == "MetersPerCluster" then return MetersPerCluster(table); end
-    if not mapLoaded and (key == "Version" or key == "MinX" or key == "MinZ" or key == "MaxX" or key == "MaxZ") then LoadBinaryMapData(table); end
+    if not mapLoaded and (key == "Version" or key == "MinX" or key == "MinZ" or key == "MaxX" or key == "MaxZ") then
+        LoadBinaryMapData(table);
+        return rawget(table, key); -- now exists
+    end
     return rawget(mapdata_meta, key); -- move on to base (looking for functions)
 end
 mapdata_meta.__newindex = function(dtable, key, value)
