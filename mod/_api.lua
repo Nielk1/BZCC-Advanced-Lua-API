@@ -616,10 +616,25 @@ end
 -- @local
 function ObjectKilled(deadObjectHandle, killersHandle)
     traceprint("_api::DeadObjectHandle(" .. tostring(deadObjectHandle) .. ", " .. tostring(killersHandle) .. ")");
-    local object1 = GameObject.FromHandle(deadObjectHandle);
-    local object2 = GameObject.FromHandle(killersHandle);
-    local retVal = hook.CallAllPassReturn("ObjectKilled", object1, object2);
-    if retVal == nil then retVal = (object1:IsPlayer() and EjectKillRetCodes.DoEjectPilot or EjectKillRetCodes.DLLHandled); end
+    local deadObject = GameObject.FromHandle(deadObjectHandle);
+    local killerObject = GameObject.FromHandle(killersHandle);
+    local retVal = hook.CallAllPassReturn("ObjectKilled", deadObject, killerObject);
+
+    -- check for invalid state for players
+    if deadObject:IsPlayer() and (retVal == nil --[[or retVal == EjectKillRetCodes.DoEjectRatio--]]) then
+        retVal = EjectKillRetCodes.DoEjectPilot;
+    end
+    
+    -- check for DoEjectRatio
+    if retVal == nil --[[or retVal == EjectKillRetCodes.DoEjectRatio--]] then
+        if not IsCraftButNotPerson(deadObjectHandle) or GetRandomFloat(1) > GetEjectRatio(deadObjectHandle)
+            retVal = EjectKillRetCodes.DLLHandled;
+        end
+        else
+            retVal = EjectKillRetCodes.DoEjectPilot;
+        end
+    end
+
     traceprint("_api::/DeadObjectHandle");
     return retVal;
 end
