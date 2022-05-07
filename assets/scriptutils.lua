@@ -1,0 +1,120 @@
+--- BZCC ScriptUtils Stub
+--
+-- Stubs for ScriptUtils LDoc
+--
+-- @module ScriptUtils
+
+--- AiCommand
+AiCommand = {
+   [0] = "CMD_NONE"; -- "CMD_NONE"
+   [1] = "CMD_SELECT"; -- "CMD_SELECT"
+   [2] = "CMD_STOP"; -- "CMD_STOP"
+   [3] = "CMD_GO"; -- "CMD_GO"
+   [4] = "CMD_ATTACK"; -- "CMD_ATTACK"
+   [5] = "CMD_FOLLOW"; -- "CMD_FOLLOW"
+   [6] = "CMD_FORMATION"; -- "CMD_FORMATION"
+   [7] = "CMD_PICKUP"; -- "CMD_PICKUP"
+   [8] = "CMD_DROPOFF"; -- "CMD_DROPOFF"
+   [9] = "CMD_UNDEPLOY"; -- "CMD_UNDEPLOY"
+   [10] = "CMD_DEPLOY"; -- "CMD_DEPLOY"
+   [11] = "CMD_NO_DEPLOY"; -- "CMD_NO_DEPLOY"
+   [12] = "CMD_GET_REPAIR"; -- "CMD_GET_REPAIR"
+   [13] = "CMD_GET_RELOAD"; -- "CMD_GET_RELOAD"
+   [14] = "CMD_GET_WEAPON"; -- "CMD_GET_WEAPON"
+   [15] = "CMD_GET_CAMERA"; -- "CMD_GET_CAMERA"
+   [16] = "CMD_GET_BOMB"; -- "CMD_GET_BOMB"
+   [17] = "CMD_DEFEND"; -- "CMD_DEFEND"
+   [18] = "CMD_RESCUE"; -- "CMD_RESCUE"
+   [19] = "CMD_RECYCLE"; -- "CMD_RECYCLE"
+   [20] = "CMD_SCAVENGE"; -- "CMD_SCAVENGE"
+   [21] = "CMD_HUNT"; -- "CMD_HUNT"
+   [22] = "CMD_BUILD"; -- "CMD_BUILD"
+   [23] = "CMD_PATROL"; -- "CMD_PATROL"
+   [24] = "CMD_STAGE"; -- "CMD_STAGE"
+   [25] = "CMD_SEND"; -- "CMD_SEND"
+   [26] = "CMD_GET_IN"; -- "CMD_GET_IN"
+   [27] = "CMD_LAY_MINES"; -- "CMD_LAY_MINES"
+   [28] = "CMD_LOOK_AT"; -- "CMD_LOOK_AT"
+   [29] = "CMD_SERVICE"; -- "CMD_SERVICE"
+   [30] = "CMD_UPGRADE"; -- "CMD_UPGRADE"
+   [31] = "CMD_DEMOLISH"; -- "CMD_DEMOLISH"
+   [32] = "CMD_POWER"; -- "CMD_POWER"
+   [33] = "CMD_BACK"; -- "CMD_BACK"
+   [34] = "CMD_DONE"; -- "CMD_DONE"
+   [35] = "CMD_CANCEL"; -- "CMD_CANCEL"
+   [36] = "CMD_SET_GROUP"; -- "CMD_SET_GROUP"
+   [37] = "CMD_SET_TEAM"; -- "CMD_SET_TEAM"
+   [38] = "CMD_SEND_GROUP"; -- "CMD_SEND_GROUP"
+   [39] = "CMD_TARGET"; -- "CMD_TARGET"
+   [40] = "CMD_INSPECT"; -- "CMD_INSPECT"
+   [41] = "CMD_SWITCHTEAM"; -- "CMD_SWITCHTEAM"
+   [42] = "CMD_INTERFACE"; -- "CMD_INTERFACE"
+   [43] = "CMD_LOGOFF"; -- "CMD_LOGOFF"
+   [44] = "CMD_AUTOPILOT"; -- "CMD_AUTOPILOT"
+   [45] = "CMD_MESSAGE"; -- "CMD_MESSAGE"
+   [46] = "CMD_CLOSE"; -- "CMD_CLOSE"
+   [47] = "CMD_MORPH_SETDEPLOYED"; -- "CMD_MORPH_SETDEPLOYED"
+   [48] = "CMD_MORPH_SETUNDEPLOYED"; -- "CMD_MORPH_SETUNDEPLOYED"
+   [49] = "CMD_MORPH_UNLOCK"; -- "CMD_MORPH_UNLOCK"
+   [50] = "CMD_BAILOUT"; -- "CMD_BAILOUT"
+   [51] = "CMD_BUILD_ROTATE"; -- "CMD_BUILD_ROTATE"
+   [52] = "CMD_CMDPANEL_SELECT"; -- "CMD_CMDPANEL_SELECT"
+   [53] = "CMD_CMDPANEL_DESELECT"; -- "CMD_CMDPANEL_DESELECT"
+   ["CMD_NONE"] = 0; -- 0
+   ["CMD_SELECT"] = 1; -- 1
+   ["CMD_STOP"] = 2; -- 2
+   ["CMD_GO"] = 3; -- 3
+   ["CMD_ATTACK"] = 4; -- 4
+   ["CMD_FOLLOW"] = 5; -- 5
+   ["CMD_FORMATION"] = 6; -- 6
+   ["CMD_PICKUP"] = 7; -- 7
+   ["CMD_DROPOFF"] = 8; -- 8
+   ["CMD_UNDEPLOY"] = 9; -- 9
+   ["CMD_DEPLOY"] = 10; -- 10
+   ["CMD_NO_DEPLOY"] = 11; -- 11
+   ["CMD_GET_REPAIR"] = 12; -- 12
+   ["CMD_GET_RELOAD"] = 13; -- 13
+   ["CMD_GET_WEAPON"] = 14; -- 14
+   ["CMD_GET_CAMERA"] = 15; -- 15
+   ["CMD_GET_BOMB"] = 16; -- 16
+   ["CMD_DEFEND"] = 17; -- 17
+   ["CMD_RESCUE"] = 18; -- 18
+   ["CMD_RECYCLE"] = 19; -- 19
+   ["CMD_SCAVENGE"] = 20; -- 20
+   ["CMD_HUNT"] = 21; -- 21
+   ["CMD_BUILD"] = 22; -- 22
+   ["CMD_PATROL"] = 23; -- 23
+   ["CMD_STAGE"] = 24; -- 24
+   ["CMD_SEND"] = 25; -- 25
+   ["CMD_GET_IN"] = 26; -- 26
+   ["CMD_LAY_MINES"] = 27; -- 27
+   ["CMD_LOOK_AT"] = 28; -- 28
+   ["CMD_SERVICE"] = 29; -- 29
+   ["CMD_UPGRADE"] = 30; -- 30
+   ["CMD_DEMOLISH"] = 31; -- 31
+   ["CMD_POWER"] = 32; -- 32
+   ["CMD_BACK"] = 33; -- 33
+   ["CMD_DONE"] = 34; -- 34
+   ["CMD_CANCEL"] = 35; -- 35
+   ["CMD_SET_GROUP"] = 36; -- 36
+   ["CMD_SET_TEAM"] = 37; -- 37
+   ["CMD_SEND_GROUP"] = 38; -- 38
+   ["CMD_TARGET"] = 39; -- 39
+   ["CMD_INSPECT"] = 40; -- 40
+   ["CMD_SWITCHTEAM"] = 41; -- 41
+   ["CMD_INTERFACE"] = 42; -- 42
+   ["CMD_LOGOFF"] = 43; -- 43
+   ["CMD_AUTOPILOT"] = 44; -- 44
+   ["CMD_MESSAGE"] = 45; -- 45
+   ["CMD_CLOSE"] = 46; -- 46
+   ["CMD_MORPH_SETDEPLOYED"] = 47; -- 47
+   ["CMD_MORPH_SETUNDEPLOYED"] = 48; -- 48
+   ["CMD_MORPH_UNLOCK"] = 49; -- 49
+   ["CMD_BAILOUT"] = 50; -- 50
+   ["CMD_BUILD_ROTATE"] = 51; -- 51
+   ["CMD_CMDPANEL_SELECT"] = 52; -- 52
+   ["CMD_CMDPANEL_DESELECT"] = 53; -- 53
+};
+
+
+
