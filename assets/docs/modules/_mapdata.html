@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+<ul>
+  <li><a href="../index.html">Index</a></li>
+</ul>
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Events">Events</a></li>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Fields">Fields</a></li>
+<li><a href="#MapData___Core">MapData - Core </a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="nowrap">
+  <li><a href="../modules/ScriptUtils.html">ScriptUtils</a></li>
+  <li><a href="../modules/ScriptExtender.html">ScriptExtender</a></li>
+  <li><a href="../modules/_api.html">_api</a></li>
+  <li><a href="../modules/_api_replaceondeath.html">_api_replaceondeath</a></li>
+  <li><a href="../modules/_funcarray.html">_funcarray</a></li>
+  <li><a href="../modules/_gameobject.html">_gameobject</a></li>
+  <li><a href="../modules/_hook.html">_hook</a></li>
+  <li><strong>_mapdata</strong></li>
+  <li><a href="../modules/_printfix.html">_printfix</a></li>
+  <li><a href="../modules/_requirefix.html">_requirefix</a></li>
+  <li><a href="../modules/_statemachine.html">_statemachine</a></li>
+  <li><a href="../modules/_table_show.html">_table_show</a></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>_mapdata</code></h1>
+<p>BZCC LUA Extended API MapData.</p>
+<p>
+
+ Functions for accessing map file data.
+ Note this data is lazy-loaded, call the module function to force load.
+
+ Dependencies: <a href="../modules/_api.html#">_api</a>, <a href="../modules/_hook.html#">_hook</a></p>
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">local mapdata = require(&quot;_mapdata&quot;);
+
+print(&quot;Map BZN: &quot; .. mapdata.BznFile);
+print(&quot;Map TRN: &quot; .. mapdata.TrnFile);
+print(&quot;Map TER: &quot; .. mapdata.TerFile);
+print(&quot;Map Version: &quot; .. mapdata.Version);
+print(&quot;Map Meters per Quarter: &quot; .. mapdata.MetersPerQuarter);
+print(&quot;Map Meters per Grid: &quot; .. mapdata.MetersPerGrid);
+print(&quot;Map Meters per Cluster: &quot; .. mapdata.MetersPerCluster);
+print(&quot;Map Width: &quot; .. (mapdata.MaxX - mapdata.MinX));
+print(&quot;Map Depth: &quot; .. (mapdata.MaxZ - mapdata.MinZ));
+</pre>
+    </ul>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Author</strong>: John "Nielk1" Klein</li>
+    </ul>
+
+
+<h2><a href="#Events">Events</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#MapData:GetPlayArea">MapData:GetPlayArea</a></td>
+	<td class="summary">Get play area polygon.</td>
+	</tr>
+</table>
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#__call">__call ()</a></td>
+	<td class="summary">Force immediate loading of all fields and return table of fields.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetPlayArea">GetPlayArea ()</a></td>
+	<td class="summary">Get play area polygon.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#BznFile">BznFile</a></td>
+	<td class="summary">BZN filename with extension.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TrnFile">TrnFile</a></td>
+	<td class="summary">TRN filename with extension.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TerFile">TerFile</a></td>
+	<td class="summary">TER filename with extension.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Version">Version</a></td>
+	<td class="summary">Version of TER file.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#MetersPerQuarter">MetersPerQuarter</a></td>
+	<td class="summary">Meters per quarter of a terrain cluster.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#MetersPerGrid">MetersPerGrid</a></td>
+	<td class="summary">Meters per terrain grid vertex.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#MetersPerCluster">MetersPerCluster</a></td>
+	<td class="summary">Meters per terrain cluster.</td>
+	</tr>
+</table>
+<h2><a href="#MapData___Core">MapData - Core </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#mapdata_meta.Load">mapdata_meta.Load (data)</a></td>
+	<td class="summary">Load event function.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2 class="section-header "><a name="Events"></a>Events</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "MapData:GetPlayArea"></a>
+    <strong>MapData:GetPlayArea</strong>
+    </dt>
+    <dd>
+    Get play area polygon.
+<p> Call method: <a href="../modules/_hook.html#hook.CallAllPassReturn">CallAllPassReturn</a>
+<p> Return Vector[] polygon
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">polygon</span>
+            <span class="types"><span class="type">Vector[]</span></span>
+         Original play area polygon
+        </li>
+        <li><span class="parameter">priorResult</span>
+            <span class="types"><span class="type">HookResult</span></span>
+         Prior event handler's polygon
+         (<em>optional</em>)
+        </li>
+    </ul>
+
+
+
+    <h3>See also:</h3>
+    <ul>
+         <a href="../modules/_hook.html#hook.Add">_hook.Add</a>
+    </ul>
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Functions"></a>Functions</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "__call"></a>
+    <strong>__call ()</strong>
+    </dt>
+    <dd>
+    Force immediate loading of all fields and return table of fields.
+<p> Calling the module as a function forces all field values to load immediately rather than lazily.
+ The module's table is returned with all fields decorated for ease use of this function.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "GetPlayArea"></a>
+    <strong>GetPlayArea ()</strong>
+    </dt>
+    <dd>
+    Get play area polygon.
+ Triggers "MapData:GetPlayArea" event.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="Fields"></a>Fields</h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "BznFile"></a>
+    <strong>BznFile</strong>
+    </dt>
+    <dd>
+    BZN filename with extension.
+
+
+    <ul>
+        <li><span class="parameter">BznFile</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TrnFile"></a>
+    <strong>TrnFile</strong>
+    </dt>
+    <dd>
+    TRN filename with extension.
+
+
+    <ul>
+        <li><span class="parameter">TrnFile</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TerFile"></a>
+    <strong>TerFile</strong>
+    </dt>
+    <dd>
+    TER filename with extension.
+
+
+    <ul>
+        <li><span class="parameter">TerFile</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Version"></a>
+    <strong>Version</strong>
+    </dt>
+    <dd>
+    Version of TER file.
+<p> Version 3 is a BZ2 TER upgraded on load.
+<p> Version 4 is a BZCC TER without compression.
+<p> Version 5 is a BZCC TER with compression.
+
+
+    <ul>
+        <li><span class="parameter">Version</span>
+            <span class="types"><span class="type">int</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "MetersPerQuarter"></a>
+    <strong>MetersPerQuarter</strong>
+    </dt>
+    <dd>
+    Meters per quarter of a terrain cluster.
+<p> This is [Size]:MetersPerGrid from the TRN
+<p> The "PerQuarter" here reffers to a single side of the cluster.
+ In BZ2 a cluster was divided into 4x4 subdivision for 16 cells in total.
+ This is what the setting is based on, where BZCC internally rescales this.
+
+
+    <ul>
+        <li><span class="parameter">MetersPerQuarter</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "MetersPerGrid"></a>
+    <strong>MetersPerGrid</strong>
+    </dt>
+    <dd>
+    Meters per terrain grid vertex.
+
+
+    <ul>
+        <li><span class="parameter">MetersPerGrid</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "MetersPerCluster"></a>
+    <strong>MetersPerCluster</strong>
+    </dt>
+    <dd>
+    Meters per terrain cluster.
+
+
+    <ul>
+        <li><span class="parameter">MetersPerCluster</span>
+            <span class="types"><span class="type">number</span></span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2 class="section-header "><a name="MapData___Core"></a>MapData - Core </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "mapdata_meta.Load"></a>
+    <strong>mapdata_meta.Load (data)</strong>
+    </dt>
+    <dd>
+    Load event function.
+<p> INTERNAL USE.
+<p> We only saved a marker of our type and nothing else, so on load we just restore ourself to our global self, via module self-requiring.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">data</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
+<i style="float:right;">Last updated 2021-12-30 06:08:37 </i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>
