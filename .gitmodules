@@ -1,4 +1,0 @@
-[submodule "baked"]
-	path = baked
-	url = https://github.com/Nielk1/BZCC-Advanced-Lua-API.git
-	branch = baked-dev
