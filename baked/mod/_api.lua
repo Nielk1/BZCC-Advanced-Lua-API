@@ -503,7 +503,10 @@ function Load(...)
     hook.CallLoad(DeSimplifyForLoad(table.unpack(args.HooksData)));
     debugprint("_api::/Load");
     
-    PostLoad(); -- not implemented by LuaMission, if we need to add it do a version check here so we don't run it twice
+    -- Prior to version 186 PostLoad was not implemented as a call, so call it manually
+    if (LuaMissionVersion or 185) < 186 then
+        PostLoad();
+    end
 end
 
 --- You probably don't need to implement this
