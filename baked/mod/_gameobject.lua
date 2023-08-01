@@ -21,11 +21,11 @@ function isgameobject(object)
 end
 
 local GameObjectMetatable = {};
-GameObjectMetatable.__mode = "k";
+GameObjectMetatable.__mode = "v";
 local GameObjectWeakList = setmetatable({}, GameObjectMetatable);
 local GameObjectAltered = {};
 local GameObjectDeadAlteredMetatable = {};
-GameObjectDeadAlteredMetatable.__mode = "k";
+GameObjectDeadAlteredMetatable.__mode = "v";
 local GameObjectDeadAltered = setmetatable({}, GameObjectDeadAlteredMetatable);
 
 --- GameObject.
