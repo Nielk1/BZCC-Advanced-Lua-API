@@ -230,11 +230,27 @@ function GameObject.Service(self, target, priority)
     end
 end
 
---- Order GameObject to Goto target GameObject / Path.
+
+--- Order GameObject to Goto target GameObject
+-- @function GameObject.Goto
 -- @tparam GameObject self GameObject instance
--- @param target Target GameObject, Vector, or Path name
+-- @param target Target GameObject
 -- @tparam int priority Order priority, >0 removes user control
-function GameObject.Goto(self, target, priority)
+
+--- Order GameObject to Goto target Vector
+-- @function GameObject.Goto
+-- @tparam GameObject self GameObject instance
+-- @param target Target Vector
+-- @tparam int priority Order priority, >0 removes user control
+
+--- Order GameObject to Goto target Path.
+-- @function GameObject.Goto
+-- @tparam GameObject self GameObject instance
+-- @param target Target Path name
+-- @tparam int point Path point index, 0 based
+-- @tparam int priority Order priority, >0 removes user control
+
+function GameObject.Goto(self, target, priority, extra)
     if not isgameobject(self) then error("Paramater self must be GameObject instance."); end
     if isgameobject(target) then
         Goto(self:GetHandle(), target:GetHandle(), priority);

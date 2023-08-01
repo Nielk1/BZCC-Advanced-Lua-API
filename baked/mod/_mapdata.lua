@@ -65,6 +65,7 @@ local hook = require("_hook");
 -- The module's table is returned with all fields decorated for ease use of this function.
 -- @function __call
 -- @treturn table
+
 local mapdata = {};
 
 --- Get play area polygon.

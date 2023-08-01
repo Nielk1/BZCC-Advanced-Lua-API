@@ -630,9 +630,8 @@ function ObjectKilled(deadObjectHandle, killersHandle)
     
     -- check for DoEjectRatio
     if retVal == nil --[[or retVal == EjectKillRetCodes.DoEjectRatio--]] then
-        if not IsCraftButNotPerson(deadObjectHandle) or GetRandomFloat(1) > GetEjectRatio(deadObjectHandle)
+        if not IsCraftButNotPerson(deadObjectHandle) or GetRandomFloat(1) > GetEjectRatio(deadObjectHandle) then
             retVal = EjectKillRetCodes.DLLHandled;
-        end
         else
             retVal = EjectKillRetCodes.DoEjectPilot;
         end
@@ -779,6 +778,11 @@ end
 
 debugprint("_api Loaded");
 
+if GameVersion ~= nil then
+    print("GameVersion v" .. GameVersion .. " detected");
+else
+    print("GameVersion unknown");
+end
 print("LuaMission v" .. (LuaMissionVersion or 185) .. " detected");
 if LuaMissionFeatures ~= nil and next(LuaMissionFeatures) ~= nil then
     print("LuaMission Features:");
