@@ -517,7 +517,7 @@ function PostLoad()
     for name,entry in pairs(CustomSavableTypes) do
         if entry.BulkPostLoad ~= nil and isfunction(entry.BulkPostLoad) then
             traceprint("PostLoaded " .. entry.TypeName);
-            SimplifyForSave(entry.BulkPostLoad());
+            entry.BulkPostLoad();
         else
             traceprint("PostLoaded " .. entry.TypeName .. " (nothing to PostLoad)");
         end
