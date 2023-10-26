@@ -50,7 +50,7 @@ local hook = require("_hook");
 -- Use this function to perform any one-time script initialization.
 --
 -- Call method: @{_hook.CallAllNoReturn|CallAllNoReturn}
--- @event InitialSetup
+-- @event Start
 -- @see _hook.Add
 
 --- Called after any game object is created.

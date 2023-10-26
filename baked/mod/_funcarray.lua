@@ -169,12 +169,12 @@ end
 -- @tparam FuncArrayIter state FuncArrayIter data
 -- @tparam number seconds How many seconds to wait
 function _funcarray.SleepSeconds( seconds )
-    if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
+    if not isnumber(seconds) then error("Paramater seconds must be a number."); end
 
     return {(function(state, ...)
         local seconds = ...;
         if state.target_turn == -1 then
-            state.target_turn = _funcarray.game_turn + (seconds * GetTPS());
+            state.target_turn = _funcarray.game_turn + math.ceil(seconds * GetTPS());
         elseif state.target_turn <= _funcarray.game_turn  then
             state:next();
             state.target_turn = -1;

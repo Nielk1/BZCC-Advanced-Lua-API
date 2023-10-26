@@ -175,13 +175,13 @@ end
 -- @tparam int seconds How many seconds to wait
 -- @tparam string next_state Next state when timer hits zero
 function _statemachine.SleepSeconds( seconds, next_state )
-    if not isinteger(seconds) then error("Paramater seconds must be an integer."); end
+    if not isnumber(seconds) then error("Paramater seconds must be a number."); end
     if not isstring(next_state) then error("Paramater next_state must be a string."); end
 
     return {(function(state, ...)
         local seconds, next_state = ...;
         if state.target_turn == -1 then
-            state.target_turn = _statemachine.game_turn + (seconds * GetTPS());
+            state.target_turn = _statemachine.game_turn + math.ceil(seconds * GetTPS());
         elseif state.target_turn <= _statemachine.game_turn  then
             state:switch(next_state);
             state.target_turn = -1;

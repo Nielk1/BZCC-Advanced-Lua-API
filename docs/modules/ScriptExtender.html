@@ -34,6 +34,7 @@
 <ul>
 <li><a href="#Radar">Radar </a></li>
 <li><a href="#GameObject">GameObject </a></li>
+<li><a href="#Team_Player">Team/Player </a></li>
 </ul>
 
 
@@ -46,6 +47,7 @@
   <li><a href="../modules/_funcarray.html">_funcarray</a></li>
   <li><a href="../modules/_gameobject.html">_gameobject</a></li>
   <li><a href="../modules/_hook.html">_hook</a></li>
+  <li><a href="../modules/_id_joiners.html">_id_joiners</a></li>
   <li><a href="../modules/_mapdata.html">_mapdata</a></li>
   <li><a href="../modules/_printfix.html">_printfix</a></li>
   <li><a href="../modules/_requirefix.html">_requirefix</a></li>
@@ -139,6 +141,25 @@
 	<td class="summary">Get radar color of object considers its alive state.</td>
 	</tr>
 </table>
+<h2><a href="#Team_Player">Team/Player </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#GetDPIDOfTeam">GetDPIDOfTeam (team)</a></td>
+	<td class="summary">Get DPID of player on team.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetTeamForDPID">GetTeamForDPID (DPID)</a></td>
+	<td class="summary">Get DPID of player on team.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetPlayerPlatformID">GetPlayerPlatformID (DPID)</a></td>
+	<td class="summary">Get player's platform ID from DPID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetSessionUniquePlayerID">GetSessionUniquePlayerID (team)</a></td>
+	<td class="summary">Get player's session unique ID.</td>
+	</tr>
+</table>
 
 <br/>
 <br/>
@@ -189,6 +210,7 @@
     <dd>
     Disable radar type.
  If this radar type is active, it will automatically switch to the next active type or none
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -215,6 +237,7 @@
     <dd>
     Enable radar type.
  If no radar types are active or activation is forced this radar will activate as well as enable
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -246,6 +269,7 @@
     </dt>
     <dd>
     Is radar type enabled?
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -277,6 +301,7 @@
     </dt>
     <dd>
     Is radar type active?
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -314,6 +339,7 @@
     Change the status image of an object.
  This image, conventionally called the "wireframe" in BZ2, is the image above the
  weapon panel. This code exploits the logic used to change it for pilot pack weapons.
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -344,6 +370,7 @@
     <dd>
     Set the lockdown state on an object.
  Apply the EMP Stream affect to an object.
+<p> [Untested, Test MP Sync]
 
 
     <h3>Parameters:</h3>
@@ -374,6 +401,7 @@
     <dd>
     Get the lockdown state on an object.
  Get the EMP Stream affect turns remaining.
+<p> [Untested, Test MP Sync]
 
 
     <h3>Parameters:</h3>
@@ -405,6 +433,7 @@
     </dt>
     <dd>
     Get the world position of the weapon's TLI.
+<p> [Untested, Test MP Sync]
 
 
     <h3>Parameters:</h3>
@@ -444,6 +473,7 @@
     </dt>
     <dd>
     Get the world center of mass.
+<p> [Untested, Test MP Sync]
 
 
     <h3>Parameters:</h3>
@@ -476,6 +506,7 @@
     <dd>
     Get percent charge of weapon.
  This applies only to ChargeGun and MulitLauncher.
+<p> [Untested, Test MP Sync]
 
 
     <h3>Parameters:</h3>
@@ -512,6 +543,7 @@
     <dd>
     Get if weapon is locked.
  This applies only to Launcher.
+<p> [Untested, Test MP Sync]
 
 
     <h3>Parameters:</h3>
@@ -549,6 +581,7 @@
     Set base radar color of object.
  This sets the radar color on stock radars for an object and auto-generates the 2nd color.
  The game will override this when a color change event occurs, such as hopping out.
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -579,6 +612,7 @@
     <dd>
     Get base radar color of object.
  This gets the radar color on stock radars for an object.
+<p> [Local Only, Untested, Assumed MP Safe, Beware of Sync]
 
 
     <h3>Parameters:</h3>
@@ -611,6 +645,7 @@
     <dd>
     Reset radar color of object.
  This restores the game default radar color to an object.
+<p> [Local Only, Untested, Assumed MP Safe]
 
 
     <h3>Parameters:</h3>
@@ -644,6 +679,7 @@
     Get radar color of object considers its alive state.
  Objects that are dead have a darker color, though this appears broken
  in BZCC it is still in the code and may be used in other cases.
+<p> [Local Only, Untested, Assumed MP Safe, Beware of Sync]
 
 
     <h3>Parameters:</h3>
@@ -670,13 +706,152 @@
 
 </dd>
 </dl>
+    <h2 class="section-header "><a name="Team_Player"></a>Team/Player </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "GetDPIDOfTeam"></a>
+    <strong>GetDPIDOfTeam (team)</strong>
+    </dt>
+    <dd>
+    Get DPID of player on team.
+ This gets the DPID number of a player on a given team.
+<p> [Untested, Test MP Sync, edge case testing needed]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">team</span>
+            <span class="types"><span class="type">int</span></span>
+         Player team number
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        DPID
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> DPID = GetDPIDOfTeam(<span class="number">1</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetTeamForDPID"></a>
+    <strong>GetTeamForDPID (DPID)</strong>
+    </dt>
+    <dd>
+    Get DPID of player on team.
+ This gets the DPID number of a player on a given team.
+<p> [Untested, Test MP Sync, edge case testing needed]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">DPID</span>
+            <span class="types"><span class="type">int</span></span>
+         of player
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">int</span></span>
+        team
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> team = GetTeamForDPID(DPID);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetPlayerPlatformID"></a>
+    <strong>GetPlayerPlatformID (DPID)</strong>
+    </dt>
+    <dd>
+    Get player's platform ID from DPID.
+ This gets the platform ID of the player, such as their SteamID, GOG ID, or I0.
+ Note that GOG returns I0 when galaxy is offline.
+<p> [RESTRICTED, Untested, Test MP Sync, edge case testing needed]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">DPID</span>
+            <span class="types"><span class="type">int</span></span>
+         of player
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        platform ID
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> platformid = GetPlayerPlatformID(GetDPIDOfTeam(<span class="number">1</span>));</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "GetSessionUniquePlayerID"></a>
+    <strong>GetSessionUniquePlayerID (team)</strong>
+    </dt>
+    <dd>
+    Get player's session unique ID.
+ This gets a unique ID for the player on a team.
+ For non-network games this is based on team number.
+ For network games this is a randomly salted hash of the player's platform ID.
+<p> [Untested, Test MP Sync, edge case testing needed]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">team</span>
+            <span class="types"><span class="type">int</span></span>
+         Player team number
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+        unique id for player in session
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> playerid = GetSessionUniquePlayerID(<span class="number">1</span>);</pre>
+    </ul>
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-10-28 05:21:18 </i>
+<i style="float:right;">Last updated 2023-10-21 02:36:35 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

@@ -10,6 +10,11 @@ debugprint = debugprint or function() end;
 
 debugprint("_requirefix Loading");
 
+if (type(LuaMissionFeatures) == 'table') and (LuaMissionFeatures.RequireFix or 0) > 0 then
+    debugprint("_requirefix Skipped");
+    return;
+end
+
 table.insert(package.searchers, 2, function(modulename)
     local errmsg = "";
     local filename = modulename .. ".lua";
