@@ -140,6 +140,14 @@
 	<td class="name" nowrap><a href="#GetRadarColorWithState">GetRadarColorWithState (handle)</a></td>
 	<td class="summary">Get radar color of object considers its alive state.</td>
 	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#IsJammed">IsJammed (handle)</a></td>
+	<td class="summary">Get if object is being radar jammed.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SetJammed">SetJammed (handle)</a></td>
+	<td class="summary">Set an object as being radar jammed.</td>
+	</tr>
 </table>
 <h2><a href="#Team_Player">Team/Player </a></h2>
 <table class="function_list">
@@ -158,6 +166,18 @@
 	<tr>
 	<td class="name" nowrap><a href="#GetSessionUniquePlayerID">GetSessionUniquePlayerID (team)</a></td>
 	<td class="summary">Get player's session unique ID.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#GetNav">GetNav (Team, Slot)</a></td>
+	<td class="summary">Get nav handle by team and slot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#SetNav">SetNav (Team, Slot, handle)</a></td>
+	<td class="summary">Set nav handle by team and slot.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#ClearNav">ClearNav (Team, Slot)</a></td>
+	<td class="summary">Clear a nav by team and slot.</td>
 	</tr>
 </table>
 
@@ -185,7 +205,10 @@
         RADARTYPE_MAP
         </li>
         <li><span class="parameter">[2]</span>
-        RADARTYPE_COCKPIT_CUSTOM_1
+        RADARTYPE_COCKPIT_CUSTOM_1 RADARTYPE_MAP_CUSTOM_1
+        </li>
+        <li><span class="parameter">[2]</span>
+        RADARTYPE_COCKPIT_CUSTOM_1 RADARTYPE_MAP_CUSTOM_1
         </li>
         <li><span class="parameter">[RADARTYPE_COCKPIT]</span>
         0
@@ -195,6 +218,9 @@
         </li>
         <li><span class="parameter">[RADARTYPE_COCKPIT_CUSTOM_1]</span>
         2
+        </li>
+        <li><span class="parameter">[RADARTYPE_MAP_CUSTOM_1]</span>
+        3
         </li>
     </ul>
 
@@ -705,6 +731,65 @@
     </ul>
 
 </dd>
+    <dt>
+    <a name = "IsJammed"></a>
+    <strong>IsJammed (handle)</strong>
+    </dt>
+    <dd>
+    Get if object is being radar jammed.
+<p> [Untested, Assumed MP Safe, Beware of Sync]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">bool</span></span>
+        Is Jammed state
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> jammed = IsJammed(objectHandle);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "SetJammed"></a>
+    <strong>SetJammed (handle)</strong>
+    </dt>
+    <dd>
+    Set an object as being radar jammed.
+<p> This must be applied every game turn.
+ [Untested, Assumed MP Safe, Beware of Sync]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">SetJammed(objectHandle);</pre>
+    </ul>
+
+</dd>
 </dl>
     <h2 class="section-header "><a name="Team_Player"></a>Team/Player </h2>
 
@@ -782,7 +867,7 @@
     <dd>
     Get player's platform ID from DPID.
  This gets the platform ID of the player, such as their SteamID, GOG ID, or I0.
- Note that GOG returns I0 when galaxy is offline.
+ Note that GOG returns I0 when galaxy is offline and the return value may be nil if not ready.
 <p> [RESTRICTED, Untested, Test MP Sync, edge case testing needed]
 
 
@@ -818,6 +903,7 @@
  This gets a unique ID for the player on a team.
  For non-network games this is based on team number.
  For network games this is a randomly salted hash of the player's platform ID.
+ Note the return value may be nil if not ready.
 <p> [Untested, Test MP Sync, edge case testing needed]
 
 
@@ -844,6 +930,107 @@
     </ul>
 
 </dd>
+    <dt>
+    <a name = "GetNav"></a>
+    <strong>GetNav (Team, Slot)</strong>
+    </dt>
+    <dd>
+    Get nav handle by team and slot.
+<p> [Untested, Assumed MP Safe, Beware of Sync]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">Team</span>
+            <span class="types"><span class="type">int</span></span>
+
+        </li>
+        <li><span class="parameter">Slot</span>
+            <span class="types"><span class="type">int</span></span>
+         (1 based)
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><span class="type">Handle</span></span>
+        GameObject handle
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> objectHandle = GetNav(team, slot);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "SetNav"></a>
+    <strong>SetNav (Team, Slot, handle)</strong>
+    </dt>
+    <dd>
+    Set nav handle by team and slot.
+<p> Please don't use non-navs here.
+ [Untested, Assumed MP Safe, Beware of Sync]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">Team</span>
+            <span class="types"><span class="type">int</span></span>
+
+        </li>
+        <li><span class="parameter">Slot</span>
+            <span class="types"><span class="type">int</span></span>
+         (1 based)
+        </li>
+        <li><span class="parameter">handle</span>
+            <span class="types"><span class="type">Handle</span></span>
+         GameObject handle
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">SetNav(team, slot, objectHandle);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "ClearNav"></a>
+    <strong>ClearNav (Team, Slot)</strong>
+    </dt>
+    <dd>
+    Clear a nav by team and slot.
+<p> [Untested, Assumed MP Safe, Beware of Sync]
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">Team</span>
+            <span class="types"><span class="type">int</span></span>
+
+        </li>
+        <li><span class="parameter">Slot</span>
+            <span class="types"><span class="type">int</span></span>
+         (1 based)
+        </li>
+    </ul>
+
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">ClearNav(team, slot);</pre>
+    </ul>
+
+</dd>
 </dl>
 
 
@@ -851,7 +1038,7 @@
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2023-10-21 02:36:35 </i>
+<i style="float:right;">Last updated 2023-11-13 18:29:35 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

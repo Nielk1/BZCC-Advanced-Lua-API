@@ -77,7 +77,6 @@ hookresult_meta.__newindex = function(dtable, key, value)
     error("Attempt to update a read-only table.", 2)
 end
 
-
 --- Is this object an instance of HookResult?
 -- @param object Object in question
 -- @treturn bool

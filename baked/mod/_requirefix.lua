@@ -6,7 +6,7 @@
 -- @author John "Nielk1" Klein
 -- @usage assert(load(assert(LoadFile("_requirefix.lua")),"_requirefix.lua"))();
 
-debugprint = debugprint or function() end;
+local debugprint = debugprint or function() end;
 
 debugprint("_requirefix Loading");
 

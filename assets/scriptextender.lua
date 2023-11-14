@@ -21,9 +21,11 @@ RadarType = {
    [0] = "RADARTYPE_COCKPIT"; -- RADARTYPE_COCKPIT
    [1] = "RADARTYPE_MAP"; -- RADARTYPE_MAP
    [2] = "RADARTYPE_COCKPIT_CUSTOM_1"; -- RADARTYPE_COCKPIT_CUSTOM_1
+   [2] = "RADARTYPE_MAP_CUSTOM_1"; -- RADARTYPE_MAP_CUSTOM_1
    ["RADARTYPE_COCKPIT"] = 0; -- 0
    ["RADARTYPE_MAP"] = 1; -- 1
    ["RADARTYPE_COCKPIT_CUSTOM_1"] = 2; -- 2
+   ["RADARTYPE_MAP_CUSTOM_1"] = 3; -- 3
 };
 
 
@@ -171,6 +173,22 @@ RadarType = {
 -- @treturn ColorInt Color value
 -- @usage local color = GetRadarColorWithState(objectHandle);
 
+--- Get if object is being radar jammed.
+--
+-- [Untested, Assumed MP Safe, Beware of Sync]
+-- @function IsJammed
+-- @tparam Handle handle GameObject handle
+-- @treturn bool Is Jammed state
+-- @usage local jammed = IsJammed(objectHandle);
+
+--- Set an object as being radar jammed.
+--
+-- This must be applied every game turn.
+-- [Untested, Assumed MP Safe, Beware of Sync]
+-- @function SetJammed
+-- @tparam Handle handle GameObject handle
+-- @usage SetJammed(objectHandle);
+
 -------------------------------------------------------------------------------
 -- Team/Player
 -------------------------------------------------------------------------------
@@ -215,6 +233,33 @@ RadarType = {
 -- @tparam int team Player team number
 -- @treturn string unique id for player in session
 -- @usage local playerid = GetSessionUniquePlayerID(1);
+
+--- Get nav handle by team and slot.
+--
+-- [Untested, Assumed MP Safe, Beware of Sync]
+-- @function GetNav
+-- @tparam int Team
+-- @tparam int Slot (1 based)
+-- @treturn Handle GameObject handle
+-- @usage local objectHandle = GetNav(team, slot);
+
+--- Set nav handle by team and slot.
+--
+-- Please don't use non-navs here.
+-- [Untested, Assumed MP Safe, Beware of Sync]
+-- @function SetNav
+-- @tparam int Team
+-- @tparam int Slot (1 based)
+-- @tparam Handle handle GameObject handle
+-- @usage SetNav(team, slot, objectHandle);
+
+--- Clear a nav by team and slot.
+--
+-- [Untested, Assumed MP Safe, Beware of Sync]
+-- @function ClearNav
+-- @tparam int Team
+-- @tparam int Slot (1 based)
+-- @usage ClearNav(team, slot);
 
 
 
