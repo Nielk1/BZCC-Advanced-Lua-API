@@ -102,6 +102,7 @@ function mapdata.GetPlayArea()
         MinZ = MinZ + 10;
         MaxZ = MaxZ - 10;
         
+		-- @todo ensure this polygon is wound in the correct direction
         retVal = { SetVector(MinX, 0, MinZ),
                    SetVector(MinX, 0, MaxZ),
                    SetVector(MaxX, 0, MaxZ),
@@ -114,12 +115,13 @@ function mapdata.GetPlayArea()
         local MinZ = mapdata.MinZ + 5;
         local MaxZ = mapdata.MaxZ - 5;
         
+		-- @todo ensure this polygon is wound in the correct direction
         retVal = { SetVector(MinX, 0, MinZ),
                    SetVector(MinX, 0, MaxZ),
                    SetVector(MaxX, 0, MaxZ),
                    SetVector(MaxX, 0, MinZ) };
     end
-    -- implementers of this function need to have 2 paramaters, where the first is the
+    -- implementers of this function need to have 2 parameters, where the first is the
     -- path we provided, and the 2nd is an overriding path from another hook implementer
     local hookResult = hook.CallAllPassReturn("MapData:GetPlayArea", retVal);
     if hookResult ~= nil then

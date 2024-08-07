@@ -6,20 +6,24 @@
 ## Examples
 
 ```lua
+debugprint = print; -- several modules will call debugprint if it exists
+--traceprint = print; -- modules may have an even more intensive print called traceprint
+IFace_SetInteger("console.log", 1); -- this will log a lot more stuff to our log file
+
 -- patch BZCC's loader so we can properly require lua files from the asset system
 assert(load(assert(LoadFile("_requirefix.lua")),"_requirefix.lua"))();
 
-IFace_SetInteger("console.log", 1); -- this will log a lot more stuff to our log file
-
 require("_printfix"); -- make newlines work when logging to console
-debugprint = print; -- several modules will call debugprint if it exists
-
 require("_table_show"); -- this module can convert tables to strings
 
 -- This is our API wrapper.
 -- It will supply implementations for all the functions BZCC calls. These implementations will wrap handles in GameObjects for us.
 -- These implementations will fire hooks via an observer pattern so we can implement multiple scripts ontop of this one.
-require("_api");
+-- You normally don't need to store the module return in a variable unless you want to use functions like RegisterCustomSavableType.
+local api = require("_api");
+
+local hook = require("_hook"); -- contains functions for the central event bus, was already loaded by _api but we need the function table
+require("_gameobject"); -- puts functions like isgameobject into global, though they're probably already there from loading _api
 
 require("_api_replaceondeath"); -- example extension module, self contained logic that works off ODF values
 require("_api_editor_tunnelfix"); -- example extension module, attempts to fix tunnel alignment

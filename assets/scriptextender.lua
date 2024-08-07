@@ -261,6 +261,41 @@ RadarType = {
 -- @tparam int Slot (1 based)
 -- @usage ClearNav(team, slot);
 
+-------------------------------------------------------------------------------
+-- Local
+-------------------------------------------------------------------------------
+-- @section
+
+--- Request Visual World Update Soon
+-- Documentation Needed
+--
+-- [Local Only, Untested, Assumed MP Safe, Beware of Sync]
+-- @function RequestVisualWorldUpdateSoon
+-- @tparam bool evenLowFps Request update even if FPS is low
+-- @usage RequestVisualWorldUpdateSoon(false);
+
+--- Disable Game Inputs
+-- Disable Mouse, Keyboard, and Joystick inputs to game world.
+--
+-- [Local Only, Untested, Assumed MP Safe, Beware of Sync]
+-- @function DisableInputs
+-- @usage DisableInputs();
+
+--- Enable Game Inputs
+-- Enable Mouse, Keyboard, and Joystick inputs to game world.
+--
+-- [Local Only, Untested, Assumed MP Safe, Beware of Sync]
+-- @function EnableInputs
+-- @usage EnableInputs();
+
+--- Are Game Inputs Enabled?
+-- Check if Mouse, Keyboard, and Joystick inputs to game world are enabled.
+--
+-- [Local Only, Untested, Assumed MP Safe, Beware of Sync]
+-- @treturn bool Are inputs enabled?
+-- @function InputsEnabled
+-- @usage local haveInputs = InputsEnabled();
+
 
 
 
