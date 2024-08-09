@@ -118,8 +118,10 @@ end
 function GameObject.BulkSave()
     -- store all the custom data we have for GameObjects by their handle keys
     local returnData = {};
-    for k,v in pairs(GameObjectAltered) do
-        returnData[k] = v.addonData;
+    for k,v in pairs(GameObjectWeakList) do
+        if v.addonData ~= nil then
+            returnData[k] = v.addonData;
+        end
     end
     
     -- store a list of handles that have already died (in theory this should always be empty but it might happen before Update can clean this)
