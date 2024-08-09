@@ -102,7 +102,7 @@ function mapdata.GetPlayArea()
         MinZ = MinZ + 10;
         MaxZ = MaxZ - 10;
         
-		-- @todo ensure this polygon is wound in the correct direction
+        -- @todo ensure this polygon is wound in the correct direction
         retVal = { SetVector(MinX, 0, MinZ),
                    SetVector(MinX, 0, MaxZ),
                    SetVector(MaxX, 0, MaxZ),
@@ -115,7 +115,7 @@ function mapdata.GetPlayArea()
         local MinZ = mapdata.MinZ + 5;
         local MaxZ = mapdata.MaxZ - 5;
         
-		-- @todo ensure this polygon is wound in the correct direction
+        -- @todo ensure this polygon is wound in the correct direction
         retVal = { SetVector(MinX, 0, MinZ),
                    SetVector(MinX, 0, MaxZ),
                    SetVector(MaxX, 0, MaxZ),

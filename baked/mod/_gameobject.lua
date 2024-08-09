@@ -13,6 +13,20 @@ debugprint("_gameobject Loading");
 local _api = require("_api");
 local hook = require("_hook");
 
+
+
+--- GameObject upgraded.
+-- The GameObject's handle has been re-used after its deletion from the world.
+-- Custom data attached to the object is still persisted so clean the data if you don't want it anymore.
+--
+-- Call method: @{_hook.CallAllNoReturn|CallAllNoReturn}
+--
+-- @event GameObject:UpgradeObject
+-- @tparam GameObject object GameObject instance
+-- @see _hook.Add
+
+
+
 --- Is this object an instance of GameObject?
 -- @param object Object in question
 -- @treturn bool
@@ -24,9 +38,7 @@ local GameObjectMetatable = {};
 GameObjectMetatable.__mode = "v";
 local GameObjectWeakList = setmetatable({}, GameObjectMetatable);
 local GameObjectAltered = {};
-local GameObjectDeadAlteredMetatable = {};
-GameObjectDeadAlteredMetatable.__mode = "v";
-local GameObjectDeadAltered = setmetatable({}, GameObjectDeadAlteredMetatable);
+local GameObjectDead = {};
 
 --- GameObject.
 -- An object containing all functions and data related to a game object.
@@ -42,11 +54,7 @@ GameObject.__newindex = function(dtable, key, value)
   if key == "addonData" then
     rawset(dtable, "addonData", value);
     local objectId = dtable:GetHandle();--string.sub(tostring(table:GetHandle()),4);
-    if isstring(objectId) then
-        GameObjectDeadAltered[objectId] = dtable;
-    else
-        GameObjectAltered[objectId] = dtable;
-    end
+    GameObjectAltered[objectId] = dtable;
   elseif key ~= "id" and key ~= "addonData" then
     local addonData = rawget(dtable, "addonData");
     if addonData == nil then
@@ -55,11 +63,8 @@ GameObject.__newindex = function(dtable, key, value)
     end
     rawset(addonData, key, value);
     local objectId = dtable:GetHandle();--string.sub(tostring(table:GetHandle()),4);
-    if isstring(objectId) then
-        GameObjectDeadAltered[objectId] = dtable;
-    else
-        GameObjectAltered[objectId] = dtable;
-    end
+    GameObjectAltered[objectId] = dtable;
+    -- @todo consider removing object from GameObjectAltered if addonData is empty
   else
     rawset(dtable, key, value);
   end
@@ -111,13 +116,17 @@ end
 -- INTERNAL USE.
 -- @return ...
 function GameObject.BulkSave()
+    -- store all the custom data we have for GameObjects by their handle keys
     local returnData = {};
     for k,v in pairs(GameObjectAltered) do
         returnData[k] = v.addonData;
     end
+    
+    -- store a list of handles that have already died (in theory this should always be empty but it might happen before Update can clean this)
     local returnDataDead = {};
-    for k,v in pairs(GameObjectDeadAltered) do
-        returnDataDead[k] = v.addonData;
+    for k,v in pairs(GameObjectDead) do
+        --table.insert(returnDataDead, v:GetHandle());
+        table.insert(returnDataDead, k);
     end
     return returnData,returnDataDead;
 end
@@ -132,8 +141,8 @@ function GameObject.BulkLoad(data,dataDead)
         newGameObject.addonData = v;
     end
     for k,v in pairs(dataDead) do
-        local newGameObject = GameObject.FromHandle(k);
-        newGameObject.addonData = v;
+        local newGameObject = GameObject.FromHandle(v); -- this will be either a new GameObject or an existing one from the above addon data filling loop
+        GameObjectDead[v] = newGameObject;
     end
 end
 
@@ -985,12 +994,27 @@ end
 hook.Add("DeleteObject", "GameObject_DeleteObject", function(object)
     local objectId = object:GetHandle();
     debugprint('Decaying object ' .. tostring(objectId));
-    GameObjectDeadAltered[objectId] = GameObjectAltered[objectId]; -- move data tracking, if it exists, to a weak table so it can GC if not being held onto
-    GameObjectAltered[objectId] = nil; -- clear hard reference for data we might have from strong table so the object can GC if nothing uses it
-    --print(table.show(GameObjectWeakList,"GameObjectWeakList"));
-    --print(table.show(GameObjectAltered,"GameObjectAltered"));
-    --print(table.show(GameObjectDeadAltered,"GameObjectDeadAltered"));
+    GameObjectDead[objectId] = object; -- store dead object for full cleanup next update (handle might be re-used)
 end, -9999);
+
+hook.Add("AddObject", "GameObject_AddObject", function(object)
+    -- we are only here to check if we're an upgraded object
+    local objectId = object:GetHandle();
+    local deadObjectWithSameId = GameObjectDead[objectId];
+    if isgameobject(deadObjectWithSameId) then
+        debugprint('Reborn object ' .. tostring(objectId));
+        hook.CallAllNoReturn("GameObject:UpgradeObject", object);
+        GameObjectDead[objectId] = nil; -- remove from dead object tracking so it's not cleaned next update, this might remove all strong tracking if the object is unaltered
+    end
+end, 9999);
+
+hook.Add("Update", "GameObject_Update", function(object)
+    for k,v in pairs(GameObjectDead) do
+        debugprint('Decayed object ' .. tostring(k));
+        GameObjectAltered[k] = nil; -- remove any strong reference for being altered
+        GameObjectDead[k] = nil; -- remove any strong reference for being dead
+    end
+end, 9999);
 
 _api.RegisterCustomSavableType(GameObject);
 
