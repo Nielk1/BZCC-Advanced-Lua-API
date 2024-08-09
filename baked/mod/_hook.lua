@@ -96,6 +96,13 @@ function hook.AbortResult(...)
 end
 
 --- Create an basic HookResult
+--
+-- This wraps a return value similarly to @{_hook.AbortResult|AbortResult} and
+-- can be used optionally to wrap return values. This is primarily used internally
+-- to wrap the prior return value to be passed as the next paramater in
+-- @{_hook.CallAllPassReturn|CallAllPassReturn} based event triggers as event
+-- handler return values are auto-unwrapped by the event handler if wrapping is
+-- detected but process fine if unwrapped.
 -- @param ... Return values passed from hook function
 -- @treturn HookResult
 function hook.WrapResult(...)
@@ -304,7 +311,7 @@ function hook.CallAllPassReturn( event, ... )
                 if ( isstring( k ) ) then
                     if ( v.priority == j ) then
                         lastreturn = { v.func(appendvargs(hook.WrapResult(lastreturn), ... )) };
-                        -- preserve the result before checking Abort flag
+                        -- preserve the Abort flag, then unwrap the result
                         if select('#', lastreturn) == 1 and hook.isresult(lastreturn[1]) then
                             local abort = lastreturn[1].Abort;
                             lastreturn = lastreturn[1].Return;
