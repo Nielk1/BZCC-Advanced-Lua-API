@@ -124,6 +124,7 @@ pre {
 
 pre.example {
     font-size: .85em;
+	line-height: 1.1em;
 }
 
 table.index { border: 1px #00007f; }

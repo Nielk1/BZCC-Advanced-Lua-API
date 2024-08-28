@@ -54,9 +54,51 @@ local hook = require("_hook");
 -- @number MetersPerQuarter
 
 --- Meters per terrain grid vertex.
+--
+-- Note this value is 4 times denser than in the TRN due to legacy from BZ2.
+-- @usage -- BZCC Cluster
+-- -- ╔═╤═╤═╤═╦═╤═╤═╤═╦═╤═╤═╤═╦═╤═╤═╤═╗
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╠═╪═╪═╪═╬═╪═╪═╪═╬═╪═╪═╪═╬═╪═╪═╪═╣
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╠═╪═╪═╪═╬═╪═╪═╪═╬═╪═╪═╪═╬═╪═╪═╪═╣
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╠═╪═╪═╪═╬═╪═╪═╪═╬═╪═╪═╪═╬═╪═╪═╪═╣
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╟─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╫─┼─┼─┼─╢
+-- -- ╚═╧═╧═╧═╩═╧═╧═╧═╩═╧═╧═╧═╩═╧═╧═╧═╝
+-- -- ├─┤ - 16 subdivisions
 -- @number MetersPerGrid
 
 --- Meters per terrain cluster.
+--
+-- Note this value is MetersPerGrid in the TRN due to legacy from BZ2. 
+-- @usage -- BZ2 Cluster Layout
+-- -- ┌───────┬───────┬───────┬───────┐
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- ├───────┼───────┼───────┼───────┤
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- ├───────┼───────┼───────┼───────┤
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- ├───────┼───────┼───────┼───────┤
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- └───────┴───────┴───────┴───────┘
+-- -- ├───────┤ - 4 subdivisions
 -- @number MetersPerCluster
 
 --- Force immediate loading of all fields and return table of fields.
@@ -133,9 +175,16 @@ end
 function read_i16(b1, b2)
     assert(0 <= b1 and b1 <= 0xff);
     assert(0 <= b2 and b2 <= 0xff);
-    local mask = bit32.lshift(1, 15);
-    local res  = bit32.bor(bit32.lshift(b1, 8), bit32.lshift(b2, 0));
-    return bit32.bxor(res, mask) - mask;
+    local res  = b1 + bit32.lshift(b2, 8);
+    return bit32.bxor(res, 0x8000) - 0x8000;
+end
+
+function read_u32(b1, b2, b3, b4)
+    assert(0 <= b1 and b1 <= 0xff);
+    assert(0 <= b2 and b2 <= 0xff);
+    assert(0 <= b3 and b3 <= 0xff);
+    assert(0 <= b4 and b4 <= 0xff);
+    return bit32.bor(b1, bit32.lshift(b2, 8), bit32.lshift(b3, 16), bit32.lshift(b4, 24));
 end
 
 local mapLoaded = false;
@@ -183,11 +232,11 @@ function LoadBinaryMapData(table)
         local ter_content = LoadFile(table.TerFile);
         if ter_content:sub(1,4) == "TERR" then
             local bytes = {string.byte(ter_content,1,16)};
-            rawset(table,"Version",(((((bytes[8] * 256) + bytes[7]) * 256) + bytes[6]) * 256) + (bytes[5]));
-            rawset(table,"MinX",read_i16(bytes[10], bytes[ 9]) * table.MetersPerQuarter);
-            rawset(table,"MinZ",read_i16(bytes[12], bytes[11]) * table.MetersPerQuarter);
-            rawset(table,"MaxX",read_i16(bytes[14], bytes[13]) * table.MetersPerQuarter);
-            rawset(table,"MaxZ",read_i16(bytes[16], bytes[15]) * table.MetersPerQuarter);
+            rawset(table,"Version",read_u32(bytes[5], bytes[6], bytes[7], bytes[8]));
+            rawset(table,"MinX",read_i16(bytes[ 9], bytes[10]) * table.MetersPerQuarter);
+            rawset(table,"MinZ",read_i16(bytes[11], bytes[12]) * table.MetersPerQuarter);
+            rawset(table,"MaxX",read_i16(bytes[13], bytes[14]) * table.MetersPerQuarter);
+            rawset(table,"MaxZ",read_i16(bytes[15], bytes[16]) * table.MetersPerQuarter);
         else
             mapLoadFailed = true; -- the map data failed to load, make sure we don't keep trying
         end
