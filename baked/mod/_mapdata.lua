@@ -44,13 +44,32 @@ local hook = require("_hook");
 -- Version 5 is a BZCC TER with compression.
 -- @int Version
 
---- Meters per quarter of a terrain cluster.
+--- Meters per terrain cluster quarter.
 --
--- This is [Size]:MetersPerGrid from the TRN
---
--- The "PerQuarter" here reffers to a single side of the cluster.
+-- The "PerQuarter" here refers to a single side of the cluster.
 -- In BZ2 a cluster was divided into 4x4 subdivision for 16 cells in total.
 -- This is what the setting is based on, where BZCC internally rescales this.
+--
+-- Note this value is [Size]:MetersPerGrid in the TRN due to legacy from BZ2. 
+-- @usage -- BZ2 Cluster Layout
+-- -- ┌───────┬───────┬───────┬───────┐
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- ├───────┼───────┼───────┼───────┤
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- ├───────┼───────┼───────┼───────┤
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- ├───────┼───────┼───────┼───────┤
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- │       │       │       │       │
+-- -- └───────┴───────┴───────┴───────┘
+-- -- ├───────┤ - 4 subdivisions
 -- @number MetersPerQuarter
 
 --- Meters per terrain grid vertex.
@@ -79,26 +98,25 @@ local hook = require("_hook");
 
 --- Meters per terrain cluster.
 --
--- Note this value is MetersPerGrid in the TRN due to legacy from BZ2. 
--- @usage -- BZ2 Cluster Layout
--- -- ┌───────┬───────┬───────┬───────┐
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- ├───────┼───────┼───────┼───────┤
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- ├───────┼───────┼───────┼───────┤
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- ├───────┼───────┼───────┼───────┤
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- │       │       │       │       │
--- -- └───────┴───────┴───────┴───────┘
--- -- ├───────┤ - 4 subdivisions
+-- @usage -- Cluster Layout
+-- -- ╔═══════╤═══════╤═══════╤═══════╗
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ╟───────┼───────┼───────┼───────╢
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ╟───────┼───────┼───────┼───────╢
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ╟───────┼───────┼───────┼───────╢
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ║─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─│─┼─┼─┼─║
+-- -- ╚═══════╧═══════╧═══════╧═══════╝
+-- -- ├───────────────────────────────┤ - full size
 -- @number MetersPerCluster
 
 --- Force immediate loading of all fields and return table of fields.
@@ -232,11 +250,21 @@ function LoadBinaryMapData(table)
         local ter_content = LoadFile(table.TerFile);
         if ter_content:sub(1,4) == "TERR" then
             local bytes = {string.byte(ter_content,1,16)};
-            rawset(table,"Version",read_u32(bytes[5], bytes[6], bytes[7], bytes[8]));
-            rawset(table,"MinX",read_i16(bytes[ 9], bytes[10]) * table.MetersPerQuarter);
-            rawset(table,"MinZ",read_i16(bytes[11], bytes[12]) * table.MetersPerQuarter);
-            rawset(table,"MaxX",read_i16(bytes[13], bytes[14]) * table.MetersPerQuarter);
-            rawset(table,"MaxZ",read_i16(bytes[15], bytes[16]) * table.MetersPerQuarter);
+			local version = read_u32(bytes[5], bytes[6], bytes[7], bytes[8]);
+            rawset(table,"Version",version);
+			if version <= 3 then
+				-- we are an old TER, thus our values are not rescaled so use BZ2's MetersPerGrid
+				rawset(table,"MinX",read_i16(bytes[ 9], bytes[10]) * table.MetersPerQuarter);
+				rawset(table,"MinZ",read_i16(bytes[11], bytes[12]) * table.MetersPerQuarter);
+				rawset(table,"MaxX",read_i16(bytes[13], bytes[14]) * table.MetersPerQuarter);
+				rawset(table,"MaxZ",read_i16(bytes[15], bytes[16]) * table.MetersPerQuarter);
+			else
+				-- we are a modern TER, thus our values are scaled so use BZCC's MetersPerGrid
+				rawset(table,"MinX",read_i16(bytes[ 9], bytes[10]) * table.MetersPerGrid);
+				rawset(table,"MinZ",read_i16(bytes[11], bytes[12]) * table.MetersPerGrid);
+				rawset(table,"MaxX",read_i16(bytes[13], bytes[14]) * table.MetersPerGrid);
+				rawset(table,"MaxZ",read_i16(bytes[15], bytes[16]) * table.MetersPerGrid);
+			end
         else
             mapLoadFailed = true; -- the map data failed to load, make sure we don't keep trying
         end
@@ -253,6 +281,16 @@ mapdata_meta.__index = function(table, key)
     if key == "MetersPerQuarter" then return LoadMetersPerQuarter(table); end
     if key == "MetersPerGrid" then return LoadMetersPerGrid(table); end
     if key == "MetersPerCluster" then return MetersPerCluster(table); end
+	
+	-- new functions from patch
+    if key == "MinX" and GetTerrainMinX then return GetTerrainMinX(); end
+	if key == "MinZ" and GetTerrainMinZ then return GetTerrainMinZ(); end
+	if key == "MaxX" and GetTerrainMaxX then return GetTerrainMaxX(); end
+	if key == "MaxZ" and GetTerrainMaxZ then return GetTerrainMaxZ(); end
+	
+	-- Implementing a backup for GetTerrainMinY, GetTerrainMaxY until the patch becomes the primary version would require iterating the entire map.
+	-- Note the game only updates this on load or editor so these don't mutate later
+	
     if not mapLoaded and (key == "Version" or key == "MinX" or key == "MinZ" or key == "MaxX" or key == "MaxZ") then
         LoadBinaryMapData(table);
         return rawget(table, key); -- now exists
