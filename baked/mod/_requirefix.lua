@@ -10,7 +10,7 @@ local debugprint = debugprint or function() end;
 
 debugprint("_requirefix Loading");
 
-if (type(LuaMissionFeatures) == 'table') and (LuaMissionFeatures.RequireFix or 0) > 0 then
+if (LuaMissionVersion or 185) >= 192 or ((type(LuaMissionFeatures) == 'table') and (LuaMissionFeatures.RequireFix or 0) > 0) then
     debugprint("_requirefix Skipped");
     return;
 end
