@@ -44,8 +44,8 @@ end);
 hook.Add("GameObject:UpgradeObject", "ReplaceOnDeath_UpgradeObject", function(object)
     if object.ReplaceOnDeathData == nil or not istable(object.ReplaceOnDeathData) then return; end
     
-	-- if the object was upgraded just remove our data as it's a new object now with its own ODF
-	object.ReplaceOnDeathData == nil;
+    -- if the object was upgraded just remove our data as it's a new object now with its own ODF
+    object.ReplaceOnDeathData == nil;
 end);
 
 debugprint("_api_replaceondeath Loaded");

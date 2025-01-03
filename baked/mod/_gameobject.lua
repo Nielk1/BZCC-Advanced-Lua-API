@@ -847,7 +847,7 @@ function GameObject.SetMaxHealth(self, amt)
     SetMaxHealth(self:GetHandle(), amt);
 end
 
---	{ "AddHealth", AddHealth },
+-- { "AddHealth", AddHealth },
 --// Adds the health to the specified handle.
 --DLLEXPORT void DLLAPI AddHealth(Handle h, long health);
 
@@ -862,27 +862,27 @@ end
 
 
 
---	{ "GetAmmo", GetAmmo },
+-- { "GetAmmo", GetAmmo },
 --// Returns the ammo Ratio of the handle (1.0f - 0.0f). Returns 0.0f if handle is invalid.
 --DLLEXPORT float DLLAPI GetAmmo(Handle h);
 
---	{ "GetCurAmmo", GetCurAmmo },
+-- { "GetCurAmmo", GetCurAmmo },
 --// Returns the current Ammo of a handle. Returns -1234 if the handle is invalid.
 --DLLEXPORT long DLLAPI GetCurAmmo(Handle h);
 
---	{ "GetMaxAmmo", GetMaxAmmo },
+-- { "GetMaxAmmo", GetMaxAmmo },
 --// Returns the max Ammo of a handle. Returns -1234 if the handle is invalid.
 --DLLEXPORT long DLLAPI GetMaxAmmo(Handle h);
 
---	{ "SetCurAmmo", SetCurAmmo },
+-- { "SetCurAmmo", SetCurAmmo },
 --// Sets the current ammo of the handle to the NewAmmo value.
 --DLLEXPORT void DLLAPI SetCurAmmo(Handle h, long NewAmmo);
 
---	{ "SetMaxAmmo", SetMaxAmmo },
+-- { "SetMaxAmmo", SetMaxAmmo },
 --// Sets the max ammo of the handle to the NewAmmo value.
 --DLLEXPORT void DLLAPI SetMaxAmmo(Handle h, long NewAmmo);
 
---	{ "AddAmmo", AddAmmo },
+-- { "AddAmmo", AddAmmo },
 --// Adds the ammo to the specified handle.
 --DLLEXPORT void DLLAPI AddAmmo(Handle h, long ammo);
 
